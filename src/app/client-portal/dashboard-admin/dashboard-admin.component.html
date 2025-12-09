@@ -1,0 +1,22 @@
+<!-- client-portal/dashboard-admin/dashboard-admin.component.html -->
+<app-navbar [rol]="'admin'"></app-navbar>
+
+<header class="admin-header">
+  <div class="admin-header__brand">Empresa de Soporte Técnico</div>
+  <div class="admin-header__user">
+    <i class="fas fa-user-circle"></i>
+    <span>Administrador</span>
+  </div>
+</header>
+
+<section class="admin-dashboard">
+  <div class="admin-dashboard__welcome">
+    <h2>Bienvenido/a a tu Panel, Daniela</h2>
+    <p>Gestiona usuarios, servicios y reportes desde un solo lugar.</p>
+  </div>
+
+  <div class="admin-dashboard__actions">
+    <button routerLink="/admin/citas" class="btn btn--primary">Consultar Citas de Diagnóstico</button>
+    <button routerLink="/admin/servicios" class="btn btn--primary">Consultar Servicios Técnicos</button>
+  </div>
+</section>

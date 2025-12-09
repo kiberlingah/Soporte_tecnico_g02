@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Servicios</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Tipografías -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
+    rel="stylesheet">
+  <!-- Animaciones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+
+<body>
+  <app-nav-pcliente></app-nav-pcliente>
+  <!-- <div class="layout"> -->
+
+  <!-- ===== SIDEBAR ===== -->
+  <!-- <aside class="sidebar">
+      <h2 class="sidebar-logo">
+        <img src="assets/icono-iniciar-sesion.png">
+      </h2>
+      <nav class="sidebar-menu">
+        <a routerLink="/cliente/dashboard"><i class="bi bi-house"></i> Inicio</a>
+        <a routerLink="/cliente/account"><i class="bi bi-gear"></i> Configuración</a>
+        <a class="active" routerLink="/cliente/historial"><i class="bi bi-clock-history"></i> Historial</a>
+        <a routerLink="/cliente/servicios"><i class="bi bi-tools"></i> Servicios</a>
+        <a routerLink="/cliente/citas"><i class="bi bi-calendar-check"></i> Citas</a>
+      </nav>
+    </aside> -->
+
+  <!-- ===== MAIN ===== -->
+  <!-- <main class="main"> -->
+
+  <!-- TOPBAR -->
+  <!-- <header class="topbar">
+        <div class="top-left">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input placeholder="Buscar...">
+          </div>
+        </div>
+        <div class="top-right d-flex align-items-center gap-3">
+          <i class="bi bi-bell notify-icon"></i>
+          <span class="user-name fw-bold">Nathan User</span>
+          <img class="user-avatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
+          <button class="logout-btn-icon btn btn-link text-danger fs-5"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+      </header> -->
+  <div class="text-center mt-5">
+    <!-- SLOGAN INSTITUCIONAL -->
+    <p class="mb-2 title_seccion1">
+      Revise su Historial de Servicios
+    </p>
+
+    <!-- LÍNEA DECORATIVA -->
+    <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
+
+    <!-- SUBTÍTULO INSTITUCIONAL -->
+    <p class="mb-2" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
+      Aquí podrás visualizar el historial de tus servicios adquiridos.
+    </p>
+  </div>
+
+  <section class="content-area container mb-5">
+    <div class="welcome-box text-center px-4 py-5">
+
+      <!-- <h1 class="mb-3"
+        style="font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 600; color: #0F032D;">
+        🚀 Bienvenido a tu Historial de Servicios
+      </h1>
+
+      <p class="mb-3" style="font-family: 'Poppins', sans-serif; font-size: 1.05rem; font-weight: 500; color: #1d253a;">
+        Aquí podrás ver el historial de tus servicios adquiridos.
+      </p> -->
+
+      <p class="mb-4" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
+        Sigue recibiendo atención especializada.
+      </p>
+
+      <div class="stats-box d-flex justify-content-center gap-5 mt-4">
+        <div>
+          <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">98%</strong>
+          <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Satisfacción</small>
+        </div>
+        <div>
+          <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">+2,500</strong>
+          <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Citas completadas</small>
+        </div>
+        <div>
+          <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">24/7</strong>
+          <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Soporte disponible</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div class="historial-wrapper container">
+    <div class="historial-box">
+      <!-- <h2>Empresa de Soporte Técnico</h2> -->
+      <h2 class="panel-title mb-5">Historial De Servicios Adquiridos</h2>
+
+      <table class="tabla-servicios">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Distrito</th>
+            <th>Dirección</th>
+            <th>Monto</th>
+            <th>Observación</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>22/06/2026</td>
+            <td>08:00 - 10:00</td>
+            <td>Jesús María</td>
+            <td>Av. Salaverry s/n</td>
+            <td>S/. 150</td>
+            <td>HDD presenta fallos al iniciar el sistema.</td>
+            <td>
+              <button class="btn-ver" [routerLink]="['/historial/detalle', '001']">Ver más</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<app-footer-simple></app-footer-simple>

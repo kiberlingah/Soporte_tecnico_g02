@@ -1,0 +1,24 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.brand {
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.links a {
+  margin-right: 12px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+

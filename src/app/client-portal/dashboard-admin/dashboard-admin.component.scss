@@ -1,0 +1,111 @@
+/* Header */
+.admin-header {
+  background: linear-gradient(90deg, #0b132b, #1c2541);
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  &__brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+
+  i {
+    font-size: 1.6rem;
+    color: #0d6efd;
+  }
+}
+
+/* Dashboard */
+.admin-dashboard {
+  padding: 3rem;
+  text-align: center;
+  background: linear-gradient(to bottom right, #f8f9fa, #ffffff);
+  min-height: 100vh;
+
+  &__welcome h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #0d6efd;
+  }
+
+  &__welcome p {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 2rem;
+  }
+
+  &__illustration {
+    position: relative;
+    margin-bottom: 2rem;
+
+    img {
+      max-width: 380px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    &__icons {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      font-size: 1.5rem;
+      color: #0d6efd;
+    }
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+
+    .btn {
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &--primary {
+        background: linear-gradient(90deg, #0d6efd, #0948b3);
+        color: #fff;
+      }
+
+      &--secondary {
+        background: #1c2541;
+        color: #fff;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+      }
+    }
+  }
+}
+
+/* Footer */
+.admin-footer {
+  margin-top: 3rem;
+  padding: 1rem;
+  background: #0b132b;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+}

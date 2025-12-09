@@ -1,0 +1,84 @@
+.video-fondo {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.bg-gradient {
+  background: linear-gradient(135deg, #5ad7f3, #8A2BE2);
+}
+
+.campo-input {
+  border: 1px solid #5ad7f3;
+  border-radius: 50px;
+  padding: 0.6rem 1rem;
+  background-color: #f5f8ff;
+  font-family: 'Rajdhani', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.campo-input:focus {
+  border-color: #8A2BE2;
+  box-shadow: 0 0 10px rgba(138,43,226,0.6);
+  outline: none;
+}
+
+.btn-login {
+  background-color: #8A2BE2;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 0.7rem;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+  box-shadow: 0 0 12px rgba(90,215,243,0.6);
+}
+
+.link-secundario {
+  font-family: 'Rajdhani', sans-serif;
+  color: #5ad7f3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-secundario:hover {
+  color: #8A2BE2;
+}
+
+.btn-cerrar {
+  background-color: #8A2BE2;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-cerrar:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+  transform: scale(1.1);
+}
+// Estilo para los mensajes de error
+.text-danger.small {
+  min-height: 1.2rem; // ✅ reserva espacio para el mensaje
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+// Estilo para los campos
+.campo-input.ng-invalid.ng-touched {
+  border-color: #dc3545; // rojo Bootstrap
+  box-shadow: 0 0 6px rgba(220,53,69,0.4); // glow rojo
+}
