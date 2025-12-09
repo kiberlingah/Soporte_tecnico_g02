@@ -1,0 +1,21 @@
+<nav class="navbar">
+  <a routerLink="/" class="brand">Sistema</a>
+
+  <div class="links" *ngIf="rol === 'cliente'">
+    <a routerLink="/inicio">Inicio</a>
+    <a routerLink="/citas">Mis citas</a>
+    <a routerLink="/historial">Historial</a>
+  </div>
+
+  <div class="links" *ngIf="rol === 'admin'">
+    <a routerLink="/admin">Panel</a>
+    <a routerLink="/admin/citas">Citas</a>
+    <a routerLink="/admin/usuarios">Usuarios</a>
+  </div>
+
+  <div class="links" *ngIf="rol === 'tecnico'">
+    <a routerLink="/tecnico">Panel</a>
+    <a routerLink="/tecnico/citas">Citas asignadas</a>
+    <a routerLink="/tecnico/disponibilidad">Disponibilidad</a>
+  </div>
+</nav>

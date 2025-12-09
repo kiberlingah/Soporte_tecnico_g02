@@ -1,0 +1,13 @@
+<!-- client-portal/dashboard-tecnico/dashboard-tecnico.component.html -->
+<app-navbar [rol]="'tecnico'"></app-navbar>
+
+<section class="tecnico-dashboard">
+  <h2>Panel Técnico</h2>
+  <p>Gestiona tus citas y disponibilidad.</p>
+
+  <ul>
+    <li><a routerLink="/tecnico/citas">Citas asignadas</a></li>
+    <li><a routerLink="/tecnico/diagnostico">Actualizar diagnóstico</a></li>
+    <li><a routerLink="/tecnico/disponibilidad">Disponibilidad</a></li>
+  </ul>
+</section>

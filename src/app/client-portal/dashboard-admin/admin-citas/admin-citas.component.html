@@ -1,0 +1,46 @@
+<section class="admin-citas">
+  <h2>Lista para Citas de Diagnóstico</h2>
+
+  <!-- Filtros -->
+  <div class="filtros">
+    <input type="text" placeholder="Nombre o apellidos" [(ngModel)]="filtroNombre" />
+    <input type="date" [(ngModel)]="filtroFecha" />
+    <input type="text" placeholder="Distrito" [(ngModel)]="filtroDistrito" />
+    <button (click)="filtrar()">Buscar</button>
+  </div>
+
+  <!-- Tabla -->
+  <table class="tabla-citas">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Técnico</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Modalidad</th>
+        <th>Distrito</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cita of citasFiltradas">
+        <td>{{ cita.id }}</td>
+        <td>{{ cita.cliente }}</td>
+        <td>{{ cita.tecnico || '-' }}</td>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.hora }}</td>
+        <td>{{ cita.modalidad }}</td>
+        <td>{{ cita.distrito || '-' }}</td>
+        <td><button (click)="verDetalle(cita.id)">Ver</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="paginacion">
+    <button *ngFor="let pagina of paginas" (click)="irPagina(pagina)" [class.activa]="pagina === paginaActual">
+      {{ pagina }}
+    </button>
+  </div>
+</section>

@@ -1,0 +1,444 @@
+//Seccion fondo
+.hero-video {
+  height: 90vh;
+  overflow: hidden;
+  position: relative; /* asegura que todo se posicione dentro */
+}
+.hero-video h1,
+.hero-video p {
+  text-shadow: 0 2px 6px rgba(89, 0, 255, 0.6);
+}
+
+
+nav{
+    /*background-color: #0d1b3f;*/
+    //background-color: rgba(99, 88, 252, 0.5);
+    background-color: rgb(3 64 195 / 86%) ;
+    margin-top: -5px;
+    position: fixed !important;
+    top: 0;
+    width: 98%;
+    padding: 10px 0 !important;
+    z-index: 5 !important;
+    margin: 1% 1% !important;
+    padding: 12px 12px !important;
+}
+
+
+.navbar-toggler{
+  color: #03cdffa2;
+}
+
+.video-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; /* el video queda detrás */
+}
+
+.hero-video nav,
+.hero-video .container-fluid {
+  position: relative;
+  z-index: 2; /* navbar y contenido encima del video */
+}
+.hero-video h1 {
+  color: #1586f5; /* azul eléctrico */
+}
+
+.hero-video p {
+  color: #5f53ff; /* blanco suave */
+}
+
+.hero-video .nav-link {
+  color: #03cdff !important; /* texto claro en menú */
+  font-weight: 500;
+}
+
+.hero-video .btn-login {
+  background-color: #8A2BE2;
+  color: rgb(0, 195, 255);
+}
+
+.hero-video .btn-register {
+  background-color: #1E90FF;
+  color: white;
+}
+
+.hero-video .navbar {
+  backdrop-filter: blur(8px); /* efecto glass suave */
+}
+
+
+
+
+//Seccion Modalidades
+.modalidades-servicio-cuadros {
+  background-color: #ffffff;      /* fondo limpio */
+  padding: 8rem 0;
+  min-height: 950px;
+}
+
+/* Cuadro general */
+.cuadro-modalidadesServicio {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.cuadro-modalidadesServicio:hover {
+  transform: scale(1.03);
+}
+
+/* Imagen */
+.imagen-cuadro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* Texto */
+.texto-cuadro {
+  background-color: #f5f8ff;      /* ✅ azul muy claro institucional */
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0.5rem;
+  box-shadow: inset 0 0 10px rgba(90,215,243,0.15); /* sombra interna azul suave */
+}
+
+/* Título */
+.texto-cuadro h5 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #8A2BE2;                 /* ✅ violeta institucional */
+  margin-bottom: 0.5rem;
+}
+
+/* Párrafo */
+.texto-cuadro p {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  color: #03153a;                 /* ✅ azul oscuro para contraste */
+  margin-bottom: 1rem;
+}
+
+/* Botón */
+.texto-cuadro a.btn {
+  background-color: #8A2BE2;      /* violeta institucional */
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.texto-cuadro a.btn:hover {
+  background-color: #5ad7f3;      /* azul eléctrico al hover */
+  color: #03153a;                 /* contraste sobre azul */
+  box-shadow: 0 0 12px rgba(90,215,243,0.6);
+}
+
+
+
+
+
+// Bloque Nosotros mision y vision */
+.seccion-historia-mision-vision {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.bloque-historia {
+  min-height: 700px; /* ← Aquí ajustas el alto de la sección */
+}
+
+.imagen-historia {
+  background-image: url('https://i.pinimg.com/736x/09/4c/e7/094ce7b2ed26536b92a6829381b48efc.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%; 
+  min-height: 500px; 
+  border-radius: 0;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+/* Bloque Mision */
+.bloque-mision {
+  background-color: #000;
+  min-height: 400px;
+  position: relative;
+}
+.imagen-mision {
+  background-image: url('https://i.pinimg.com/736x/28/3a/32/283a32def17dfd82bbb187a48aebaeea.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+.titulo-mision h2 {
+  font-size: 2.8rem;
+  text-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+/* Bloque Vision */
+.bloque-vision {
+  background-color: #03153a;
+  min-height: 500px;
+}
+.bloque-vision img {
+  width: 100%;
+  height: 270px;            /* ✅ más pequeño que antes */
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.texto-descubre h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #5ad7f3;
+}
+
+.cuadro-servicio {
+  width: 100%;
+  aspect-ratio: 1 / 1;         /* ✅ fuerza que sean cuadrados */
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.texto-descubre {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.texto-descubre p {
+  max-width: 90%;
+}
+
+
+
+
+//Seccion Servicios
+.seccion-servicios {
+  background-color: #03153a;
+  color: #f0f8ff;
+  min-height: 650px;              /* ✅ más alto */
+  display: flex;                  /* ✅ activa flexbox */
+  flex-direction: column;
+  justify-content: center;        /* ✅ centra verticalmente */
+  align-items: center;
+  padding-top: 60px;              /* ✅ espacio arriba */
+  padding-bottom: 80px;
+}
+
+
+.servicio-cuadro {
+  height: 280px;                  /* ✅ más alto */
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  background-color: #0d1b3f;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+}
+
+.servicio-cuadro h5 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(138,43,226,0.8);
+  margin: 0;
+  padding: 0.6rem 0.5rem;
+  font-size: 1.15rem;
+  font-family: 'Rajdhani', sans-serif;
+  color: #fff;
+}
+
+
+.servicio-cuadro:hover {
+  transform: scale(1.05);
+}
+
+.servicio-cuadro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+
+/* Botones del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #5ad7f3;   /* azul eléctrico */
+  border-radius: 50%;
+  padding: 1rem;
+  background-size: 60% 60%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+
+//Seccion Foorte y contacto
+.contacto-seccion {
+  background-color: #03153a; /* azul oscuro tecnológico */
+}
+
+.footer-seccion {
+  background-color: #0a0f1c; /* contraste elegante */
+}
+
+.campo-email {
+  background-color: #1c2331;
+  border: 2px solid #5ad7f3;   /* azul eléctrico */
+  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 50px;         /* ✅ borde redondeado */
+  font-family: 'Rajdhani', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.campo-email:focus {
+  outline: none;
+  border-color: #8A2BE2;       /* violeta institucional al focus */
+  box-shadow: 0 0 10px rgba(138,43,226,0.6);
+}
+
+.campo-email::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.boton-suscribir {
+  background-color: #8A2BE2;
+  border-radius: 50px;
+  font-weight: 600;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  padding: 0.6rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.boton-suscribir:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+  box-shadow: 0 0 12px rgba(90,215,243,0.6);
+}
+
+
+.footer-link {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.footer-link:hover {
+  color: #5ad7f3; /* azul eléctrico */
+}
+
+
+
+
+
+//Seccion chatbot
+/* Icono flotante */
+.chatbot-icono {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #8A2BE2, #5ad7f3); // violeta + celeste bebé
+  color: white;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+  z-index: 1050;
+}
+
+.chatbot-icono:hover {
+  transform: scale(1.1);
+}
+
+/* Ventana de chat */
+.chatbot-ventana {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 340px;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 1050;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #8A2BE2, #5ad7f3); // degradado institucional
+  color: white;
+  font-weight: 600;
+}
+
+.chat-body {
+  height: 280px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  padding: 12px;
+}
+
+/* Mensajes estilo burbuja */
+.mensaje-bot {
+  background: #e9ecef;
+  color: #03153a;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  font-size: 0.9rem;
+}
+
+.mensaje-user {
+  background: #5ad7f3; // celeste bebé
+  color: #03153a;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  margin-left: auto;
+  font-size: 0.9rem;
+}
+
+/* Input */
+.campo-input {
+  border-radius: 20px;
+}
+
+/* Botón enviar */
+.btn-enviar {
+  background-color: #8A2BE2; // violeta institucional
+  color: white;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-enviar:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+}

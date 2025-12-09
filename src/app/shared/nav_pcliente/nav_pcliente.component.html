@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-cliente px-4 py-2">
+  <div class="container-fluid">
+    <!-- Logo institucional -->
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" style="font-family:'Orbitron', sans-serif;"
+      routerLink="/cliente/dashboard">
+      <i class="bi bi-arrow-up-right-square-fill me-2"></i> AsiQueUD
+    </a>
+
+    <!-- Botón hamburguesa -->
+    <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#menuCliente">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menú y acciones -->
+    <div class="collapse navbar-collapse justify-content-end " id="menuCliente">
+      <ul class="navbar-nav gap-4 me-3">       
+        
+        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/citas">Diagnóstico</a></li>
+        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/servicios">Instalación</a></li>
+        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/servifast">ServiFast</a></li>
+        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/historial"><i class="bi bi-journal-text  me-1"></i>Mis Servicios</a></li>
+        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/account"><i class="bi bi-person-circle  me-1"></i>Mi Cuenta</a></li>
+      </ul>
+
+
+      <!-- Lupa expandible + botón -->
+      <div class="d-flex align-items-center gap-3 position-relative">
+        <!-- <button class="btn btn-lupa" (click)="mostrarBuscador = !mostrarBuscador">
+          <i class="bi bi-search"></i>
+        </button> 
+        <input *ngIf="mostrarBuscador" type="text" class="form-control buscador-expandido" placeholder="Buscar">-->
+        <button class="btn btn-cerrar-sesion" (click)="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,335 @@
+.video-fondo {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.navbar-cliente {
+  background: linear-gradient(135deg, #5ad7f3, #8A2BE2);
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.nav-link {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #f0f8ff !important;
+}
+
+.btn-lupa {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.buscador-expandido {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  width: 200px;
+  border-radius: 50px;
+  padding: 6px 12px;
+  background-color: rgba(255,255,255,0.9);
+  color: #03153a;
+  font-family: 'Rajdhani', sans-serif;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.btn-cerrar-sesion {
+  background-color: #3957ff;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.btn-cerrar-sesion:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 991px) {
+  #menuCliente {
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 20px;
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    width: 250px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  .nav-link {
+    color: #03153a !important;
+  }
+
+  .btn-cerrar-sesion {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+
+
+
+.banner-cliente {
+  height: 40vh;
+  background: linear-gradient(to bottom right, rgba(10,61,145,0.6), rgba(0,0,0,0.3));
+  backdrop-filter: blur(4px);
+  padding-top: 80px;
+}
+
+
+//Cudrados
+.cliente-accesos {
+  background: linear-gradient(to bottom right, #f6fbff, #ffffff); // celeste bebé
+}
+
+.titulo-accesos {
+  font-family: 'Orbitron', sans-serif;
+  color: #5ad7f3;
+  font-size: 2.5rem;
+}
+
+.acceso-card {
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.acceso-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(90,215,243,0.35);
+}
+
+.acceso-card h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  color: #03153a;
+  margin-top: 15px;
+}
+
+.acceso-card p {
+  color: #444;
+  font-size: 1rem;
+  margin: 10px 0 20px;
+}
+
+.icono-acceso {
+  font-size: 2.6rem;
+  margin-bottom: 10px;
+}
+
+.acceso-violeta {
+  background-color: #8A2BE2;
+  color: white;
+}
+
+.acceso-blanco {
+  background-color: #ffffff;
+  color: #03153a;
+}
+
+/* Botones institucionales */
+.btn {
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-acceder {
+  background-color: #5ad7f3;
+  color: #03153a;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  border: none;
+}
+
+.btn-acceder:hover {
+  background-color: #ffc107;
+  color: #03153a;
+}
+
+.btn-contactar {
+  background-color: #ffffff;
+  color: #8A2BE2;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  border: none;
+}
+
+.btn-contactar:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+}
+
+.acceso-violeta {
+  background-color: #8A2BE2;
+  color: #ffffff; // texto principal blanco
+}
+
+.acceso-violeta h4 {
+  color: #f0f8ff; // título más brillante
+}
+
+.acceso-violeta p {
+  color: #e0e0ff; // párrafo con blanco suave para contraste
+}
+
+.btn-diagnostico,
+.btn-instalacion,
+.btn-configuracion,
+.btn-soporte,
+.btn-historial {
+  background-color: #5ad7f3; // celeste bebé
+  color: #03153a; // texto oscuro para contraste
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-diagnostico:hover,
+.btn-instalacion:hover,
+.btn-configuracion:hover,
+.btn-soporte:hover,
+.btn-historial:hover {
+  background-color: #ffc107; // amarillo institucional
+  color: #03153a;
+}
+
+
+//seccion ayuada
+.seccion-contacto-ayuda {
+  background: linear-gradient(to bottom right, #f6fbff, #ffffff); // celeste bebé
+  padding-top: 80px;
+  padding-bottom: 80px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.subtitulo-contacto {
+  font-size: 1rem;
+  color: #8A2BE2;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.titulo-contacto {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.4rem;
+  color: #5ad7f3;
+  margin-top: 10px;
+}
+
+.descripcion-contacto {
+  font-size: 1.2rem;
+  color: #03153a;
+  margin-top: 20px;
+}
+
+.detalle-contacto {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.cuadro-blanco {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.titulo-ayuda {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.6rem;
+  color: #8A2BE2;
+}
+
+.descripcion-ayuda {
+  font-size: 1.1rem;
+  color: #03153a;
+  margin: 15px 0;
+}
+
+.btn-contactar {
+  background-color: #8A2BE2;
+  color: white;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-contactar:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+}
+
+///seccion footer
+.footer-cliente {
+  background-color: #2e0066; // violeta institucional
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.titulo-footer {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #5ad7f3;
+}
+
+.texto-footer {
+  font-size: 0.95rem;
+  color: #f0f0f0;
+}
+
+.link-footer {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.link-footer:hover {
+  color: #5ad7f3;
+}
