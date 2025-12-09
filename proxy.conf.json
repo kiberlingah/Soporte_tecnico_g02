@@ -1,0 +1,47 @@
+{
+  "/distritos": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/modalidades": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/serviciosInstalacion": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/serviciosReparacion": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/horarios": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/tarifas_distritos": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+
+  "/clientes": {
+    "target": "https://spyrocode.dev",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
+
+  
+
