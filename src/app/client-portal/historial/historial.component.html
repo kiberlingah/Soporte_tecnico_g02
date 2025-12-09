@@ -106,35 +106,34 @@
     <div class="historial-box">
       <!-- <h2>Empresa de Soporte Técnico</h2> -->
       <h2 class="panel-title mb-5">Historial De Servicios Adquiridos</h2>
+      <div class="table-responsive-lg">
+        <table class=" table table-striped">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Fecha y Hora</th>
+              <th>Monto final</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pago of listaPagos">
+              <td> <span class="badge text-bg-primary">{{pago.id_pago}}</span></td>
+<td class="td-wrap">
+  <div class="badge text-bg-primary">{{ pago.fecha_pago }}</div>
+  <div class="badge text-bg-danger mt-1">{{ pago.hora_pago }}</div>
+</td>
 
-      <table class="tabla-servicios">
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Distrito</th>
-            <th>Dirección</th>
-            <th>Monto</th>
-            <th>Observación</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>001</td>
-            <td>22/06/2026</td>
-            <td>08:00 - 10:00</td>
-            <td>Jesús María</td>
-            <td>Av. Salaverry s/n</td>
-            <td>S/. 150</td>
-            <td>HDD presenta fallos al iniciar el sistema.</td>
-            <td>
-              <button class="btn-ver" [routerLink]="['/historial/detalle', '001']">Ver más</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td>{{pago.monto_final}}</td>
+
+              <td>
+                <button class="btn-ver" [routerLink]="['/historial/detalle', '001']">Ver más</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
-<app-footer-simple></app-footer-simple>
+  <app-footer-simple></app-footer-simple>

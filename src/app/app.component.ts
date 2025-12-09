@@ -8,7 +8,7 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.scss'] // 👈 aquí importas el SCSS
 })
 export class AppComponent {
-    title = 'proyecto-web-soporte';
+    title = 'Soporte_tecnico_g02';
     mostrarRegistro = false;
   constructor(
     public auth: AuthService,

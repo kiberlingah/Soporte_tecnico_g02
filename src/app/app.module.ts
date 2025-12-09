@@ -33,8 +33,7 @@ import { ServiciosFastComponent } from './client-portal/servicios-fast/servicios
 import { TerminosCondicionesComponent } from './client-portal/terminos-condiciones/terminos-condiciones.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent,
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
@@ -53,21 +52,18 @@ import { TerminosCondicionesComponent } from './client-portal/terminos-condicion
     ServiciosFastComponent,
     TerminosCondicionesComponent
   ],
-  imports: [
-    BrowserModule,
+  imports: [BrowserModule,
     AppRoutingModule,   // 👈 aquí ya está RouterModule.forRoot() con tus rutas
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
+  providers: [{provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
-      multi: true
-    }
-  ],
+      multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+

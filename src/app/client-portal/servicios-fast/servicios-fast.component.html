@@ -1,1 +1,254 @@
-<app-nav-pcliente></app-nav-pcliente>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
+  rel="stylesheet">
+<div class="bodyportalcliente">
+  <app-nav-pcliente></app-nav-pcliente>
+
+  <div class="text-center mb-5 mt-5">
+    <p class="mb-2 title_seccion1">
+      <em> <i class="bi bi-list-nested small"></i> ServiFast</em> <br>
+      Servicio de Ayuda Inmediata
+    </p>
+
+    <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
+    <p class="mb-4" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
+      Tiene un costo adicional de S/ 10.00 sobre el precio regular del servicio. <br>
+      El tiempo de atención dependerá de la modalidad que elija al momento de solicitarlo.<br>
+    </p>
+  </div>
+  <div class="container">
+    <ul class="nav nav-tabs row">
+
+      <li class="nav-item col-6">
+        <a class="nav-link text-center" [class.active]="activeTab === 'home'" (click)="activeTab='home'">Diagnóstico</a>
+      </li>
+
+      <li class="nav-item col">
+        <a class="nav-link text-center" [class.active]="activeTab === 'set'" (click)="activeTab='set'">Instalación</a>
+      </li>
+    </ul>
+
+    <div class="tab-content p-3">
+      <div class="tab-pane" [class.active]="activeTab === 'home'">
+<div class="wrapper2  mb-5">
+    <div class="formulario2  mb-5">
+      <h2 class="panel-title1 mb-4" style="text-align: center;">Diagnóstico</h2>
+
+      <form #formCitaDiagnostico="ngForm">
+        <div class="form-grid">
+          <div class="row">
+            <div class="col-sm-8 mb-2">
+              <label class="form-label">Nombres y Apellidos</label>
+              <input type="text" class="form-control" [(ngModel)]="nombreCompleto" name="nombres" readonly>
+            </div>
+            <div class="col-sm-4 mb-2">
+              <label class="form-label">DNI/RUC</label>
+              <input type="text" class="form-control" [(ngModel)]="citas_diagnostico.documento" name="documento"
+                id="documento" #documento="ngModel" pattern="[0-9]*" minlength="8" maxlength="11" required
+                title="Debe contener solo números (8 para DNI, 11 para RUC)" />
+              <div *ngIf="documento.errors?.['pattern'] && documento.touched" class="text-danger small mt-1">
+                Solo se permiten números.
+              </div>
+              <div *ngIf="(documento.errors?.['minlength'] || documento.errors?.['maxlength']) && documento.touched"
+                class=" text-danger small mt-1">
+                Ingrese 8 dígitos para DNI y 11 para RUC.
+              </div>
+              <div *ngIf="documento.errors?.['required'] && documento.touched" class="text-danger small mt-1">
+                Ingrese su número de documento o RUC.
+              </div>
+            </div>
+
+            <div class="col-sm-4 mb-2">
+              <label class="form-label">Modalidad</label>
+              <select class="form-select" [(ngModel)]="citas_diagnostico.id_modalidad" name="id_modalidad"
+                id="id_modalidad" (change)="validarModalidad()" #id_modalidad="ngModel" required>
+                <option value="">Seleccionar</option>
+                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">
+                  {{ m.nombre_modalidad }}
+                </option>
+              </select>
+              <div *ngIf="id_modalidad.invalid && id_modalidad.touched" class="text-danger small mt-1">
+                Debe seleccionar una modalidad.
+              </div>
+            </div>
+
+            <div class="col-sm-4 mb-2">
+              <label class="form-label">Fecha</label>
+              <input type="date" class="form-control" [(ngModel)]="citas_diagnostico.fecha_atencion"
+                name="fecha_atencion" [min]="fechaMinima" (change)="validarNoDomingo()" required
+                title="Seleccione una fecha válida">
+              <div *ngIf="!citas_diagnostico.fecha_atencion" class="text-danger small mt-1">
+                Debe seleccionar una fecha.
+              </div>
+            </div>
+
+            <div class="col-sm-4 mb-2">
+              <!-- <label class="form-label">Hora</label>
+              <select class="form-select" [(ngModel)]="citas_diagnostico.id_horario" name="id_horario" id="id_horario">
+                <option value="">Seleccionar</option>
+                <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
+              </select> -->
+            </div>
+
+            <div class="col-sm-4 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
+              <label class="form-label">Distrito</label>
+              <select class="form-select" [(ngModel)]="idDistritoSeleccionado" (change)="setearTarifaDomicilio()"
+                name="id_distrito">
+                <option value="">Seleccionar</option>
+                <option *ngFor="let d of distritos" [value]="d.id_distrito">
+                  {{ d.nombre_distrito }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-sm-8 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
+              <label class="form-label">Dirección</label>
+              <input type="text" class="form-control" [(ngModel)]="citas_diagnostico.direccion" name="direccion"
+                #direccion="ngModel" maxlength="100" required>
+              <div *ngIf="direccion.invalid && direccion.touched" class="text-danger small mt-1">
+                La dirección es obligatoria.
+              </div>
+            </div>
+            
+            <div class="col-sm-12 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
+              <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
+                tarifaDomicilio }}</span>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+              <label class="form-label">Comentario</label>
+              <textarea class="form-control" [(ngModel)]="citas_diagnostico.comentario_cliente"
+                name="comentario_cliente"></textarea>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="acepto" [(ngModel)]="citas_diagnostico.acepto"
+                  name="acepto" />
+                <a href="#" class="form-check-label text-black ms-2">Acepto los términos y condiciones</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-submit" type="submit" (click)="registrarCitaDiagnostico(formCitaDiagnostico)">Pagar Cita de
+          Diagnóstico</button>
+      </form>
+    </div>
+  </div>
+      </div>
+
+      <div class="tab-pane" [class.active]="activeTab === 'set'">
+        <div class="wrapper2">
+          <div class="formulario2  mb-5">
+            <h2 class="panel-title1 mb-4">Instalación</h2>
+
+            <form>
+              <div class="form-grid ">
+                <div class="row">
+                  <div class="col-sm-8 mb-2">
+                    <label class="form-label">Programa a Instalar</label>
+                    <select class="form-select" name="id_servicio" id="id_servicio" [(ngModel)]="idServicioSeleccionado"
+                      (change)="setearPrecio()">
+                      <option value="">Seleccionar</option>
+                      <option *ngFor="let s of servicios" [value]="s.id_servicio">
+                        {{ s.descripcion_servicio }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label">Precio (S/)</label>
+                    <input type="number" class="form-control" readonly [value]="precioServicio" step="0.01"
+                      name="precio_serviciot" id="precio_serviciot" />
+                  </div>
+
+                  <div class="col-sm-8 mb-2">
+                    <label class="form-label">Nombres y Apellidos</label>
+                    <input class="form-control" type="text" id="nombres" [(ngModel)]="nombreCompleto" name="nombres"
+                      readonly />
+                  </div>
+
+
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label">DNI/RUC </label>
+                    <input class="form-control" type="text" id="documento" [(ngModel)]="servicios_tecnicos.documento"
+                      name="documento" placeholder="Ej. 12345678" />
+                  </div>
+
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label">Modalidad</label>
+                    <select class="form-select" [(ngModel)]="servicios_tecnicos.id_modalidad" name="id_modalidad"
+                      id="id_modalidad" (change)="validarModalidad()">
+                      <option value="">Seleccionar</option>
+                      <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-4 mb-2">
+                    <label class="form-label">Fecha</label>
+                    <input class="form-control" type="date" id="fecha_atencion"
+                      [(ngModel)]="servicios_tecnicos.fecha_atencion" name="fecha_atencion" [min]="fechaMinima"
+                      (change)="validarNoDomingo()" />
+                  </div>
+
+                  <div class="col-sm-4 mb-2">
+                    <!-- <label class="form-label">Hora</label>
+                    <select class="form-select" [(ngModel)]="servicios_tecnicos.id_horario" name="id_horario"
+                      id="id_horario">
+                      <option value="">Seleccionar</option>
+                      <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
+                    </select> -->
+                  </div>
+
+                  <div class="col-sm-4 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                    <label class="form-label">Distrito</label>
+                    <select class="form-select" [(ngModel)]="idDistritoSeleccionado" (change)="setearTarifaDomicilio()"
+                      name="distrito">
+                      <option value="">Seleccionar</option>
+                      <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-8 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                    <label class="form-label">Dirección</label>
+                    <input class="form-control" type="text" id="direccion" [(ngModel)]="servicios_tecnicos.direccion"
+                      name="direccion" placeholder="Dirección completa" />
+                  </div>
+
+                  <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                    <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
+                      tarifaDomicilio }}</span>
+                  </div>
+
+
+                  <div class="col-sm-12 mb-3">
+                    <label class="form-label">Comentario</label>
+                    <textarea class="form-control" id="comentario_cliente"
+                      [(ngModel)]="servicios_tecnicos.comentario_cliente" name="comentario_cliente" rows="3"
+                      placeholder="Escribe algún detalle adicional..."></textarea>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="acepto"
+                        [(ngModel)]="servicios_tecnicos.acepto" name="acepto" />
+                      <a href="#" class="form-check-label text-black ms-2">Acepto los términos y condiciones</a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <button type="submit" class="btn-submit" (click)="registrarServicioInstalacion()">
+                Pagar Servicio
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer-simple></app-footer-simple>

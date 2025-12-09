@@ -147,6 +147,25 @@ body {
   cursor: pointer;
 }
 
+.wrapper2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //padding: 40px;
+  //background-color: #f0f4f8;
+  min-height: 100%;
+}
+
+.formulario2 {
+  //background-color: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+  background: linear-gradient(180deg, #deffff25);
+  border: 1px solid #5bb7f4;
+}
 
 /* ============================================================
    CONTENT

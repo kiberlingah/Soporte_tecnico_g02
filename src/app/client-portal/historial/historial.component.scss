@@ -4,6 +4,13 @@ body {
   background-color: #f0f4f8;
 }
 
+table td {
+  white-space: nowrap;
+}
+.td-wrap {
+  white-space: normal !important;
+}
+
 /* ===== LAYOUT ===== */
 .layout {
   display: flex;

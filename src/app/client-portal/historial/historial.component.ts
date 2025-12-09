@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { HistorialService } from 'src/app/services/historial.service';
 
 @Component({
@@ -7,14 +8,30 @@ import { HistorialService } from 'src/app/services/historial.service';
   styleUrls: ['./historial.component.scss']
 })
 export class HistorialComponent implements OnInit {
-  servicios: any[] = [];
 
-  constructor(private historialService: HistorialService) {}
 
-  ngOnInit(): void {
-    this.historialService.obtenerHistorial().subscribe({
-      next: (data: any[]) => this.servicios = data,
-      error: (err: any) => console.error('Error al cargar historial:', err)
-    });
-  }
+  constructor(private historialService: HistorialService,
+    private clienteService: ClienteService
+  ) {}
+
+
+  listaPagos: any[] = [];
+idCliente!: number;
+
+ngOnInit(): void {
+  this.idCliente = Number(localStorage.getItem('id_cliente'));  
+  this.cargarPagos();
+}
+
+cargarPagos() {
+  this.clienteService.obtenerListaPagos(this.idCliente).subscribe({
+    next: (resp) => {
+      console.log("Pagos recibidos:", resp);
+      this.listaPagos = resp;
+    },
+    error: (err) => {
+      console.error("Error al obtener pagos:", err);
+    }
+  });
+}
 }

@@ -32,4 +32,9 @@ export class ClienteService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.delete(`${this.baseUrl}/eliminar?id_cliente=${id}`, { headers });
   }
+
+  obtenerListaPagos(id_cliente: number): Observable<any[]> {
+  const url = `${environment.urlHost}/clientes/lista_pagos?id_cliente=${id_cliente}`;
+  return this.http.get<any[]>(url);
+}
 }

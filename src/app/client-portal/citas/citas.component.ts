@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { ModalidadService } from 'src/app/services/modalidad.service';
 import { DistritoService } from 'src/app/services/distrito.service';
 import { HorarioService } from 'src/app/services/horario.service';
-import { ServicioService } from 'src/app/services/servicio.service';
 import { TarifaService } from 'src/app/services/tarifa.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CitaService } from 'src/app/services/cita.service';
@@ -18,7 +17,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./citas.component.scss']
 })
 export class CitasComponent implements OnInit {
-  servicios: any[] = [];
+  //servicios: any[] = [];
   modalidades: any[] = [];
   distritos: any[] = [];
   horarios: any[] = [];
