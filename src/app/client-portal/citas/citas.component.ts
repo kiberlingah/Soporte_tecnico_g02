@@ -10,6 +10,7 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { CitaService } from 'src/app/services/cita.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import { environment } from'src/environment/environment';
 
 declare var MercadoPago: any;
 
@@ -26,7 +27,8 @@ export class CitasComponent implements OnInit {
   tarifasDomicilio: any[] = [];
   cliente: any = {};
   nombreCompleto: string = '';
-  cardPaymentBrickController: any;
+  paymentBrickController: any;
+  correo: string = '';
   //hoy: string = '';
 
   // Estado del formulario
@@ -91,8 +93,10 @@ export class CitasComponent implements OnInit {
       error: (err: any) => console.error('Error al cargar tarifas:', err)
     });
 
+
     const token = localStorage.getItem('token');
     const idCliente = Number(localStorage.getItem('id_cliente'));
+
 
     if (token && idCliente) {
       this.clienteService.obtenerCliente(idCliente, token).subscribe({
@@ -100,6 +104,7 @@ export class CitasComponent implements OnInit {
           this.cliente = data;
           this.nombreCompleto = `${this.cliente.nombres} ${this.cliente.apellidos}`;
           this.citas_diagnostico.id_cliente = this.cliente.id_cliente;
+          this.correo = this.cliente.correo;
         },
         error: err => console.error('Error al cargar cliente:', err)
       });
@@ -211,34 +216,10 @@ export class CitasComponent implements OnInit {
       return;
     }
 
-    this.mostrarPasarela(montoFinal, this.cliente.email);
+    this.mostrarPasarela(montoFinal, this.correo, data);
     return;
 
-    this.citaService.registrarCitaDiagnostico(data).subscribe({
-      next: (resp) => {
-        Swal.fire({
-          title: "¡Registro exitoso!",
-          text: "Se ha registrado la cita de diagnóstico con éxito.",
-          icon: "success",
-          draggable: true,
-          confirmButtonText: "Aceptar",
-        
-        }).then(() => {
-          window.location.reload();
-        })
-      },
-      error: (err) => {
-        //alert("Hubo un problema al registrar.");
-        console.error("Error al registrar", err);
-        Swal.fire({
-          title: "Error al Registrar!",
-          text: "Hubo un problema al registrar su cita de diagnóstico.",
-          icon: "error",
-          draggable: true
-        });
-      }
-      
-    });
+    
   }
 
   obtenerFechaHoraPeru(): string {
@@ -262,17 +243,97 @@ export class CitasComponent implements OnInit {
     return `${get("year")}-${get("month")}-${get("day")} ${get("hour")}:${get("minute")}:${get("second")}`;
   }
 
-  mostrarPasarela(monto:number, email: string){
+  async mostrarPasarela(monto:number, email: string, dataPago: any){
     const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
         locale: 'es-PE'
     });
     const bricksBuilder = mp.bricks();
+    const settings = {
+      initialization: {
+        amount: 100,
+        payer: {
+          email: "demo@mail.com",
+        }
+      },
+      customization: {
+        paymentMethods: {
+          creditCard: "all",
+          maxInstallments: 1
+        }
+      },
+      callbacks: {
+        onReady: () => {
+          console.log("CardPayment Brick listo");
+        },
+        onSubmit: (cardFormData:any) => {
+          console.log("Payload enviado:", cardFormData);
+
+          return new Promise((resolve, reject) => {
+            fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(cardFormData),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                this.citaService.registrarCitaDiagnostico(dataPago).subscribe({
+                  next: (resp) => {
+                    Swal.fire({
+                      title: "¡Registro exitoso!",
+                      text: "Se ha registrado la cita de diagnóstico con éxito.",
+                      icon: "success",
+                      draggable: true,
+                      confirmButtonText: "Aceptar",
+                    
+                    }).then(() => {
+                      window.location.reload();
+                    })
+                  },
+                  error: (err) => {
+                    //alert("Hubo un problema al registrar.");
+                    console.error("Error al registrar", err);
+                    Swal.fire({
+                      title: "Error al Registrar!",
+                      text: "Hubo un problema al registrar su cita de diagnóstico.",
+                      icon: "error",
+                      draggable: true
+                    });
+                  }
+                  
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+                Swal.fire({
+                  title: "Error al Registrar!",
+                  text: "Hubo un problema al registrar su cita de diagnóstico.",
+                  icon: "error",
+                  draggable: true
+                });
+                // reject();
+              });
+          });
+        },
+        onError: (error: string) => {
+          console.error("Error en CardPayment:", error);
+        },
+      }
+    };
+
+    this.paymentBrickController = await bricksBuilder.create(
+      "cardPayment",
+      "cardPaymentBrick_container",
+      settings
+    );
+    /*
     const renderCardPaymentBrick = async (bricksBuilder: any) => {
         const settings = {
             initialization: {
-                amount: monto, // monto a ser pago
+                amount: 30, // monto a ser pago
                 payer: {
-                    email,
+                    email: "test_user@test.com",
                 },
             },
             customization: {
@@ -294,7 +355,7 @@ export class CitasComponent implements OnInit {
                     //  callback llamado cuando el usuario haga clic en el botón enviar los datos
                     //  ejemplo de envío de los datos recolectados por el Brick a su servidor
                     return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
+                        fetch("http://localhost:81/mercado-pago/procesar-pago", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
@@ -319,6 +380,7 @@ export class CitasComponent implements OnInit {
         };
         this.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
     };
-    renderCardPaymentBrick(bricksBuilder);
+    */
+    // renderCardPaymentBrick(bricksBuilder);
   }
 }
