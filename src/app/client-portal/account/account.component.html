@@ -156,11 +156,30 @@
                   <label class="form-label">Correo</label>
                   <input type="email" class="form-control" [(ngModel)]="cliente.correo" name="correo" readonly>
                 </div>
-                <div class="col-12"> 
-                  <label class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" name="contrasena">
-                  <span class="opcional text-primary mt-1">Ingrese su contraseña actual para actualizar sus datos</span>
+                <div class="col-12">
+                   <label class="form-label">Contraseña</label>
+                   <input 
+                    type="password" 
+                     class="form-control" 
+                     formControlName="contrasena" 
+                      placeholder="Nueva contraseña (opcional)">
+  
+                      <!-- Mensaje de ayuda -->
+                   <span class="opcional text-primary mt-1">
+                   Ingrese su nueva contraseña si desea actualizarla
+                    </span>
+
+                  <!-- Validaciones -->
+                  <div *ngIf="formCuenta.get('contrasena')?.touched && formCuenta.get('contrasena')?.invalid" class="text-danger mt-1">
+                  <span *ngIf="formCuenta.get('contrasena')?.errors?.['required']">
+                      La contraseña es obligatoria.
+                    </span>
+                    <span *ngIf="formCuenta.get('contrasena')?.errors?.['minlength']">
+                      La contraseña debe tener al menos 6 caracteres.
+                    </span>
+                  </div>
                 </div>
+
               </form>
             </div>
             <div class="modal-footer">
