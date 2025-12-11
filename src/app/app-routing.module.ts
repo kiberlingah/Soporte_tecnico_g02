@@ -15,6 +15,13 @@ import { CitasComponent } from './client-portal/citas/citas.component';
 import { HistorialComponent } from './client-portal/historial/historial.component';
 import { ServiciosTecnicosComponent } from './client-portal/servicios_tecnicos/servicios_tecnicos.component';
 import { ServiciosFastComponent } from './client-portal/servicios-fast/servicios-fast.component';
+import { LoginEmpresaComponent } from './company_portal/login-empresa/login-empresa.component';
+import { PortalAdminEmpComponent } from './company_portal/portal-admin-emp/portal-admin-emp.component';
+import { PortalTecnicoComponent } from './company_portal/portal-tecnico/portal-tecnico.component';
+import { CitaspAdminComponent } from './company_portal/citasp-admin/citasp-admin.component';
+import { ServiciospAdminComponent } from './company_portal/serviciosp-admin/serviciosp-admin.component';
+import { CitaspTecnicoComponent } from './company_portal/citasp-tecnico/citasp-tecnico.component';
+import { ServiciospTecnicoComponent } from './company_portal/serviciosp-tecnico/serviciosp-tecnico.component';
 
 const routes: Routes = [
   //Clientes
@@ -34,6 +41,20 @@ const routes: Routes = [
     ]
   },
 
+  //company
+  { path: 'empresa', component: LoginEmpresaComponent},
+  {
+    path: 'company',
+    children: [
+      { path: 'portalAdminEmp', component: PortalAdminEmpComponent },
+      {path: 'portalTecnico', component: PortalTecnicoComponent},
+      { path: 'citaspAdmin', component: CitaspAdminComponent },
+      { path: 'serviciospAdmin', component: ServiciospAdminComponent },
+      { path: 'citaspTecnico', component: CitaspTecnicoComponent },
+      { path: 'serviciospTecnico', component: ServiciospTecnicoComponent },
+
+    ]},
+//company/citaspAdmin
   // Dashboards
   //{ path: 'cliente', component: DashboardClienteComponent },
   //{ path: 'cliente/dashboard', component: DashboardClienteComponent }, // 👈 nueva ruta explícita

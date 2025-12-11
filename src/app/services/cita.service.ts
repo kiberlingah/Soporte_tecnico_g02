@@ -21,4 +21,36 @@ export class CitaService {
   // eliminarCliente(id: number): Observable<any> {
   //   return this.http.delete(`${this.baseUrl}/eliminar?id=${id}`);
   // }
+  getCitasStatusPendient(): Observable<any[]> {
+    const url = `${this.baseUrl}/listapendientes`;
+    return this.http.get<any[]>(url);
+  }
+
+  getCitasTecnico(id_usuario: number): Observable<any[]> {
+    const url = `${this.baseUrl}/listatecnico?id_usuario=${id_usuario}`;
+    return this.http.get<any[]>(url);
+  }
+
+  getCitaDetalle(id_cita: number): Observable<any> {
+    const url = `${this.baseUrl}/obtenerId?id_cita=${id_cita}`;
+    return this.http.get<any>(url);
+  }
+
+  asignarTecnicoUpdate(cita: any): Observable<any> {
+    const url = `${this.baseUrl}/asignar-tecnico`;
+    const body = {
+      id_cita: cita.id_cita,
+      id_usuario: cita.id_usuario
+    };
+    return this.http.put<any>(url, body);
+  }
+
+  comentarioUpdate(cita: any): Observable<any> {
+    const url = `${this.baseUrl}/comentario-tecnico`;
+    const body = {
+      id_cita: cita.id_cita,
+      observacion_tecnico: cita.observacion_tecnico
+    };
+    return this.http.put<any>(url, body);
+  }
 }

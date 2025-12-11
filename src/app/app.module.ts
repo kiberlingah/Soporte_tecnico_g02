@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // Interceptor versión Instalada
 import { AuthTokenInterceptor } from './auth/auth.interceptor';
@@ -31,6 +32,16 @@ import { NavPclienteComponent } from './shared/nav_pcliente/nav_pcliente.compone
 import { FooterSimpleComponent } from './shared/footer_simple/footer_simple.component';
 import { ServiciosFastComponent } from './client-portal/servicios-fast/servicios-fast.component';
 import { TerminosCondicionesComponent } from './client-portal/terminos-condiciones/terminos-condiciones.component';
+import { PortalTecnicoComponent } from './company_portal/portal-tecnico/portal-tecnico.component';
+import { PortalAdminEmpComponent } from './company_portal/portal-admin-emp/portal-admin-emp.component';
+import { NavAdminEmpComponent } from './shared/nav-admin-emp/nav-admin-emp.component';
+import { NavTecnicosComponent } from './shared/nav-tecnicos/nav-tecnicos.component';
+import { LoginEmpresaComponent } from './company_portal/login-empresa/login-empresa.component';
+import { CitaspAdminComponent } from './company_portal/citasp-admin/citasp-admin.component';
+import { ServiciospAdminComponent } from './company_portal/serviciosp-admin/serviciosp-admin.component';
+import { CitaspTecnicoComponent } from './company_portal/citasp-tecnico/citasp-tecnico.component';
+import { ServiciospTecnicoComponent } from './company_portal/serviciosp-tecnico/serviciosp-tecnico.component';
+import { BuscarPipe } from './pipes/buscar.pipe';
 
 @NgModule({
   declarations: [AppComponent,
@@ -50,14 +61,25 @@ import { TerminosCondicionesComponent } from './client-portal/terminos-condicion
     NavPclienteComponent,
     FooterSimpleComponent,
     ServiciosFastComponent,
-    TerminosCondicionesComponent
+    TerminosCondicionesComponent,
+    PortalTecnicoComponent,
+    PortalAdminEmpComponent,
+    NavAdminEmpComponent,
+    NavTecnicosComponent,
+    LoginEmpresaComponent,
+    CitaspAdminComponent,
+    ServiciospAdminComponent,
+    CitaspTecnicoComponent,
+    ServiciospTecnicoComponent,
+    BuscarPipe
   ],
   imports: [BrowserModule,
     AppRoutingModule,   // 👈 aquí ya está RouterModule.forRoot() con tus rutas
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,

@@ -11,6 +11,8 @@ import { CitaService } from 'src/app/services/cita.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 
+declare var MercadoPago: any;
+
 @Component({
   selector: 'app-citas',
   templateUrl: './citas.component.html',
@@ -24,6 +26,7 @@ export class CitasComponent implements OnInit {
   tarifasDomicilio: any[] = [];
   cliente: any = {};
   nombreCompleto: string = '';
+  cardPaymentBrickController: any;
   //hoy: string = '';
 
   // Estado del formulario
@@ -62,6 +65,7 @@ export class CitasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     // Fecha 
     const hoy = new Date();
     const manana = new Date(hoy);
@@ -158,6 +162,8 @@ export class CitasComponent implements OnInit {
 
 
   registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
+    
+
     const idCliente = Number(localStorage.getItem('id_cliente'));
     const precioCita = 50.00;
     const precioDomicilio = this.citas_diagnostico.id_modalidad == 3
@@ -205,6 +211,9 @@ export class CitasComponent implements OnInit {
       return;
     }
 
+    this.mostrarPasarela(montoFinal, this.cliente.email);
+    return;
+
     this.citaService.registrarCitaDiagnostico(data).subscribe({
       next: (resp) => {
         Swal.fire({
@@ -251,5 +260,65 @@ export class CitasComponent implements OnInit {
       partes.find(p => p.type === tipo)?.value || "00";
 
     return `${get("year")}-${get("month")}-${get("day")} ${get("hour")}:${get("minute")}:${get("second")}`;
+  }
+
+  mostrarPasarela(monto:number, email: string){
+    const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
+        locale: 'es-PE'
+    });
+    const bricksBuilder = mp.bricks();
+    const renderCardPaymentBrick = async (bricksBuilder: any) => {
+        const settings = {
+            initialization: {
+                amount: monto, // monto a ser pago
+                payer: {
+                    email,
+                },
+            },
+            customization: {
+                visual: {
+                    style: {
+                        theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
+                        customVariables: {},
+                    },
+                },
+                paymentMethods: {
+                    maxInstallments: 1,
+                },
+            },
+            callbacks: {
+                onReady: () => {
+                    // callback llamado cuando Brick esté listo
+                },
+                onSubmit: (cardFormData:any) => {
+                    //  callback llamado cuando el usuario haga clic en el botón enviar los datos
+                    //  ejemplo de envío de los datos recolectados por el Brick a su servidor
+                    return new Promise((resolve, reject) => {
+                        fetch("/process_payment", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(cardFormData)
+                            })
+                            .then((response) => {
+                                // recibir el resultado del pago
+                                alert('Pago realizado correctamente');
+                                // resolve();
+                            })
+                            .catch((error) => {
+                                // tratar respuesta de error al intentar crear el pago
+                                reject();
+                            })
+                    });
+                },
+                onError: (error:any) => {
+                    // callback llamado para todos los casos de error de Brick
+                },
+            },
+        };
+        this.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
+    };
+    renderCardPaymentBrick(bricksBuilder);
   }
 }

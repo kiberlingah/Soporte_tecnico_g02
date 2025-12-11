@@ -1,0 +1,35 @@
+  .hero-section {
+    background-image: url('https://static.wixstatic.com/media/c837a6_2119733e838e4a2f8813ebde736f99d5~mv2.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    color: white;
+
+  }
+  .hero-section h1 {
+  font-size: 4.5rem; 
+  font-weight: 700;
+  line-height: 1.2;
+  animation: fadeInLeft 0.9s ease forwards;
+}
+
+.hero-section p {
+  font-size: 1.8rem;
+  animation: fadeInLeft 1.8s ease forwards;
+}
+
+.btn1 {
+  animation: fadeInLeft 2.7s ease forwards;
+
+}
+
+.btn2 {
+  animation: fadeInLeft 3.6s ease forwards;
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}

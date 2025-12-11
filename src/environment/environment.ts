@@ -4,5 +4,5 @@ export const environment = {
   //urlHost:'https://spyrocode.dev',
   urlApi: 'http://localhost/api',
   //urlApi:'https://spyrocode.dev/api',
-  userId:1
+  //userId:1
 };

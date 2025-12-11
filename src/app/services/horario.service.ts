@@ -17,5 +17,9 @@ export class HorarioService {
   listarPorId(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/ver?id_horario=${id}`);
   }
+
+  listarHorarios(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/listar`);
+  }
 }
 

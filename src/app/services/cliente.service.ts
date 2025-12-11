@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from'src/environment/environment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ClienteService {
   private baseUrl = `${environment.urlHost}/clientes`;
   //private baseUrl = 'http://localhost/clientes';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   registrarCliente(cliente: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/registrar`, cliente);
@@ -34,7 +34,16 @@ export class ClienteService {
   }
 
   obtenerListaPagos(id_cliente: number): Observable<any[]> {
-  const url = `${environment.urlHost}/clientes/lista_pagos?id_cliente=${id_cliente}`;
-  return this.http.get<any[]>(url);
-}
+    const url = `${this.baseUrl}/lista_pagos?id_cliente=${id_cliente}`;
+    return this.http.get<any[]>(url);
+  }
+
+  detallePago(id_pago: number): Observable<any> {
+    const url = `${this.baseUrl}/detalles_pago?id_pago=${id_pago}`;
+    return this.http.get<any>(url);
+  }
+
+  listarClientes(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/listar`);
+  }
 }

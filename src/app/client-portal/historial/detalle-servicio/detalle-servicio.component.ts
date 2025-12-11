@@ -16,10 +16,10 @@ export class DetalleServicioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    this.historialService.obtenerDetalleServicio(id).subscribe({
-      next: (data: any) => this.servicio = data,
-      error: (err: any) => console.error('Error al cargar detalle:', err)
-    });
+    // const id = this.route.snapshot.params['id'];
+    // this.historialService.obtenerDetalleServicio(id).subscribe({
+    //   next: (data: any) => this.servicio = data,
+    //   error: (err: any) => console.error('Error al cargar detalle:', err)
+    // });
   }
 }

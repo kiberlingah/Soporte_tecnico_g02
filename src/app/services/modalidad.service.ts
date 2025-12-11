@@ -13,5 +13,13 @@ private baseUrl = `${environment.urlHost}/modalidades`;
   getModalidades(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/listar`);
   }
+  getModalidadId(id: number): Observable<any> {
+    return this.http.get<any[]>(`${this.baseUrl}/ver?id_modalidad=${id}`);
+  }
+
+  listarModalidades(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/listar`);
+  }
+
 }
 

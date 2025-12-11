@@ -1,139 +1,173 @@
-<!DOCTYPE html>
-<html lang="es">
+<app-nav-pcliente></app-nav-pcliente>
+<div class="text-center mt-5">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Historial de Servicios</title>
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Tipografías -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
-    rel="stylesheet">
-  <!-- Animaciones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-</head>
+  <p class="mb-2 title_seccion1">
+    Revise su Historial de Servicios
+  </p>
+  <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
+  <p class="mb-2" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
+    Aquí podrás visualizar el historial de tus servicios adquiridos.
+  </p>
+</div>
 
-<body>
-  <app-nav-pcliente></app-nav-pcliente>
-  <!-- <div class="layout"> -->
-
-  <!-- ===== SIDEBAR ===== -->
-  <!-- <aside class="sidebar">
-      <h2 class="sidebar-logo">
-        <img src="assets/icono-iniciar-sesion.png">
-      </h2>
-      <nav class="sidebar-menu">
-        <a routerLink="/cliente/dashboard"><i class="bi bi-house"></i> Inicio</a>
-        <a routerLink="/cliente/account"><i class="bi bi-gear"></i> Configuración</a>
-        <a class="active" routerLink="/cliente/historial"><i class="bi bi-clock-history"></i> Historial</a>
-        <a routerLink="/cliente/servicios"><i class="bi bi-tools"></i> Servicios</a>
-        <a routerLink="/cliente/citas"><i class="bi bi-calendar-check"></i> Citas</a>
-      </nav>
-    </aside> -->
-
-  <!-- ===== MAIN ===== -->
-  <!-- <main class="main"> -->
-
-  <!-- TOPBAR -->
-  <!-- <header class="topbar">
-        <div class="top-left">
-          <div class="search-box">
-            <i class="bi bi-search"></i>
-            <input placeholder="Buscar...">
-          </div>
-        </div>
-        <div class="top-right d-flex align-items-center gap-3">
-          <i class="bi bi-bell notify-icon"></i>
-          <span class="user-name fw-bold">Nathan User</span>
-          <img class="user-avatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
-          <button class="logout-btn-icon btn btn-link text-danger fs-5"><i class="bi bi-box-arrow-right"></i></button>
-        </div>
-      </header> -->
-  <div class="text-center mt-5">
-    <!-- SLOGAN INSTITUCIONAL -->
-    <p class="mb-2 title_seccion1">
-      Revise su Historial de Servicios
+<section class="content-area container mb-5">
+  <div class="welcome-box text-center px-4 py-5">
+    <p class="mb-4" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
+      Sigue recibiendo atención especializada.
     </p>
 
-    <!-- LÍNEA DECORATIVA -->
-    <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
-
-    <!-- SUBTÍTULO INSTITUCIONAL -->
-    <p class="mb-2" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
-      Aquí podrás visualizar el historial de tus servicios adquiridos.
-    </p>
-  </div>
-
-  <section class="content-area container mb-5">
-    <div class="welcome-box text-center px-4 py-5">
-
-      <!-- <h1 class="mb-3"
-        style="font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 600; color: #0F032D;">
-        🚀 Bienvenido a tu Historial de Servicios
-      </h1>
-
-      <p class="mb-3" style="font-family: 'Poppins', sans-serif; font-size: 1.05rem; font-weight: 500; color: #1d253a;">
-        Aquí podrás ver el historial de tus servicios adquiridos.
-      </p> -->
-
-      <p class="mb-4" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
-        Sigue recibiendo atención especializada.
-      </p>
-
-      <div class="stats-box d-flex justify-content-center gap-5 mt-4">
-        <div>
-          <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">98%</strong>
-          <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Satisfacción</small>
-        </div>
-        <div>
-          <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">+2,500</strong>
-          <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Citas completadas</small>
-        </div>
-        <div>
-          <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">24/7</strong>
-          <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Soporte disponible</small>
-        </div>
+    <div class="stats-box d-flex justify-content-center gap-5 mt-4">
+      <div>
+        <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">98%</strong>
+        <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Satisfacción</small>
+      </div>
+      <div>
+        <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">+2,500</strong>
+        <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Citas completadas</small>
+      </div>
+      <div>
+        <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">24/7</strong>
+        <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Soporte disponible</small>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
+<div class="historial-wrapper container mb-5">
+  <div class="historial-box">
 
+    <h2 class="panel-title mb-5">Historial De Servicios Adquiridos</h2>
 
-  <div class="historial-wrapper container">
-    <div class="historial-box">
-      <!-- <h2>Empresa de Soporte Técnico</h2> -->
-      <h2 class="panel-title mb-5">Historial De Servicios Adquiridos</h2>
-      <div class="table-responsive-lg">
-        <table class=" table table-striped">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Fecha y Hora</th>
-              <th>Monto final</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let pago of listaPagos">
-              <td> <span class="badge text-bg-primary">{{pago.id_pago}}</span></td>
-<td class="td-wrap">
-  <div class="badge text-bg-primary">{{ pago.fecha_pago }}</div>
-  <div class="badge text-bg-danger mt-1">{{ pago.hora_pago }}</div>
-</td>
+    <div class="card shadow-sm border-0">
 
-              <td>{{pago.monto_final}}</td>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>#</th>
+                <th>Servicio</th>
+                <th>Atención</th>
+                <th>Modalidad</th>
+                <th>Monto</th>
+                <th class="text-end">Acciones</th>
+              </tr>
+            </thead>
 
-              <td>
-                <button class="btn-ver" [routerLink]="['/historial/detalle', '001']">Ver más</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <tbody>
+              <tr *ngFor="let pago of listaPagos | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                <td>{{pago.id_pago}}</td>
+
+                <td>
+                  {{ getServicioDesc(pago.id_servicio) }} <br>
+                  <span class="badge bg-info">Registrado: {{pago.fecha_pago}} </span>
+                </td>
+
+                <td>
+                  Fecha: {{pago.fecha_servicio || pago.fecha_diagnostico}} <br>
+                  <span class="text-primary">Horario: {{getHorario(pago.horario_servicio) ||
+                    getHorario(pago.horario_diagnostico)}}</span>
+                </td>
+
+                <td>
+                  {{getModalidadNombre(pago.modalidad_servicio) || getModalidadNombre(pago.modalidad_diagnostico)}} <br>
+                  <span class="badge bg-secondary">{{pago.direccion_servicio || pago.direccion_diagnostico}}</span><br>
+                  <span class="badge bg-warning">{{getDistritoNombre(pago.distrito_servicio) ||
+                    getDistritoNombre(pago.distrito_diagnostico)}}</span>
+                </td>
+
+                <td>
+                  Total: S/{{pago.monto_final}} <br>
+                  <span class="badge bg-info">Servicio: S/{{pago.precio_serviciot ||
+                    pago.precio_diagnostico}}</span><br>
+                  <span class="badge bg-warning"
+                    *ngIf="(pago.costo_domicilio_servicio || pago.precio_domicilio_diagnostico) !== '0.00'">
+                    Domicilio: S/{{pago.costo_domicilio_servicio || pago.precio_domicilio_diagnostico}}
+                  </span>
+                </td>
+
+                <td class="text-end">
+                  <button class="btn btn-sm btn-primary" (click)="abrirModal(pago.id_pago)">Más detalles</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 text-center">
+          <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+          </pagination-controls>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detalleModalLabel">Detalle del Pago</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="  detallePago; else cargando">
+          <p><strong>Servicio Adquirido:</strong> {{ getServicioDesc(detallePago.id_servicio) }}</p>
+          <p><strong>Fecha de registro:</strong> {{detallePago.fecha_pago}}</p>
+          <p><strong>Fecha de atención:</strong> {{detallePago.fecha_servicio||detallePago.fecha_diagnostico}}</p>
+          <p><strong>Hora de atención:</strong>
+            {{getHorario(detallePago.horario_servicio)||getHorario(detallePago.horario_diagnostico)}}</p>
+          <p><strong>Modalidad de atención:</strong>
+            {{getModalidadNombre(detallePago.modalidad_servicio)||getModalidadNombre(detallePago.modalidad_diagnostico)}}
+          </p>
+          <p
+            *ngIf="(getDistritoNombre(detallePago.distrito_servicio)||getDistritoNombre(detallePago.distrito_diagnostico))!==''">
+            <strong>Distrito:</strong>
+            {{getDistritoNombre(detallePago.distrito_servicio)||getDistritoNombre(detallePago.distrito_diagnostico)||''}}
+          </p>
+          <p *ngIf="(detallePago.direccion_servicio||detallePago.direccion_diagnostico)!==null">
+            <strong>Dirección:</strong> {{detallePago.direccion_servicio||detallePago.direccion_diagnostico}}
+          </p>
+          <p
+            *ngIf="(detallePago.comentario_servicio||detallePago.comentario_diagnostico)!==null||(detallePago.comentario_servicio||detallePago.comentario_diagnostico)!==''">
+            <strong>Comentario del cliente:</strong>
+            {{(detallePago.comentario_servicio||detallePago.comentario_diagnostico)}}
+          </p>
+
+          <p><strong>Precio del servicio:</strong> S/{{detallePago.precio_serviciot||detallePago.precio_diagnostico}}
+          </p>
+          <p *ngIf="(detallePago.costo_domicilio_servicio || detallePago.precio_domicilio_diagnostico) && 
+          (detallePago.costo_domicilio_servicio || detallePago.precio_domicilio_diagnostico) !== '0.00'">
+            <strong>Precio de visita domicilio:</strong>
+            S/{{ detallePago.costo_domicilio_servicio || detallePago.precio_domicilio_diagnostico }}
+          </p>
+          <p><strong>Monto Total:</strong> S/{{detallePago.monto_final}}</p>
+
+                    <p
+            *ngIf="getUsuarioDatos(detallePago.tecnico_servicio||detallePago.tecnico_diagnostico)===null||getUsuarioDatos(detallePago.tecnico_servicio||detallePago.tecnico_diagnostico)!==''">
+            <strong>Tecnico:</strong> {{getUsuarioDatos(detallePago.tecnico_servicio||detallePago.tecnico_diagnostico)}}
+          </p>
+
+          <p
+            *ngIf="(detallePago.observacion_servicio||detallePago.observacion_tecnico)===null||(detallePago.comentario_cliente||detallePago.observacion_tecnico)===''">
+            <strong>Observacion del Tecnico:</strong>
+            {{(detallePago.comentario_cliente||detallePago.observacion_tecnico)}}
+          </p>
+        </ng-container>
+
+        <ng-template #cargando>
+          <p>Cargando detalles...</p>
+        </ng-template>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
 
     </div>
   </div>
-  <app-footer-simple></app-footer-simple>
+</div>
+
+<app-footer-simple></app-footer-simple>
