@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgForm } from '@angular/forms';
 
 // Interceptor versión Instalada
 import { AuthTokenInterceptor } from './auth/auth.interceptor';

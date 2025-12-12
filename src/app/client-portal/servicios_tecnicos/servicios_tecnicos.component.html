@@ -19,270 +19,157 @@
       Para instalar un programa en tu equipo de computo, necesitas una cita de instalación.
     </p>
   </div>
-  <!-- <div class="layout"> -->
-
-  <!-- ===== SIDEBAR ===== -->
-  <!-- <aside class="sidebar">
-    <h2 class="sidebar-logo">
-      <img src="assets\icono-iniciar-sesion.png">
-    </h2>
 
 
-    <nav class="sidebar-menu">
-      <a routerLink="/cliente/dashboard"><i class="bi bi-house"></i> Inicio</a>
-      <a routerLink="/cliente/account"><i class="bi bi-gear"></i> Configuración</a>
-      <a routerLink="/cliente/historial"><i class="bi bi-clock-history"></i> Historial</a>
-      <a class="active" routerLink="/cliente/servicios"><i class="bi bi-calendar-check"></i> Servicios</a>
-      <a routerLink="/cliente/citas"><i class="bi bi-tools"></i> Citas</a>
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="servicio-formulario panel-card" style="max-width: 900px; padding-bottom: 40px; margin: 0 auto;">
+        <h2 class="panel-title1 mb-4 text-center">Servicio de Instalación</h2>
+        <form #formCita="ngForm" (ngSubmit)="registrarServicioInstalacion(formCita)">
+          <div class="form-grid">
+            <div class="row g-3">
 
-    </nav>
-  </aside> -->
-
-  <!-- ===== MAIN ===== -->
-
-
-  <!-- TOPBAR -->
-  <!-- <header class="topbar">
-      <div class="top-left">
-        <div class="search-box">
-          <i class="bi bi-search"></i>
-          <input placeholder="Buscar...">
-        </div>
-
-
-      </div>
-
-      <div class="top-right">
-        <i class="bi bi-bell notify-icon"></i>
-
-        <span class="user-name">Nathan User</span>
-        <img class="user-avatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
-
-        <button class="logout-btn-icon"><i class="bi bi-box-arrow-right"></i></button>
-      </div>
-    </header> -->
-  <!-- <div class="servicio-wrapper ">
-    <div class="servicio-formulario container mb-5">
-       <h2>Empresa de Soporte Técnico</h2> 
-      <h2 class="panel-title mb-5">Reservar Servicio de Instalación</h2>
-
-      <form>
-        <div class="form-grid ">
-          <div class="row">
-            <div class="col-sm-8 mb-2">
-              <label class="form-label">Programa a Instalar</label>
-              <select class="form-select" [(ngModel)]="servicio.programa" (change)="actualizarPrecio()" name="servicio">
-                <option value="">Seleccionar</option>
-                <optgroup label="Instalación">
-                  <option *ngFor="let s of programasInstalacion" [value]="s.id_servicio">
-                    {{ s.descripcion_servicio }}
-                  </option>
-            </optgroup> 
-                <optgroup label="Reparación">
-                    <option *ngFor="let r of programasReparacion" [value]="r.id_servicio">
-                      {{ r.descripcion_servicio }}
-                    </option>
-                  </optgroup> 
-              </select>
+          <!-- Programa -->
+          <div class="col-md-8">
+            <label class="form-label">Programa a Instalar</label>
+            <select class="form-select" name="id_servicio" id="id_servicio"
+                    [(ngModel)]="idServicioSeleccionado" #id_servicio="ngModel"
+                    required (change)="setearPrecio()">
+              <option value="">Seleccionar</option>
+              <option *ngFor="let s of servicios" [value]="s.id_servicio">
+                {{ s.descripcion_servicio }}
+              </option>
+            </select>
+            <div *ngIf="id_servicio.invalid && id_servicio.touched" class="text-danger small mt-1">
+              Debe seleccionar un programa.
             </div>
+          </div>
 
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Precio</label>
-              Precio 
-              <input class="form-control" type="text" [value]="'S/. ' + (servicio.precio || '0.00')" readonly />
+          <!-- Precio -->
+          <div class="col-md-4">
+            <label class="form-label">Precio (S/)</label>
+            <input type="number" class="form-control" readonly [value]="precioServicio" step="0.01"
+                   name="precio_serviciot" id="precio_serviciot"/>
+          </div>
+
+          <!-- Nombres -->
+          <div class="col-md-8">
+            <label class="form-label">Nombres y Apellidos</label>
+            <input class="form-control" type="text" id="nombres"
+                   [(ngModel)]="nombreCompleto" name="nombres" readonly />
+          </div>
+
+          <!-- DNI -->
+          <div class="col-md-4">
+            <label class="form-label">DNI/RUC</label>
+            <input class="form-control" type="text" id="documento"
+                   [(ngModel)]="servicios_tecnicos.documento" name="documento"
+                   #documento="ngModel" pattern="[0-9]*" minlength="8" maxlength="11" required />
+            <div *ngIf="documento.errors?.['required'] && documento.touched" class="text-danger small mt-1">
+              Ingrese su número de documento.
             </div>
-
-            <div class="col-sm-8 mb-2">
-              <label class="form-label">Nombres y Apellidos</label>
-              <input class="form-control" type="text" id="nombres" [(ngModel)]="servicio.nombres" name="nombres"
-                placeholder="Ingresa tus nombres" />
+            <div *ngIf="documento.errors?.['pattern'] && documento.touched" class="text-danger small mt-1">
+              Solo se permiten números.
             </div>
-
-             <div class="campo">
-              <label for="apellidos">Apellidos</label>
-              <input type="text" id="apellidos" [(ngModel)]="servicio.apellidos" name="apellidos"
-                placeholder="Ingresa tus apellidos" />
-            </div> 
-
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">DNI/RUC <span class="opcional">(Opcional)</span></label>
-              <input class="form-control" type="text" id="dni" [(ngModel)]="servicio.dni" name="dni"
-                placeholder="Ej. 12345678" />
+            <div *ngIf="(documento.errors?.['minlength'] || documento.errors?.['maxlength']) && documento.touched" class="text-danger small mt-1">
+              Ingrese 8 dígitos para DNI o 11 para RUC.
             </div>
+          </div>
 
-
-            <div class="columna">
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Modalidad</label>
-              
-              <select class="form-select" [(ngModel)]="servicio.modalidad" name="modalidad">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
-              </select>
+          <!-- Modalidad -->
+          <div class="col-md-4">
+            <label class="form-label">Modalidad</label>
+            <select class="form-select" [(ngModel)]="servicios_tecnicos.id_modalidad"
+                    name="id_modalidad" #id_modalidad="ngModel" required (change)="validarModalidad()">
+              <option value="">Seleccionar</option>
+              <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
+            </select>
+            <div *ngIf="id_modalidad.invalid && id_modalidad.touched" class="text-danger small mt-1">
+              Debe seleccionar una modalidad.
             </div>
+          </div>
 
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Fecha</label>
-              <input class="form-control" type="date" id="fecha" [(ngModel)]="servicio.fecha" name="fecha" />
+          <!-- Fecha -->
+          <div class="col-md-4">
+            <label class="form-label">Fecha</label>
+            <input class="form-control" type="date" id="fecha_atencion"
+                   [(ngModel)]="servicios_tecnicos.fecha_atencion" name="fecha_atencion"
+                   #fecha_atencion="ngModel" required [min]="fechaMinima" (change)="validarNoDomingo()" />
+            <div *ngIf="fecha_atencion.invalid && fecha_atencion.touched" class="text-danger small mt-1">
+              Debe seleccionar una fecha.
             </div>
+          </div>
 
-            <div class="col-sm-4">
-              <label class="form-label">Hora</label>
-              
-              <select class="form-select" [(ngModel)]="servicio.hora" name="hora">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
-              </select>
+          <!-- Hora -->
+          <div class="col-md-4">
+            <label class="form-label">Hora</label>
+            <select class="form-select" [(ngModel)]="servicios_tecnicos.id_horario"
+                    name="id_horario" #id_horario="ngModel" required>
+              <option value="">Seleccionar</option>
+              <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
+            </select>
+            <div *ngIf="id_horario.invalid && id_horario.touched" class="text-danger small mt-1">
+              Debe seleccionar una hora.
             </div>
+          </div>
 
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Distrito</label>
-              
-              <select class="form-select" [(ngModel)]="servicio.distrito" (change)="actualizarPrecio()" name="distrito">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let d of distritos" [value]="d.nombre_distrito">{{ d.nombre_distrito }}</option>
-              </select>
+          <!-- Distrito y Dirección -->
+          <div class="col-md-4" *ngIf="servicios_tecnicos.id_modalidad == 3">
+            <label class="form-label">Distrito</label>
+            <select class="form-select" [(ngModel)]="idDistritoSeleccionado"
+                    name="distrito" #distrito="ngModel" required (change)="setearTarifaDomicilio()">
+              <option value="">Seleccionar</option>
+              <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
+            </select>
+            <div *ngIf="distrito.invalid && distrito.touched" class="text-danger small mt-1">
+              Debe seleccionar un distrito.
             </div>
+          </div>
 
-            <div class="col-sm-8 mb-2">
-              <label class="form-label">Dirección</label>
-              <input class="form-control" type="text" id="direccion" [(ngModel)]="servicio.direccion" name="direccion"
-                placeholder="Dirección completa" />
+          <div class="col-md-8" *ngIf="servicios_tecnicos.id_modalidad == 3">
+            <label class="form-label">Dirección</label>
+            <input class="form-control" type="text" id="direccion"
+                   [(ngModel)]="servicios_tecnicos.direccion" name="direccion"
+                   #direccion="ngModel" required />
+            <div *ngIf="direccion.invalid && direccion.touched" class="text-danger small mt-1">
+              La dirección es obligatoria.
             </div>
+          </div>
 
+          <!-- Comentario -->
+          <div class="col-md-12">
+            <label class="form-label">Comentario</label>
+            <textarea class="form-control" id="comentario_cliente"
+                      [(ngModel)]="servicios_tecnicos.comentario_cliente"
+                      name="comentario_cliente" rows="3"
+                      placeholder="Escribe algún detalle adicional..."></textarea>
+          </div>
 
-
-            
-
-            <div class="col-sm-12 mb-2">
-              <label class="form-label">Comentario</label>
-              <textarea class="form-control" id="comentario" [(ngModel)]="servicio.comentario" name="comentario"
-                rows="3" placeholder="Escribe algún detalle adicional..."></textarea>
-            </div>
-
-            <div class="col-sm-12">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="acepto" [(ngModel)]="servicio.acepto"
-                  name="acepto" />
-                <a href="#" class="form-check-label text-black ms-2">Acepto los términos y condiciones</a>
+          <!-- Términos -->
+          <div class="col-md-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="acepto"
+                     [(ngModel)]="servicios_tecnicos.acepto" name="acepto"
+                     #acepto="ngModel" required>
+              <label class="form-check-label text-black ms-2" for="acepto">
+                Acepto los términos y condiciones
+              </label>
+              <div *ngIf="acepto.invalid && acepto.touched" class="text-danger small mt-1">
+                Debes aceptar los términos y condiciones.
               </div>
             </div>
-
           </div>
-        </div>
 
-        
-
-
-        
-        <button type="button" class="btn-pagar" [disabled]="!formularioValido()" (click)="registrarServicio()">
-          Pagar Servicio
-        </button>
-      </form>
-    </div>
-  </div>-->
-  <div class="servicio-wrapper container">
-    <div class="servicio-formulario  mb-5">
-      <h2 class="panel-title1 mb-4">Servicio de Instalación</h2>
-
-      <form>
-        <div class="form-grid ">
-          <div class="row">
-            <div class="col-sm-8 mb-2">
-              <label class="form-label">Programa a Instalar</label>
-              <select class="form-select" name="id_servicio" id="id_servicio" [(ngModel)]="idServicioSeleccionado"
-                (change)="setearPrecio()">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let s of servicios" [value]="s.id_servicio">
-                  {{ s.descripcion_servicio }}
-                </option>
-              </select>
-            </div>
-
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Precio (S/)</label>
-              <input type="number" class="form-control" readonly [value]="precioServicio" step="0.01"
-                name="precio_serviciot" id="precio_serviciot"/>
-            </div>
-
-            <div class="col-sm-8 mb-2">
-              <label class="form-label">Nombres y Apellidos</label>
-              <input class="form-control" type="text" id="nombres" [(ngModel)]="nombreCompleto" name="nombres"
-                readonly />
-            </div>
-
-
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">DNI/RUC </label>
-              <input class="form-control" type="text" id="documento"
-                [(ngModel)]="servicios_tecnicos.documento" name="documento" placeholder="Ej. 12345678" />
-            </div>
-
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Modalidad</label>
-              <select class="form-select" [(ngModel)]="servicios_tecnicos.id_modalidad" name="id_modalidad" id="id_modalidad"
-                (change)="validarModalidad()">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
-              </select>
-            </div>
-
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Fecha</label>
-              <input class="form-control" type="date" id="fecha_atencion" [(ngModel)]="servicios_tecnicos.fecha_atencion" name="fecha_atencion"
-                [min]="fechaMinima" (change)="validarNoDomingo()" />
-            </div>
-
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">Hora</label>
-              <select class="form-select" [(ngModel)]="servicios_tecnicos.id_horario" name="id_horario" id="id_horario">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
-              </select>
-            </div>
-
-            <div class="col-sm-4 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-              <label class="form-label">Distrito</label>
-              <select class="form-select" [(ngModel)]="idDistritoSeleccionado" (change)="setearTarifaDomicilio()"
-                name="distrito">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
-              </select>
-            </div>
-
-            <div class="col-sm-8 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-              <label class="form-label">Dirección</label>
-              <input class="form-control" type="text" id="direccion" [(ngModel)]="servicios_tecnicos.direccion"
-                name="direccion" placeholder="Dirección completa" />
-            </div>
-
-            <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-              <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
-                tarifaDomicilio }}</span>
-            </div>
-
-
-            <div class="col-sm-12 mb-3">
-              <label class="form-label">Comentario</label>
-              <textarea class="form-control" id="comentario_cliente" [(ngModel)]="servicios_tecnicos.comentario_cliente"
-                name="comentario_cliente" rows="3" placeholder="Escribe algún detalle adicional..."></textarea>
-            </div>
-
-            <div class="col-sm-12">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="acepto" [(ngModel)]="servicios_tecnicos.acepto"
-                  name="acepto" />
-                <a href="#" class="form-check-label text-black ms-2">Acepto los términos y condiciones</a>
+          <div class="col-md-12 text-center mt-4 mb-5">
+                <button type="submit" class="btn btn-primary px-5" [disabled]="formCita.invalid">
+                  Pagar Servicio
+                </button>
               </div>
             </div>
-
           </div>
-        </div>
-
-        <button type="submit" class="btn-submit" (click)="registrarServicioInstalacion()" >
-          Pagar Servicio
-        </button>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>
