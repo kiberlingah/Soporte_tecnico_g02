@@ -7,6 +7,7 @@ import { TarifaService } from 'src/app/services/tarifa.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import Swal from 'sweetalert2';
 import { ServiciosTecnicosService } from './service/servicios_tecnicos.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-servicios',
@@ -174,71 +175,84 @@ export class ServiciosTecnicosComponent implements OnInit {
   }
 
 
-  registrarServicioInstalacion() {
-    const precioServicio = parseFloat(this.precioServicio) || 0;
-    const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
-      ? parseFloat(this.tarifaDomicilio) || 0
-      : 0;
+registrarServicioInstalacion(formCita: NgForm) {
+  // 🔥 Marca todos los campos como tocados para activar los mensajes en rojo
+  formCita.form.markAllAsTouched();
 
-    const montoFinal = precioServicio + precioDomicilio;
-
-    const data = {
-      servicios_tecnicos: {
-        id_cita: null,
-        id_cliente: this.cliente.id_cliente,
-        id_servicio: this.idServicioSeleccionado,
-        id_horario: this.servicios_tecnicos.id_horario,
-        fecha_atencion: this.servicios_tecnicos.fecha_atencion,
-        id_modalidad: this.servicios_tecnicos.id_modalidad,
-        id_tarifadomicilio:
-          this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-        id_distrito:
-          this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-        direccion:
-          this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
-        documento: this.servicios_tecnicos.documento,
-        comentario_cliente: this.servicios_tecnicos.comentario_cliente,
-        estado: "Pendiente",
-        id_usuario: null,
-        observacion_tecnico: null,
-        precio_serviciot: precioServicio,
-        precio_domicilio: precioDomicilio,
-        acepto: this.servicios_tecnicos.acepto
-      },
-      pago: {
-        id_tipopago: "CREDIT_CARD",
-        fecha_pago: this.obtenerFechaHoraPeru(),
-        monto_final: montoFinal,
-      },
-    };
-
-    console.log("Enviando a API:", data);
-
-    this.serviciosTecnicosService.registrarServicio(data).subscribe({
-      next: (resp) => {
-        //alert("Registro exitoso");
-        Swal.fire({
-          title: "¡Registro exitoso!",
-          text: "Se ha registrado la cita de diagnóstico con éxito.",
-          icon: "success",
-          draggable: true,
-          confirmButtonText: "Aceptar",
-        }).then(() => {
-          window.location.reload();
-        });
-      },
-      error: (err) => {
-        console.error("Error al registrar", err);
-        //alert("Hubo un problema al registrar.");
-        Swal.fire({
-                  title: "Error al Registrar!",
-                  text: "Hubo un problema al registrar su cita de diagnóstico.",
-                  icon: "error",
-                  draggable: true
-                });
-      }
+  // Validación global antes de enviar
+  if (formCita.invalid || !this.servicios_tecnicos.acepto) {
+    Swal.fire({
+      title: "Registro incompleto",
+      text: "Por favor completa todos los campos obligatorios y acepta los términos y condiciones.",
+      icon: "warning",
+      confirmButtonText: "Aceptar"
     });
+    return;
   }
+
+  const precioServicio = parseFloat(this.precioServicio) || 0;
+  const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
+    ? parseFloat(this.tarifaDomicilio) || 0
+    : 0;
+
+  const montoFinal = precioServicio + precioDomicilio;
+
+  const data = {
+    servicios_tecnicos: {
+      id_cita: null,
+      id_cliente: this.cliente.id_cliente,
+      id_servicio: this.idServicioSeleccionado,
+      id_horario: this.servicios_tecnicos.id_horario,
+      fecha_atencion: this.servicios_tecnicos.fecha_atencion,
+      id_modalidad: this.servicios_tecnicos.id_modalidad,
+      id_tarifadomicilio:
+        this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+      id_distrito:
+        this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+      direccion:
+        this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
+      documento: this.servicios_tecnicos.documento,
+      comentario_cliente: this.servicios_tecnicos.comentario_cliente,
+      estado: "Pendiente",
+      id_usuario: null,
+      observacion_tecnico: null,
+      precio_serviciot: precioServicio,
+      precio_domicilio: precioDomicilio,
+      acepto: this.servicios_tecnicos.acepto
+    },
+    pago: {
+      id_tipopago: "CREDIT_CARD",
+      fecha_pago: this.obtenerFechaHoraPeru(),
+      monto_final: montoFinal,
+    },
+  };
+
+  console.log("Enviando a API:", data);
+
+  this.serviciosTecnicosService.registrarServicio(data).subscribe({
+    next: (resp) => {
+      Swal.fire({
+        title: "¡Registro exitoso!",
+        text: "Se ha registrado la cita de instalación con éxito.",
+        icon: "success",
+        draggable: true,
+        confirmButtonText: "Aceptar",
+      }).then(() => {
+        window.location.reload();
+      });
+    },
+    error: (err) => {
+      console.error("Error al registrar", err);
+      Swal.fire({
+        title: "Error al Registrar!",
+        text: "Hubo un problema al registrar su cita de instalación.",
+        icon: "error",
+        draggable: true
+      });
+    }
+  });
+}
+
 
   obtenerFechaHoraPeru(): string {
     const fecha = new Date();

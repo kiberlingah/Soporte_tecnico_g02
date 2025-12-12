@@ -167,55 +167,56 @@ export class CitasComponent implements OnInit {
   }
 
 
-  registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
-    
+registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
+  // 🔥 Marca todos los campos como tocados para activar los mensajes en rojo
+  formCitaDiagnostico.form.markAllAsTouched();
 
-    const idCliente = Number(localStorage.getItem('id_cliente'));
-    const precioCita = 50.00;
-    const precioDomicilio = this.citas_diagnostico.id_modalidad == 3
-      ? parseFloat(this.tarifaDomicilio) || 0
-      : 0;
+  // Validación global antes de enviar
+  formCitaDiagnostico.form.markAllAsTouched();
+
+if (formCitaDiagnostico.invalid) {
+  Swal.fire({
+    title: "Registro incompleto",
+    text: "Por favor completa todos los campos obligatorios antes de continuar.",
+    icon: "warning",
+    confirmButtonText: "Aceptar"
+  });
+  return;
+}
 
 
-    const montoFinal = precioCita + precioDomicilio;
+  // Si todo está completo, continúa con el envío
+  const idCliente = Number(localStorage.getItem('id_cliente'));
+  const precioCita = 50.00;
+  const precioDomicilio = this.citas_diagnostico.id_modalidad == 3
+    ? parseFloat(this.tarifaDomicilio) || 0
+    : 0;
 
-    const data = {
-      citas_diagnostico: {
-        id_cliente: idCliente,
-        id_horario: this.citas_diagnostico.id_horario,
-        fecha_atencion: this.citas_diagnostico.fecha_atencion,
-        estado: "Pendiente",
-        id_modalidad: this.citas_diagnostico.id_modalidad,
-        id_tarifadomicilio:
-          this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-        id_distrito:
-          this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-        direccion:
-          this.citas_diagnostico.id_modalidad == 3 ? this.citas_diagnostico.direccion : null,
-        documento: this.citas_diagnostico.documento,
-        comentario_cliente: this.citas_diagnostico.comentario_cliente,
-        id_usuario: null,
-        observacion_tecnico: null,
-        precio_diagnostico: precioCita,
-        precio_domicilio: precioDomicilio,
-        //acepto: false
-      },
-      pago: {
-        id_tipopago: "CREDIT_CARD",
-        fecha_pago: this.obtenerFechaHoraPeru(),
-        monto_final: montoFinal,
-      },
-    };
+  const montoFinal = precioCita + precioDomicilio;
 
-    console.log("Enviando a API:", data);
-    console.log("idCliente:", idCliente);
-//Marcador de errores
-    if (formCitaDiagnostico.invalid) {
-      Object.values(formCitaDiagnostico.controls).forEach(control => {
-        control.markAsTouched();
-      });
-      return;
-    }
+  const data = {
+    citas_diagnostico: {
+      id_cliente: idCliente,
+      id_horario: this.citas_diagnostico.id_horario,
+      fecha_atencion: this.citas_diagnostico.fecha_atencion,
+      estado: "Pendiente",
+      id_modalidad: this.citas_diagnostico.id_modalidad,
+      id_tarifadomicilio: this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+      id_distrito: this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+      direccion: this.citas_diagnostico.id_modalidad == 3 ? this.citas_diagnostico.direccion : null,
+      documento: this.citas_diagnostico.documento,
+      comentario_cliente: this.citas_diagnostico.comentario_cliente,
+      id_usuario: null,
+      observacion_tecnico: null,
+      precio_diagnostico: precioCita,
+      precio_domicilio: precioDomicilio,
+    },
+    pago: {
+      id_tipopago: "CREDIT_CARD",
+      fecha_pago: this.obtenerFechaHoraPeru(),
+      monto_final: montoFinal,
+    },
+  };
 
 
         setTimeout(() => {
@@ -228,9 +229,7 @@ export class CitasComponent implements OnInit {
     this.mostrarPasarela(montoFinal, this.correo, data);
     return;
 
-    
-  }
-
+}
   obtenerFechaHoraPeru(): string {
     const fecha = new Date();
     const formateador = new Intl.DateTimeFormat("es-PE", {
