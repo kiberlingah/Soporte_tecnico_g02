@@ -11,6 +11,7 @@ import { CitaService } from 'src/app/services/cita.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { environment } from'src/environment/environment';
+import { Modal } from 'bootstrap';
 
 declare var MercadoPago: any;
 
@@ -216,6 +217,14 @@ export class CitasComponent implements OnInit {
       return;
     }
 
+
+        setTimeout(() => {
+                const modalEl = document.getElementById('pasarelaModal');
+                const modal = Modal.getOrCreateInstance(modalEl!);
+                modal.show();
+              }, 50);
+
+  
     this.mostrarPasarela(montoFinal, this.correo, data);
     return;
 
@@ -252,7 +261,7 @@ export class CitasComponent implements OnInit {
       initialization: {
         amount: 100,
         payer: {
-          email: "demo@mail.com",
+          email: email,
         }
       },
       customization: {
@@ -282,7 +291,7 @@ export class CitasComponent implements OnInit {
                   next: (resp) => {
                     Swal.fire({
                       title: "¡Registro exitoso!",
-                      text: "Se ha registrado la cita de diagnóstico con éxito.",
+                      text: "Se ha registrado la cita de diagnóstico con éxito. En breve recibirá un correo de confimación. Gracias por elegirnos",
                       icon: "success",
                       draggable: true,
                       confirmButtonText: "Aceptar",
@@ -327,60 +336,7 @@ export class CitasComponent implements OnInit {
       "cardPaymentBrick_container",
       settings
     );
-    /*
-    const renderCardPaymentBrick = async (bricksBuilder: any) => {
-        const settings = {
-            initialization: {
-                amount: 30, // monto a ser pago
-                payer: {
-                    email: "test_user@test.com",
-                },
-            },
-            customization: {
-                visual: {
-                    style: {
-                        theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
-                        customVariables: {},
-                    },
-                },
-                paymentMethods: {
-                    maxInstallments: 1,
-                },
-            },
-            callbacks: {
-                onReady: () => {
-                    // callback llamado cuando Brick esté listo
-                },
-                onSubmit: (cardFormData:any) => {
-                    //  callback llamado cuando el usuario haga clic en el botón enviar los datos
-                    //  ejemplo de envío de los datos recolectados por el Brick a su servidor
-                    return new Promise((resolve, reject) => {
-                        fetch("http://localhost:81/mercado-pago/procesar-pago", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify(cardFormData)
-                            })
-                            .then((response) => {
-                                // recibir el resultado del pago
-                                alert('Pago realizado correctamente');
-                                // resolve();
-                            })
-                            .catch((error) => {
-                                // tratar respuesta de error al intentar crear el pago
-                                reject();
-                            })
-                    });
-                },
-                onError: (error:any) => {
-                    // callback llamado para todos los casos de error de Brick
-                },
-            },
-        };
-        this.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
-    };
-    */
-    // renderCardPaymentBrick(bricksBuilder);
+
   }
+
 }

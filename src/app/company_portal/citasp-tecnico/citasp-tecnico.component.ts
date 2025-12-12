@@ -7,6 +7,7 @@ import { HorarioService } from 'src/app/services/horario.service';
 import { ModalidadService } from 'src/app/services/modalidad.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-citasp-tecnico',
@@ -130,7 +131,16 @@ export class CitaspTecnicoComponent {
     guardarCambios() {
     this.citaService.comentarioUpdate(this.citaSeleccionada).subscribe({
       next: () => {
-        alert("Cambios guardados correctamente");
+        Swal.fire({
+                              title: "¡Registro exitoso!",
+                              text: "Ha registrado con éxito su comentario.",
+                              icon: "success",
+                              draggable: true,
+                              confirmButtonText: "Aceptar",
+                            
+                            }).then(() => {
+                              window.location.reload();
+                            })
         this.modalInstance.hide();
       },
       error: (err) => console.error(err)
