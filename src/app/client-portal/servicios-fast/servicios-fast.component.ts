@@ -9,8 +9,10 @@ import Swal from 'sweetalert2';
 import { ServiciosTecnicosService } from '../servicios_tecnicos/service/servicios_tecnicos.service';
 import { NgForm } from '@angular/forms';
 import { CitaService } from 'src/app/services/cita.service';
+import { Modal } from 'bootstrap';
+import { environment } from 'src/environment/environment';
 
-
+declare var MercadoPago: any;
 @Component({
   selector: 'app-servicios-fast',
   templateUrl: './servicios-fast.component.html',
@@ -26,26 +28,46 @@ export class ServiciosFastComponent {
     tarifasDomicilio: any[] = [];
     cliente: any = {};
     nombreCompleto: string = '';
+      paymentBrickController: any;
+  correo: string = '';
   activeTab = 'home';
 
-    servicios_tecnicos: any = {
-      id_servicio: 0,
+    citas_diagnostico: any = {
       id_cliente: '',
+      id_horario: '',
+      fecha_atencion: '',
+      estado: '',
       id_modalidad: '',
+      id_tarifadomicilio: '',
       id_distrito: '',
       direccion: '',
-      fecha_atencion: '',
-      id_horario: '',
-      documento: '',
-      estado: '',
       comentario_cliente: '',
-      precio_serviciot: 0.00,
-      precio_domicilio: 0.00,
+      documento: '',
+      id_usuario: '',
+      observacion_tecnico: '',
+      precio_diagnostico: 0,
+      precio_domicilio: 0,
+      acepto: false
     };
+
+  servicios_tecnicos: any = {
+    id_servicio: 0,
+    id_cliente: '',
+    id_modalidad: '',
+    id_distrito: '',
+    direccion: '',
+    fecha_atencion: '',
+    id_horario: '',
+    documento: '',
+    estado: '',
+    comentario_cliente: '',
+    precio_serviciot: 0.00,
+    precio_domicilio: 0.00,
+  };
   
     idServicioSeleccionado: any = '';
     precioSeleccionado: number = 0.00;
-    fechaMinima: string = '';
+    fechaUnica: string = '';
   
     idDistritoSeleccionado: any = '';
     precioTarifa: number = 0.00;
@@ -65,10 +87,11 @@ export class ServiciosFastComponent {
     ngOnInit(): void {
       //fecha
       const hoy = new Date();
-      const manana = new Date(hoy);
-      manana.setDate(hoy.getDate() + 2);
-      this.fechaMinima = manana.toISOString().split('T')[0];
-      this.servicios_tecnicos.fecha_atencion = this.fechaMinima;
+      //const manana = new Date(hoy);
+      //manana.setDate(hoy.getDate() + 2);
+      this.fechaUnica = hoy.toISOString().split('T')[0];
+      this.servicios_tecnicos.fecha_atencion = this.fechaUnica;
+      this.citas_diagnostico.fecha_atencion = this.fechaUnica;
   
       // Cargar modalidades
       this.modalidadService.getModalidades().subscribe({
@@ -132,7 +155,7 @@ export class ServiciosFastComponent {
           confirmButtonText: "Aceptar",
         })
           ;
-        this.servicios_tecnicos.fecha_atencion = this.fechaMinima;
+        this.servicios_tecnicos.fecha_atencion = this.fechaUnica;
       }
     }
 
@@ -147,11 +170,11 @@ export class ServiciosFastComponent {
 
   if (servicioInstalacion) {
     servicioEncontrado = servicioInstalacion;
-    adicional = 15.00;   
-  } else if (servicioReparacion) {
-    servicioEncontrado = servicioReparacion;
-    adicional = 65.00;  
-  }
+    adicional = 10.00;  } 
+  // } else if (servicioReparacion) {
+  //   servicioEncontrado = servicioReparacion;
+  //   adicional = 60.00;  
+  // }
 
   this.precioSeleccionado = servicioEncontrado
     ? parseFloat(servicioEncontrado.precio) + adicional
@@ -198,72 +221,91 @@ export class ServiciosFastComponent {
       return n.toFixed(2);
     }
   
-  
-    registrarServicioInstalacion() {
-      const precioServicio = parseFloat(this.precioServicio) || 0;
-      const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
-        ? parseFloat(this.tarifaDomicilio) || 0
-        : 0;
-  
-      const montoFinal = precioServicio + precioDomicilio;
-  
-      const data = {
-        servicios_tecnicos: {
-          id_cita: null,
-          id_cliente: this.cliente.id_cliente,
-          id_servicio: this.idServicioSeleccionado,
-          id_horario: this.servicios_tecnicos.id_horario,
-          fecha_atencion: this.servicios_tecnicos.fecha_atencion,
-          id_modalidad: this.servicios_tecnicos.id_modalidad,
-          id_tarifadomicilio:
-            this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-          id_distrito:
-            this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-          direccion:
-            this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
-          documento: this.servicios_tecnicos.documento,
-          comentario_cliente: this.servicios_tecnicos.comentario_cliente,
-          estado: "Pendiente",
-          id_usuario: null,
-          observacion_tecnico: null,
-          precio_serviciot: precioServicio,
-          precio_domicilio: precioDomicilio,
-          acepto: this.servicios_tecnicos.acepto
-        },
-        pago: {
-          id_tipopago: "CREDIT_CARD",
-          fecha_pago: this.obtenerFechaHoraPeru(),
-          monto_final: montoFinal,
-        },
-      };
-  
-      console.log("Enviando a API:", data);
-  
-      this.serviciosTecnicosService.registrarServicio(data).subscribe({
-        next: (resp) => {
-          //alert("Registro exitoso");
-          Swal.fire({
-            title: "¡Registro exitoso!",
-            text: "Se ha registrado la cita de diagnóstico con éxito.",
-            icon: "success",
-            draggable: true,
-            confirmButtonText: "Aceptar",
-          }).then(() => {
-            window.location.reload();
+ //SERVICIO INSTALACION
+    registrarServicioInstalacion(formServicioTec: NgForm) {
+    
+        const precioServicio = parseFloat(this.precioServicio) || 0;
+        const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
+          ? parseFloat(this.tarifaDomicilio) || 0
+          : 0;
+        const montoFinal = precioServicio + precioDomicilio ;
+    
+        const data = {
+          servicios_tecnicos: {
+            id_cita: null,
+            id_cliente: this.cliente.id_cliente,
+            id_servicio: this.idServicioSeleccionado,
+            id_horario: null,
+            fecha_atencion: this.servicios_tecnicos.fecha_atencion,
+            id_modalidad: this.servicios_tecnicos.id_modalidad,
+            id_tarifadomicilio:
+              this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+            id_distrito:
+              this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+            direccion:
+              this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
+            documento: this.servicios_tecnicos.documento,
+            comentario_cliente: this.servicios_tecnicos.comentario_cliente,
+            estado: "Pendiente",
+            id_usuario: null,
+            observacion_tecnico: null,
+            precio_serviciot: precioServicio,
+            precio_domicilio: precioDomicilio,
+            acepto: this.servicios_tecnicos.acepto,
+            tipo: "ServiFast"
+          },
+          pago: {
+            id_tipopago: "CREDIT_CARD",
+            fecha_pago: this.obtenerFechaHoraPeru(),
+            monto_final: montoFinal,
+          },
+        };
+    
+          //Marcador de errores
+        if (formServicioTec.invalid) {
+          Object.values(formServicioTec.controls).forEach(control => {
+            control.markAsTouched();
           });
-        },
-        error: (err) => {
-          console.error("Error al registrar", err);
-          //alert("Hubo un problema al registrar.");
-          Swal.fire({
-                    title: "Error al Registrar!",
-                    text: "Hubo un problema al registrar su cita de diagnóstico.",
-                    icon: "error",
-                    draggable: true
-                  });
+          return;
         }
-      });
-    }
+    
+        setTimeout(() => {
+          const modalEl = document.getElementById('pasarelaModal');
+          const modal = Modal.getOrCreateInstance(modalEl!);
+          modal.show();
+        }, 50);
+    
+    
+        this.mostrarPasarelaInstalacion(montoFinal, this.correo, data);
+        return;
+    
+      //   this.serviciosTecnicosService.registrarServicio(data).subscribe({
+      //     next: (resp) => {
+      //       Swal.fire({
+      //         title: "¡Registro exitoso!",
+      //           html: `
+      //   <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+      //   <p>En breve recibirá un correo de confirmación.</p>
+      //   <p><strong>Gracias por elegirnos.</strong></p>
+      // `,
+      //         icon: "success",
+      //         draggable: true,
+      //         confirmButtonText: "Aceptar",
+      //       }).then(() => {
+      //         window.location.reload();
+      //       });
+      //     },
+      //     error: (err) => {
+      //       console.error("Error al registrar", err);
+      //       Swal.fire({
+      //         title: "Error al Registrar!",
+      //         text: "Hubo un problema al registrar su cita de instalación.",
+      //         icon: "error",
+      //         draggable: true
+      //       });
+      //     }
+      //   });
+      }
   
     obtenerFechaHoraPeru(): string {
       const fecha = new Date();
@@ -287,23 +329,7 @@ export class ServiciosFastComponent {
     }
 
 
-  citas_diagnostico: any = {
-      id_cliente: '',
-      id_horario: '',
-      fecha_atencion: '',
-      estado: '',
-      id_modalidad: '',
-      id_tarifadomicilio: '',
-      id_distrito: '',
-      direccion: '',
-      comentario_cliente: '',
-      documento: '',
-      id_usuario: '',
-      observacion_tecnico: '',
-      precio_diagnostico: 0,
-      precio_domicilio: 0,
-      acepto: false
-    };
+
   
   
   
@@ -325,7 +351,7 @@ export class ServiciosFastComponent {
           confirmButtonText: "Aceptar",
         })
           ;
-        this.citas_diagnostico.fecha_atencion = this.fechaMinima;
+        this.citas_diagnostico.fecha_atencion = this.fechaUnica;
       }
     }
   
@@ -361,37 +387,34 @@ export class ServiciosFastComponent {
       return n.toFixed(2);
     }
   
-  
+//CITA DIAGNOSTICO  
     registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
       const idCliente = Number(localStorage.getItem('id_cliente'));
-      const precioCita = 50.00;
+      const precioCita = 50.00 + 10.00;
       const precioDomicilio = this.citas_diagnostico.id_modalidad == 3
         ? parseFloat(this.tarifaDomicilio) || 0
         : 0;
-  
-  
+    
       const montoFinal = precioCita + precioDomicilio;
-  
+    
       const data = {
         citas_diagnostico: {
           id_cliente: idCliente,
-          id_horario: this.citas_diagnostico.id_horario,
+          id_horario: null,
           fecha_atencion: this.citas_diagnostico.fecha_atencion,
-          estado: "Pendiente",
+          estado: "PendienteU",
           id_modalidad: this.citas_diagnostico.id_modalidad,
-          id_tarifadomicilio:
-            this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-          id_distrito:
-            this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-          direccion:
-            this.citas_diagnostico.id_modalidad == 3 ? this.citas_diagnostico.direccion : null,
+          id_tarifadomicilio: this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+          id_distrito: this.citas_diagnostico.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+          direccion: this.citas_diagnostico.id_modalidad == 3 ? this.citas_diagnostico.direccion : null,
           documento: this.citas_diagnostico.documento,
           comentario_cliente: this.citas_diagnostico.comentario_cliente,
           id_usuario: null,
           observacion_tecnico: null,
           precio_diagnostico: precioCita,
           precio_domicilio: precioDomicilio,
-          //acepto: false
+          acepto: this.citas_diagnostico.acepto,
+          tipo: "ServiFast"
         },
         pago: {
           id_tipopago: "CREDIT_CARD",
@@ -399,46 +422,237 @@ export class ServiciosFastComponent {
           monto_final: montoFinal,
         },
       };
-  
-      console.log("Enviando a API:", data);
-      console.log("idCliente:", idCliente);
-  //Marcador de errores
-      if (formCitaDiagnostico.invalid) {
-        Object.values(formCitaDiagnostico.controls).forEach(control => {
-          control.markAsTouched();
-        });
-        return;
-      }
-  
-      this.citaService.registrarCitaDiagnostico(data).subscribe({
-        next: (resp) => {
-          Swal.fire({
-            title: "¡Registro exitoso!",
-            text: "Se ha registrado la cita de diagnóstico con éxito.",
-            icon: "success",
-            draggable: true,
-            confirmButtonText: "Aceptar",
-          
-          }).then(() => {
-            window.location.reload();
-          })
-        },
-        error: (err) => {
-          //alert("Hubo un problema al registrar.");
-          console.error("Error al registrar", err);
-          Swal.fire({
-            title: "Error al Registrar!",
-            text: "Hubo un problema al registrar su cita de diagnóstico.",
-            icon: "error",
-            draggable: true
+    
+      //Marcador de errores
+        if (formCitaDiagnostico.invalid) {
+          Object.values(formCitaDiagnostico.controls).forEach(control => {
+            control.markAsTouched();
           });
+          return;
         }
-        
-      });
+    
+            setTimeout(() => {
+                    const modalEl = document.getElementById('pasarelaModal');
+                    const modal = Modal.getOrCreateInstance(modalEl!);
+                    modal.show();
+                  }, 50);
+    
+      
+        this.mostrarPasarelaCitaDiagnostico(montoFinal, this.correo, data);
+        return;
+
+  //                       this.citaService.registrarCitaDiagnostico(data).subscribe({
+  //                         next: (resp) => {
+  //                           Swal.fire({
+  //                             title: "¡Registro exitoso!",
+  //                                         html: `
+  //   <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+  //   <p>En breve recibirá un correo de confirmación.</p>
+  //   <p><strong>Gracias por elegirnos.</strong></p>
+  // `,
+  //                             icon: "success",
+  //                             draggable: true,
+  //                             confirmButtonText: "Aceptar",
+                            
+  //                           }).then(() => {
+  //                             window.location.reload();
+  //                           })
+  //                         },
+  //                         error: (err) => {
+  //                           //alert("Hubo un problema al registrar.");
+  //                           console.error("Error al registrar", err);
+  //                           Swal.fire({
+  //                             title: "Error al Registrar!",
+  //                             text: "Hubo un problema al registrar su cita de diagnóstico.",
+  //                             icon: "error",
+  //                             draggable: true
+  //                           });
+  //                         }
+                          
+  //                       });
+    
     }
-  
 
   
+    async mostrarPasarelaCitaDiagnostico(monto:number, email: string, dataPago: any){
+      const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
+          locale: 'es-PE'
+      });
+      const bricksBuilder = mp.bricks();
+      const settings = {
+        initialization: {
+          amount: 100,
+          payer: {
+            email: email,
+          }
+        },
+        customization: {
+          paymentMethods: {
+            creditCard: "all",
+            maxInstallments: 1
+          }
+        },
+        callbacks: {
+          onReady: () => {
+            console.log("CardPayment Brick listo");
+          },
+          onSubmit: (cardFormData:any) => {
+            console.log("Payload enviado:", cardFormData);
   
+            return new Promise((resolve, reject) => {
+              fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(cardFormData),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  this.citaService.registrarCitaDiagnostico(dataPago).subscribe({
+                    next: (resp) => {
+                      Swal.fire({
+                        title: "¡Registro exitoso!",
+                                    html: `
+    <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+    <p>En breve recibirá un correo de confirmación.</p>
+    <p><strong>Gracias por elegirnos.</strong></p>
+  `,
+                        icon: "success",
+                        draggable: true,
+                        confirmButtonText: "Aceptar",
+                      
+                      }).then(() => {
+                        window.location.reload();
+                      })
+                    },
+                    error: (err) => {
+                      //alert("Hubo un problema al registrar.");
+                      console.error("Error al registrar", err);
+                      Swal.fire({
+                        title: "Error al Registrar!",
+                        text: "Hubo un problema al registrar su cita de diagnóstico.",
+                        icon: "error",
+                        draggable: true
+                      });
+                    }
+                    
+                  });
+                })
+                .catch((err) => {
+                  console.error(err);
+                  Swal.fire({
+                    title: "Error al Registrar!",
+                    text: "Hubo un problema al registrar su cita de diagnóstico.",
+                    icon: "error",
+                    draggable: true
+                  });
+                  // reject();
+                });
+            });
+          },
+          onError: (error: string) => {
+            console.error("Error en CardPayment:", error);
+          },
+        }
+      };
+  
+      this.paymentBrickController = await bricksBuilder.create(
+        "cardPayment",
+        "cardPaymentBrick_container",
+        settings
+      );
+  
+    }
+
+    async mostrarPasarelaInstalacion(monto: number, email: string, dataPago: any) {
+        const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
+          locale: 'es-PE'
+        });
+        const bricksBuilder = mp.bricks();
+        const settings = {
+          initialization: {
+            amount: 100,
+            payer: {
+              email: email,
+            }
+          },
+          customization: {
+            paymentMethods: {
+              creditCard: "all",
+              maxInstallments: 1
+            }
+          },
+          callbacks: {
+            onReady: () => {
+              console.log("CardPayment Brick listo");
+            },
+            onSubmit: (cardFormData: any) => {
+              console.log("Payload enviado:", cardFormData);
+    
+              return new Promise((resolve, reject) => {
+                fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(cardFormData),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    this.serviciosTecnicosService.registrarServicio(dataPago).subscribe({
+                      next: (resp) => {
+                        Swal.fire({
+                          title: "¡Registro exitoso!",
+                                      html: `
+        <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+        <p>En breve recibirá un correo de confirmación.</p>
+        <p><strong>Gracias por elegirnos.</strong></p>
+      `,
+                          icon: "success",
+                          draggable: true,
+                          confirmButtonText: "Aceptar",
+                        }).then(() => {
+                          window.location.reload();
+                        });
+                      },
+                      error: (err) => {
+                        console.error("Error al registrar", err);
+                        Swal.fire({
+                          title: "Error al Registrar!",
+                          text: "Hubo un problema al registrar su cita de instalación.",
+                          icon: "error",
+                          draggable: true
+                        });
+    
+                      }
+    
+                    });
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                    Swal.fire({
+                      title: "Error al Registrar!",
+                      text: "Hubo un problema al registrar su cita de diagnóstico.",
+                      icon: "error",
+                      draggable: true
+                    });
+                    // reject();
+                  });
+              });
+            },
+            onError: (error: string) => {
+              console.error("Error en CardPayment:", error);
+            },
+          }
+        };
+    
+        this.paymentBrickController = await bricksBuilder.create(
+          "cardPayment",
+          "cardPaymentBrick_container",
+          settings
+        );
+    
+      }
 
 }

@@ -1,23 +1,24 @@
-<!-- Bootstrap Icons y AOS CSS -->
+<!-- Bootstrap Icons y AOS CSS-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Dancing+Script&display=swap"
   rel="stylesheet">
 
- 
+
 <section class="hero-video">
   <!-- Video de fondo -->
   <video autoplay muted loop playsinline class="video-fondo" id="inicio">
-    <source src="assets/video-fondo.mp4" type="video/mp4">
+    <source [src]="'assets/'+'video-fondo.mp4'" type="video/mp4"> 
   </video>
 
   <!-- Navbar responsive con hamburguesa -->
-  <nav class="navbar classnavbar2 navbar-dark navbar-expand-lg rounded-pill px-4 py-2 mb-5 mx-4 mt-4"
-    > <!--style="background-color: rgba(99, 88, 252, 0.5); z-index: 2;"-->
+  <nav class="navbar classnavbar2 navbar-dark navbar-expand-lg rounded-pill px-4 py-2 mb-5 mx-4 mt-4">
+    <!--style="background-color: rgba(99, 88, 252, 0.5); z-index: 2;"-->
     <div class="container-fluid">
 
       <!-- Logo -->
-      <a [routerLink]="[]" class="navbar-brand d-flex align-items-center nav-link" fragment="inicio"> <!--href="#inicio" -->
+      <a [routerLink]="[]" class="navbar-brand d-flex align-items-center nav-link" fragment="inicio">
+        <!--href="#inicio" -->
         <img src="https://i.pinimg.com/1200x/dd/83/fd/dd83fd3bfcc60f6e3563e5db3b4f8eaa.jpg" alt="Logo" width="150"
           height="40">
       </a>
@@ -76,7 +77,8 @@
         software y hardware. </p>
       <!-- Botón -->
       <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a  fragment="servicios" (click)="redirigirRegistro()" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
+        <a fragment="servicios" (click)="redirigirRegistro()"
+          class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
           Regístrate ahora
         </a>
       </div>
@@ -305,7 +307,8 @@
           <p style="font-family:'Rajdhani', sans-serif; color:#03153a;">
             Atención técnica directa en nuestras oficinas, ideal para diagnósticos complejos y soporte especializado.
           </p>
-          <a (click)="redirigirRegistro()" fragment="contacto" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
+          <a (click)="redirigirRegistro()" fragment="contacto"
+            class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
             Regístrate ahora
           </a>
 
@@ -331,7 +334,8 @@
           <p style="font-family:'Rajdhani', sans-serif; color:#03153a;">
             Soporte técnico a distancia vía conexión segura, ideal para resolver problemas sin salir de casa.
           </p>
-          <a (click)="redirigirRegistro()" fragment="contacto" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
+          <a (click)="redirigirRegistro()" fragment="contacto"
+            class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
             Regístrate ahora
           </a>
 
@@ -354,7 +358,8 @@
             Un técnico especializado visita tu ubicación para brindar soluciones personalizadas y confiables.
           </p>
           <!-- Botón -->
-          <a (click)="redirigirRegistro()" fragment="contacto" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
+          <a (click)="redirigirRegistro()" fragment="contacto"
+            class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
             Regístrate ahora
           </a>
 
@@ -445,12 +450,12 @@
 
 
 <!-- Icono flotante -->
-<div class="chatbot-icono d-flex align-items-center justify-content-center" (click)="toggleChat()">
+<!-- <div class="chatbot-icono d-flex align-items-center justify-content-center" (click)="toggleChat()">
   <i class="bi bi-chat-dots-fill"></i>
-</div>
+</div> -->
 
 <!-- Ventana de chat -->
-<div *ngIf="chatAbierto" class="chatbot-ventana card shadow-lg">
+<!-- <div *ngIf="chatAbierto" class="chatbot-ventana card shadow-lg">
   <div class="card-header d-flex justify-content-between align-items-center">
     <span><i class="bi bi-robot me-2"></i> Asistente Virtual</span>
     <button class="btn btn-sm btn-light rounded-circle" (click)="toggleChat()">✖</button>
@@ -477,8 +482,11 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->
 
+<div id="livechatai-container"></div>
+<!-- <script src="https://app.livechatai.com/embed.js" data-id="cmiqu0nh40003jo04k7qx2e12" async defer>
+</script> -->
 
 <!-- AOS JS y activación -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

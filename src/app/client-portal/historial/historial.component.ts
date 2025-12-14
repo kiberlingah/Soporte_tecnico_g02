@@ -6,6 +6,8 @@ import { ModalidadService } from 'src/app/services/modalidad.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Modal } from 'bootstrap';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { CitaService } from 'src/app/services/cita.service';
+import { ServiciosTecnicosService } from '../servicios_tecnicos/service/servicios_tecnicos.service';
 
 
 @Component({
@@ -20,12 +22,15 @@ export class HistorialComponent implements OnInit {
   distritos: any[] = [];
   horarios: any[] = [];
   usuarios: any[] = [];
+  serviciosRepair: any[] = [];
 
   idCliente!: number;
+  idCita!: number;
   page: number = 1;
   itemsPerPage: number = 8;
 
   detallePago: any;
+  servicioTecnico: any;
 
 
   constructor(
@@ -34,11 +39,13 @@ export class HistorialComponent implements OnInit {
     private modalidadService: ModalidadService,
     private distritoService: DistritoService,
     private horarioService: HorarioService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private servicioTecnicoService: ServiciosTecnicosService,
   ) { }
 
   ngOnInit(): void {
     this.idCliente = Number(localStorage.getItem('id_cliente'));
+    this.idCita = Number(localStorage.getItem('id_cita'));
 
     this.cargarCatalogos().then(() => {
       this.cargarPagos();
@@ -51,8 +58,13 @@ export class HistorialComponent implements OnInit {
       this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
       this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
       this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
-      this.usuarioService.listarUsuarios().toPromise().then(data => this.usuarios = data)
+      this.usuarioService.listarUsuarios().toPromise().then(data => this.usuarios = data),
     ]);
+
+    this.servicioService.getServiciosReparacion().subscribe({
+      next: (sr: any[]) => this.serviciosRepair = sr,
+      error: (err: any) => console.error('Error al cargar instalación:', err)
+    })
   }
 
   cargarPagos() {
@@ -95,21 +107,78 @@ export class HistorialComponent implements OnInit {
   }
 
 
-  abrirModal(id_pago: number) {
-    this.detallePago = null;
+  // abrirModal(id_pago: number) {
 
-    this.clienteService.detallePago(id_pago).subscribe(detalle => {
-      console.log("DETALLE RECIBIDO:", detalle);
 
-      this.detallePago = detalle[0];
+  //   this.servicioTecnicoService
+  //     .obtenerServicioFaltaPago(this.idCliente, this.idCita)
+  //     .subscribe(resp => {
+  //       console.log(resp);
+  //     });
 
-      setTimeout(() => {
+  //   this.detallePago = null;
+
+  //   this.clienteService.detallePago(id_pago).subscribe(detalle => {
+  //     console.log("DETALLE RECIBIDO:", detalle);
+
+  //     this.detallePago = detalle[0];
+
+  //     setTimeout(() => {
+  //       const modalEl = document.getElementById('detalleModal');
+  //       const modal = Modal.getOrCreateInstance(modalEl!);
+  //       modal.show();
+  //     }, 50);
+  //   });
+  // }
+get montoTotal(): string {
+
+  const precioServ =Number(this.servicioTecnico.precio_serviciot || 0); 
+    const precioDom=     Number(this.servicioTecnico.precio_domicilio || 0);
+    const precioTotal = precioServ + precioDom;
+    const n = Number(precioTotal)||0;
+    return n.toFixed(2);
+}
+
+  abrirModal(id_pago: number, id_cita: number) {
+
+  this.detallePago = null;
+  this.servicioTecnico = null;
+
+  this.servicioTecnicoService
+    .obtenerServicioFaltaPago(this.idCliente, id_cita)
+    .subscribe(st => {
+
+      this.servicioTecnico = st[0]; // si es array
+      console.log('aquiiiiiiiiiii',st);
+
+      this.clienteService.detallePago(id_pago).subscribe(detalle => {
+
+        this.detallePago = detalle[0];
+
         const modalEl = document.getElementById('detalleModal');
         const modal = Modal.getOrCreateInstance(modalEl!);
         modal.show();
-      }, 50);
+
+      });
+
     });
+}
+
+  pagarServicio() {
+    const dataPag = {
+      id_tipopago: "CREDIT_CARD",
+  id_servicio_tecnico: this.servicioTecnico.id_servicio_tecnico,
+  monto_final: this.montoTotal
+};
+
+this.servicioTecnicoService.registrarPago(dataPag).subscribe({
+  next: resp => {
+    console.log('Pago registrado', resp);
+  },
+  error: err => {
+    console.error('Error', err);
   }
+});}
 
 }
 

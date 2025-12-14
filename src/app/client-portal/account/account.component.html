@@ -139,52 +139,67 @@
             </div>
             <div class="modal-body">
               <!-- Formulario editable -->
-              <form class="row g-3">
+              <form [formGroup]="formCuenta" class="row g-3">
+
                 <div class="col-md-6">
                   <label class="form-label">Nombres</label>
-                  <input type="text" class="form-control" [(ngModel)]="cliente.nombres" name="nombres">
+                  <input type="text" class="form-control" formControlName="nombres">
+                  <small class="text-danger"
+                    *ngIf="formCuenta.get('nombres')?.touched && formCuenta.get('nombres')?.invalid">
+                    Campo obligatorio
+                  </small>
                 </div>
+
                 <div class="col-md-6">
                   <label class="form-label">Apellidos</label>
-                  <input type="text" class="form-control" [(ngModel)]="cliente.apellidos" name="apellidos">
+                  <input type="text" class="form-control" formControlName="apellidos">
+                  <small class="text-danger"
+                    *ngIf="formCuenta.get('apellidos')?.touched && formCuenta.get('apellidos')?.invalid">
+                    Campo obligatorio
+                  </small>
                 </div>
+
                 <div class="col-md-6">
                   <label class="form-label">Teléfono</label>
-                  <input type="tel" class="form-control" [(ngModel)]="cliente.telefono" name="telefono">
+                  <input type="tel" class="form-control" formControlName="telefono">
+                  <small class="text-danger"
+                    *ngIf="formCuenta.get('telefono')?.touched && formCuenta.get('telefono')?.invalid">
+                    Teléfono inválido
+                  </small>
                 </div>
+
                 <div class="col-md-6">
                   <label class="form-label">Correo</label>
-                  <input type="email" class="form-control" [(ngModel)]="cliente.correo" name="correo" readonly>
+                  <input type="email" class="form-control" formControlName="correo" readonly>
                 </div>
-                <div class="col-12">
-                   <label class="form-label">Contraseña</label>
-                   <input 
-                    type="password" 
-                     class="form-control" 
-                     formControlName="contrasena" 
-                      placeholder="Nueva contraseña (opcional)">
-  
-                      <!-- Mensaje de ayuda -->
-                   <span class="opcional text-primary mt-1">
-                   Ingrese su nueva contraseña si desea actualizarla
-                    </span>
 
-                  <!-- Validaciones -->
-                  <div *ngIf="formCuenta.get('contrasena')?.touched && formCuenta.get('contrasena')?.invalid" class="text-danger mt-1">
-                  <span *ngIf="formCuenta.get('contrasena')?.errors?.['required']">
+                <div class="col-12">
+                  <label class="form-label">Contraseña actual</label>
+                  <input type="password" class="form-control" formControlName="contrasenaActual"
+                    placeholder="Ingrese su contraseña actual">
+
+                  <span class="text-primary d-block mt-1">
+                    Ingrese su contraseña actual para actualizar sus datos
+                  </span>
+
+                  <div class="text-danger mt-1"
+                    *ngIf="formCuenta.get('contrasenaActual')?.touched && formCuenta.get('contrasenaActual')?.invalid">
+
+                    <span *ngIf="formCuenta.get('contrasenaActual')?.errors?.['required']">
                       La contraseña es obligatoria.
                     </span>
-                    <span *ngIf="formCuenta.get('contrasena')?.errors?.['minlength']">
-                      La contraseña debe tener al menos 6 caracteres.
+                    <span *ngIf="formCuenta.get('contrasenaActual')?.errors?.['minlength']">
+                      Mínimo 6 caracteres.
                     </span>
                   </div>
                 </div>
 
               </form>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button class="btn btn-outline-primary" (click)="editarCuenta()" data-bs-dismiss="modal">Guardar</button>
+
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-outline-primary" (click)="editarCuenta()">Guardar</button>
+              </div>
             </div>
           </div>
         </div>

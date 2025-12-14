@@ -5,6 +5,7 @@ import { environment } from'src/environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CitaService {
+  [x: string]: any;
   //private baseUrl = 'https://spyrocode.dev';
   private baseUrl = `${environment.urlHost}/citas`;
 
@@ -21,6 +22,11 @@ export class CitaService {
   // eliminarCliente(id: number): Observable<any> {
   //   return this.http.delete(`${this.baseUrl}/eliminar?id=${id}`);
   // }
+   getCitaDetalle(id_cita: number): Observable<any> {
+    const url = `${this.baseUrl}/obtenerId?id_cita=${id_cita}`;
+    return this.http.get<any>(url);
+  }
+
   getCitasStatusPendient(): Observable<any[]> {
     const url = `${this.baseUrl}/listapendientes`;
     return this.http.get<any[]>(url);
@@ -31,11 +37,7 @@ export class CitaService {
     return this.http.get<any[]>(url);
   }
 
-  getCitaDetalle(id_cita: number): Observable<any> {
-    const url = `${this.baseUrl}/obtenerId?id_cita=${id_cita}`;
-    return this.http.get<any>(url);
-  }
-
+ 
   asignarTecnicoUpdate(cita: any): Observable<any> {
     const url = `${this.baseUrl}/asignar-tecnico`;
     const body = {
@@ -52,5 +54,9 @@ export class CitaService {
       observacion_tecnico: cita.observacion_tecnico
     };
     return this.http.put<any>(url, body);
+  }
+  finalizarCita(data: any): Observable<any> {
+    const url = `${this.baseUrl}/finalizar`;
+    return this.http.post<any>(url, data);
   }
 }

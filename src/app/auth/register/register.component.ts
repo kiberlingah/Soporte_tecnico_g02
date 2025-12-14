@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -18,31 +20,63 @@ export class RegisterComponent {
   // Mensaje de éxito
   mensajeExito: string = '';
 
+
   constructor(private clienteService: ClienteService, private router: Router) {}
 
-  registrar(formValue: any): void {
-    const cliente = {
-      nombres: this.nombres,
-      apellidos: this.apellidos,
-      telefono: this.telefono,
-      correo: this.correo,
-      contrasena: this.contrasena // ⚠️ backend espera "password"
-    };
+registrar(formRegisterClient: NgForm): void {
+  const cliente = {
+    nombres: this.nombres,
+    apellidos: this.apellidos,
+    telefono: this.telefono,
+    correo: this.correo,
+    contrasena: this.contrasena
+  };
 
-    this.clienteService.registrarCliente(cliente).subscribe({
-      next: (res: any) => {
-        this.mensajeExito = '✅ Cliente registrado correctamente';
-        console.log(res);
-      },
-      error: (err: any) => console.error('Error en registro:', err)
-    });
+  if (formRegisterClient.invalid) {
+    return;
   }
 
+  this.clienteService.registrarCliente(cliente).subscribe({
+    next: () => {
+      Swal.fire({
+        title: '✅ Registro exitoso',
+        text: 'Se ha registrado con éxito tu cuenta',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        window.location.reload();
+      });
+
+    },
+    error: err => console.error('Error en registro', err)
+  });
+}
+
+tieneMayuscula(): boolean {
+  return /[A-Z]/.test(this.contrasena || '');
+}
+
+tieneMinuscula(): boolean {
+  return /[a-z]/.test(this.contrasena || '');
+}
+
+tieneNumero(): boolean {
+  return /[0-9]/.test(this.contrasena || '');
+}
+
+tieneSimbolo(): boolean {
+  return /[.,@$!%*?&]/.test(this.contrasena || '');
+}
+
+longitudValida(): boolean {
+  return (this.contrasena || '').length >= 8;
+}
+
   volverAlInicio(): void {
-    this.router.navigate(['/']); // redirige al inicio
+    this.router.navigate(['/']); 
   }
 
   redirigirLogin(): void {
-    this.router.navigate(['/login']); // redirige al login
+    this.router.navigate(['/login']); 
   }
 }

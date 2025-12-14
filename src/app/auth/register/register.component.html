@@ -1,4 +1,6 @@
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
+  rel="stylesheet">
 
 <video autoplay muted loop playsinline class="video-fondo">
   <source src="assets/video-fondo.mp4" type="video/mp4">
@@ -6,11 +8,11 @@
 
 <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
   <div class="row register-wrapper rounded-4 overflow-hidden shadow-lg" style="max-width: 950px; width: 100%;">
-    
+
     <!-- Columna izquierda: formulario -->
     <div class="col-md-6 bg-white p-5 d-flex flex-column justify-content-center">
-      <form #form="ngForm" (ngSubmit)="registrar(form.value)" novalidate>
-        
+      <form #formRegisterClient="ngForm" (ngSubmit)="registrar(formRegisterClient)" novalidate>
+
         <!-- Botón cerrar -->
         <div class="text-end mb-3">
           <button type="button" class="btn btn-cerrar" (click)="volverAlInicio()" aria-label="Cerrar">
@@ -27,66 +29,88 @@
         </div>
 
         <!-- Nombres y Apellidos -->
-<div class="row">
-  <div class="col-md-6 mb-3">
-    <label for="nombres" class="form-label fw-semibold text-info">Nombres</label>
-    <input type="text" id="nombres" name="nombres" [(ngModel)]="nombres" class="form-control campo-input"
-           placeholder="Ingresa tus nombres" required #nombresCtrl="ngModel"/>
-    <div *ngIf="nombresCtrl.invalid && nombresCtrl.touched" class="text-danger small">Este campo es obligatorio.</div>
-  </div>
-  <div class="col-md-6 mb-3">
-    <label for="apellidos" class="form-label fw-semibold text-info">Apellidos</label>
-    <input type="text" id="apellidos" name="apellidos" [(ngModel)]="apellidos" class="form-control campo-input"
-           placeholder="Ingresa tus apellidos" required #apellidosCtrl="ngModel"/>
-    <div *ngIf="apellidosCtrl.invalid && apellidosCtrl.touched" class="text-danger small">Este campo es obligatorio.</div>
-  </div>
-</div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="nombres" class="form-label fw-semibold text-info">Nombres</label>
+            <input type="text" id="nombres" name="nombres" [(ngModel)]="nombres" class="form-control campo-input"
+              placeholder="Ingresa tus nombres" required #nombresCtrl="ngModel" />
+            <div
+              *ngIf="(nombresCtrl.invalid && nombresCtrl.touched) || (formRegisterClient.submitted && nombresCtrl.invalid)"
+              class="text-danger small">Este campo es obligatorio.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="apellidos" class="form-label fw-semibold text-info">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" [(ngModel)]="apellidos" class="form-control campo-input"
+              placeholder="Ingresa tus apellidos" required #apellidosCtrl="ngModel" />
+            <div
+              *ngIf="(apellidosCtrl.invalid && apellidosCtrl.touched) || (formRegisterClient.submitted && apellidosCtrl.invalid)"
+              class="text-danger small">Este campo es
+              obligatorio.</div>
+          </div>
+        </div>
 
-<!-- Teléfono y Correo -->
-<div class="row">
-  <div class="col-md-6 mb-3">
-    <label for="telefono" class="form-label fw-semibold text-info">Teléfono</label>
-    <input type="tel" id="telefono" name="telefono" [(ngModel)]="telefono" class="form-control campo-input"
-           placeholder="Ej. 987654321" pattern="[0-9]{9}" required #telefonoCtrl="ngModel"/>
-    <div *ngIf="telefonoCtrl.invalid && telefonoCtrl.touched" class="text-danger small">Debe contener 9 dígitos.</div>
-  </div>
-  <div class="col-md-6 mb-3">
-    <label for="correo" class="form-label fw-semibold text-info">Correo electrónico</label>
-    <input type="email" id="correo" name="correo" [(ngModel)]="correo" class="form-control campo-input"
-           placeholder="Ej. ejemplo@correo.com" required email #correoCtrl="ngModel"/>
-    <div *ngIf="correoCtrl.invalid && correoCtrl.touched" class="text-danger small">Ingresa un correo válido.</div>
-  </div>
-</div>
+        <!-- Teléfono y Correo -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="telefono" class="form-label fw-semibold text-info">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" [(ngModel)]="telefono" class="form-control campo-input"
+              placeholder="Ej. 987654321" pattern="[0-9]{9}" required #telefonoCtrl="ngModel" />
+            <div
+              *ngIf="(telefonoCtrl.invalid && telefonoCtrl.touched)|| (formRegisterClient.submitted && telefonoCtrl.invalid)"
+              class="text-danger small">Debe contener 9 dígitos.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="correo" class="form-label fw-semibold text-info">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" [(ngModel)]="correo" class="form-control campo-input"
+              placeholder="Ej. ejemplo@correo.com" required email #correoCtrl="ngModel" />
+            <div
+              *ngIf="(correoCtrl.invalid && correoCtrl.touched) || (formRegisterClient.submitted && correoCtrl.invalid)"
+              class="text-danger small">Ingresa un correo válido.
+            </div>
+          </div>
+        </div>
 
-<!-- Contraseña (sola en una fila) -->
-<div class="mb-3">
-  <label for="contrasena" class="form-label fw-semibold text-info">Contraseña</label>
-  <input type="password" id="contrasena" name="contrasena" [(ngModel)]="contrasena" class="form-control campo-input"
-         placeholder="Crea una contraseña segura"
-         minlength="8"
-         pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}$"
-         required #passCtrl="ngModel"/>
-  <div *ngIf="passCtrl.invalid && passCtrl.touched" class="text-danger small">
-    Mínimo 8 caracteres, con mayúscula, minúscula, número y símbolo.
-  </div>
-</div>
+        <!-- Contraseña (sola en una fila) -->
+        <div class="mb-3">
+          <label for="contrasena" class="form-label fw-semibold text-info">Contraseña</label>
 
+          <input type="password" id="contrasena" name="contrasena" [(ngModel)]="contrasena"
+            class="form-control campo-input" placeholder="Crea una contraseña segura" required minlength="8"
+            #passCtrl="ngModel" />
+          <div class="text-danger small" *ngIf="passCtrl.touched || formRegisterClient.submitted">
 
+            <!-- Campo obligatorio -->
+            <div *ngIf="passCtrl.errors?.['required']">
+              ⚠️ Este campo es obligatorio, asegurate que contenga 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.
+            </div>
+
+            <!-- Reglas -->
+            <div *ngIf="!passCtrl.errors?.['required']">
+
+              <div *ngIf="!longitudValida()">Mínimo 8 caracteres</div>
+              <div *ngIf="!tieneMayuscula()">Al menos una letra mayúscula</div>
+              <div *ngIf="!tieneMinuscula()">Al menos una letra minúscula</div>
+              <div *ngIf="!tieneNumero()">Al menos un número</div>
+              <div *ngIf="!tieneSimbolo()">Al menos un símbolo (@$!%*?&)</div>
+
+            </div>
+          </div>
+
+        </div>
         <!-- Botón -->
         <button type="submit" class="btn btn-login w-100 mt-3">Registrar Cuenta</button>
 
         <div *ngIf="mensajeExito" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-  {{ mensajeExito }}
-  <button type="button" class="btn-close" aria-label="Close" (click)="mensajeExito=''"></button>
-</div>
-
-
-
-        <!-- Enlace a login -->
-        <div class="text-center mt-3">
-<a class="link-secundario" (click)="redirigirLogin()">¿Ya tienes cuenta? Inicia sesión</a>
+          {{ mensajeExito }}
+          <button type="button" class="btn-close" aria-label="Close" (click)="mensajeExito=''"></button>
         </div>
       </form>
+      <!-- Enlace a login -->
+      <div class="text-center mt-3">
+        <a class="link-secundario" (click)="redirigirLogin()">¿Ya tienes cuenta? Inicia sesión</a>
+      </div>
     </div>
 
     <!-- Columna derecha: imagen institucional -->

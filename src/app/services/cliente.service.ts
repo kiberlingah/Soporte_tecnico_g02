@@ -23,9 +23,13 @@ export class ClienteService {
     return this.http.get(`${this.baseUrl}/ver?id_cliente=${id}`, { headers });
   }
 
-  actualizarCliente(cliente: any, token: string): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.put(`${this.baseUrl}/actualizar`, cliente, { headers });
+  // actualizarCliente(cliente: any, token: string): Observable<any> {
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //   return this.http.put(`${this.baseUrl}/actualizar`, cliente, { headers });
+  // }
+  actualizarCliente( id_cliente: number, data: any, token: string): Observable<any> {
+    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`,'Content-Type': 'application/json'});
+    return this.http.put( `${this.baseUrl}/actualizar?id_cliente=${id_cliente}`, data, { headers });
   }
 
   eliminarCliente(id: number, token: string): Observable<any> {
@@ -46,4 +50,21 @@ export class ClienteService {
   listarClientes(): Observable<any> {
     return this.http.get(`${this.baseUrl}/listar`);
   }
+
+  solicitarEliminacion(idCliente: number, token: string) {
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.put(
+    `${this.baseUrl}/solicitar_eliminacion?id_cliente=${idCliente}`,
+    {},
+    { headers }
+  );
+}
+
+obtenerUncliente(id:number): Observable<any> {
+  return this.http.get<any[]>(`${this.baseUrl}/ver?id_cliente=${id}`);
+}
+
 }

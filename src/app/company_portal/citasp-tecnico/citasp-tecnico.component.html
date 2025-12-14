@@ -6,7 +6,7 @@
     </p>
     <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
     <p class="mb-2" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
-        Consulte las citas de diagnóstico y asigne un tecnico para la solicitud de los clientes.
+        Consulte las citas de diagnóstico y adicione sus comentarios.
     </p>
 </div>
 <div class="historial-wrapper container mb-5 mt-4">
@@ -22,7 +22,7 @@
         <div class="col-md-3">
             <select class="form-select" [(ngModel)]="filtroServicio">
                 <option value="">Todos los servicios</option>
-                <option *ngFor="let s of servicios" [value]="s.id">{{ s.descripcion_servicio }}</option>
+                <option *ngFor="let s of serviciosInstall" [value]="s.id">{{ s.descripcion_servicio }}</option>
             </select>
         </div>
 
@@ -123,40 +123,140 @@
 
                 <form *ngIf="citaSeleccionada">
 
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Cliente</label>
-                            <input class="form-control" [value]="getClientes(citaSeleccionada.id_cliente)" disabled />
+                            <input class="form-control" [value]="getClientes(citaSeleccionada.id_cliente)"
+                                [(ngModel)]="citaSeleccionada.id_cliente" disabled />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">DNI/RUC</label>
+                            <input class="form-control" [value]="citaSeleccionada.documento"
+                                [(ngModel)]="citaSeleccionada.documento" disabled />
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Servicio</label>
                             <input class="form-control" [value]="getServicioDesc(citaSeleccionada.id_servicio)"
                                 disabled />
                         </div>
-                    </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Modalidad</label>
+                            <input class="form-control" [value]="getModalidadNombre(citaSeleccionada.id_modalidad)"
+                                disabled />
+                        </div>
 
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Fecha de Atención</label>
                             <input class="form-control" [value]="citaSeleccionada.fecha_atencion" disabled />
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">Horario</label>
                             <input class="form-control" [value]="getHorario(citaSeleccionada.id_horario)" disabled />
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Comentario del Cliente</label>
-                        <textarea class="form-control" rows="3" [value]="citaSeleccionada.comentario_cliente"
-                            disabled></textarea>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Observación del Técnico</label>
-                        <textarea class="form-control" [(ngModel)]="citaSeleccionada.observacion_tecnico" name="obs"></textarea>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Comentario del Cliente</label>
+                            <textarea class="form-control" rows="3" [value]="citaSeleccionada.comentario_cliente"
+                                disabled></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Observación del Técnico</label>
+                            <textarea class="form-control" rows="3" [(ngModel)]="citaSeleccionada.observacion_tecnico"
+                                name="obs" placeholder="Ingrese sus observaciones y diagnostico"></textarea>
+                        </div>
+
+                        <div class="col-md-12 mb-2 mt-3">
+                            <h5>Servicio Recomendado por el Técnico</h5>
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Se recomienda</label>
+                            <select class="form-select" name="id_servicio" id="id_servicio"
+                                [(ngModel)]="idServicioReparacionSeleccionado" #id_servicio="ngModel" required
+                                (change)="setearPrecio()">
+                                <option value="">Seleccionar</option>
+                                <option *ngFor="let sr of serviciosRepair" [value]="sr.id_servicio">
+                                    {{ sr.descripcion_servicio }}
+                                </option>
+                            </select>
+                            <div *ngIf="id_servicio.invalid && id_servicio.touched" class="text-danger small mt-1">
+                                Debe seleccionar una opcion recomendada.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Precio (S/)</label>
+                            <input type="number" class="form-control" readonly [value]="precioServicioReparacion"
+                                step="0.01" name="precio_serviciot" id="precio_serviciot" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Modalidad</label>
+                            <select class="form-select" [(ngModel)]="servicios_tecnicos.id_modalidad"
+                                name="id_modalidad" #id_modalidad="ngModel" required (change)="validarModalidad()">
+                                <option value="">Seleccionar</option>
+                                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}
+                                </option>
+                            </select>
+                            <div *ngIf="id_modalidad.invalid && id_modalidad.touched" class="text-danger small mt-1">
+                                Debe seleccionar una modalidad.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Fecha</label>
+                            <input class="form-control" type="date" id="fecha_atencion"
+                                [(ngModel)]="servicios_tecnicos.fecha_atencion" name="fecha_atencion"
+                                #fecha_atencion="ngModel" required [min]="fechaUnica" />
+                            <div *ngIf="fecha_atencion.invalid && fecha_atencion.touched"
+                                class="text-danger small mt-1">
+                                Debe seleccionar una fecha.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Hora</label>
+                            <select class="form-select" [(ngModel)]="servicios_tecnicos.id_horario" name="id_horario"
+                                #id_horario="ngModel" required>
+                                <option value="">Seleccionar</option>
+                                <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
+                            </select>
+                            <div *ngIf="id_horario.invalid && id_horario.touched" class="text-danger small mt-1">
+                                Debe seleccionar una hora.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                            <label class="form-label">Distrito</label>
+                            <select class="form-select" [(ngModel)]="idDistritoSeleccionado" name="distrito"
+                                #distrito="ngModel" required (change)="setearTarifaDomicilio()">
+                                <option value="">Seleccionar</option>
+                                <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}
+                                </option>
+                            </select>
+                            <div *ngIf="distrito.invalid && distrito.touched" class="text-danger small mt-1">
+                                Debe seleccionar un distrito.
+                            </div>
+                        </div>
+
+                        <div class="col-md-8" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                            <label class="form-label">Dirección</label>
+                            <input class="form-control" type="text" id="direccion"
+                                [(ngModel)]="servicios_tecnicos.direccion" name="direccion" #direccion="ngModel"
+                                required />
+                            <div *ngIf="direccion.invalid && direccion.touched" class="text-danger small mt-1">
+                                La dirección es obligatoria.
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                            <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de:
+                                S/. {{
+                                tarifaDomicilio }}</span>
+                        </div>
                     </div>
                 </form>
 
@@ -164,7 +264,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-success" (click)="guardarCambios()">Guardar comnetarios</button>
+                <button class="btn btn-success" (click)="guardarCambios()">Guardar</button>
             </div>
 
         </div>

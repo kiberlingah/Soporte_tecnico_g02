@@ -17,9 +17,14 @@ export class NavAdminEmpComponent {
         //ngOnInit(): void {
           //this.rol = this.auth.getRole();
         //}
-        logout() {
-            this.auth.logout();
-            return this.router.navigate(['/empresa']);
-        }
+        // logout() {
+        //     this.auth.logout();
+        //     return this.router.navigate(['/empresa']);
+        // }
+          logout() {
+  localStorage.clear();
+
+  this.router.navigate(['/empresa'], { replaceUrl: true });
+}
 
 }

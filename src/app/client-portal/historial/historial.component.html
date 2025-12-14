@@ -65,8 +65,9 @@
 
                 <td>
                   Fecha: {{pago.fecha_servicio || pago.fecha_diagnostico}} <br>
-                  <span class="text-primary">Horario: {{getHorario(pago.horario_servicio) ||
-                    getHorario(pago.horario_diagnostico)}}</span>
+                  <span class="text-primary" *ngIf="getHorario(pago.horario_servicio||pago.horario_diagnostico) !== ''">
+                    Hora: {{getHorario(pago.horario_servicio||pago.horario_diagnostico)}}</span><br>
+                  <span class="badge rounded-pill bg-light text-info">{{pago.tipo_servicio||pago.tipo_diagnostico}}</span>
                 </td>
 
                 <td>
@@ -87,7 +88,7 @@
                 </td>
 
                 <td class="text-end">
-                  <button class="btn btn-sm btn-primary" (click)="abrirModal(pago.id_pago)">Más detalles</button>
+                  <button class="btn btn-sm btn-primary" (click)="abrirModal(pago.id_pago, pago.id_cita)">Más detalles</button>
                 </td>
               </tr>
             </tbody>
@@ -109,7 +110,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="detalleModalLabel">Detalle del Pago</h5>
+        <h5 class="modal-title" id="detalleModalLabel">Detalles</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -156,6 +157,31 @@
             {{(detallePago.comentario_cliente||detallePago.observacion_tecnico)}}
           </p>
         </ng-container>
+
+        <h5 class="mb-2 mt-2 text-info text-center" *ngIf="servicioTecnico">Servicio Recomendado – Listo para Pago</h5>
+<form *ngIf="servicioTecnico">
+            <div *ngIf="servicioTecnico">
+
+  <p><strong>Servicio:</strong> {{ getServicioDesc(servicioTecnico.id_servicio) }}</p>
+
+  <p><strong>Modalidad:</strong> {{ getModalidadNombre(servicioTecnico.id_modalidad) }}</p>
+
+  <p><strong>Fecha atención:</strong> {{ servicioTecnico.fecha_atencion | date }}</p>
+  <p><strong>Hora atención:</strong> {{ getHorario(servicioTecnico.id_horario) }}</p>
+  <p *ngIf="servicioTecnico.direccion || servicioTecnico.id_distrito">
+    <strong>Dirección:</strong> {{ servicioTecnico.direccion }} {{getDistritoNombre(servicioTecnico.id_distrito)}}
+  </p>
+  <p><strong>Precio del servicio:</strong> S/{{ servicioTecnico.precio_serviciot }}</p>
+  <p *ngIf="servicioTecnico.precio_domicilio !=0"><strong>Tarifa visita a domicilio:</strong> S/{{ servicioTecnico.precio_domicilio }}</p>
+
+  
+
+  <p><strong>Monto Total:</strong> S/{{ montoTotal }}</p>
+  <button class="btn btn-info mb-5 mt-3" (click)="pagarServicio()">Pagar Servicio</button>
+
+</div>
+</form>
+
 
         <ng-template #cargando>
           <p>Cargando detalles...</p>

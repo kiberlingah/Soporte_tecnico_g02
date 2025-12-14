@@ -8,7 +8,10 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import Swal from 'sweetalert2';
 import { ServiciosTecnicosService } from './service/servicios_tecnicos.service';
 import { NgForm } from '@angular/forms';
+import { environment } from 'src/environment/environment';
+import { Modal } from 'bootstrap';
 
+declare var MercadoPago: any;
 @Component({
   selector: 'app-servicios',
   templateUrl: './servicios_tecnicos.component.html',
@@ -22,6 +25,8 @@ export class ServiciosTecnicosComponent implements OnInit {
   tarifasDomicilio: any[] = [];
   cliente: any = {};
   nombreCompleto: string = '';
+  paymentBrickController: any;
+  correo: string = '';
 
   servicios_tecnicos: any = {
     id_servicio: 0,
@@ -132,9 +137,7 @@ export class ServiciosTecnicosComponent implements OnInit {
 
   setearPrecio(): void {
     const servicio = this.servicios.find(s => s.id_servicio == this.idServicioSeleccionado);
-    console.log('Servicio seleccionado:', servicio);
     this.precioSeleccionado = servicio ? parseFloat(servicio.precio) : 0.00;
-    console.log('Precio actualizado:', this.precioSeleccionado);
   }
 
   get precioServicio(): string {
@@ -175,83 +178,91 @@ export class ServiciosTecnicosComponent implements OnInit {
   }
 
 
-registrarServicioInstalacion(formCita: NgForm) {
-  // 🔥 Marca todos los campos como tocados para activar los mensajes en rojo
-  formCita.form.markAllAsTouched();
+  registrarServicioInstalacion(formServicioTec: NgForm) {
 
-  // Validación global antes de enviar
-  if (formCita.invalid || !this.servicios_tecnicos.acepto) {
-    Swal.fire({
-      title: "Registro incompleto",
-      text: "Por favor completa todos los campos obligatorios y acepta los términos y condiciones.",
-      icon: "warning",
-      confirmButtonText: "Aceptar"
-    });
-    return;
-  }
+    const precioServicio = parseFloat(this.precioServicio) || 0;
+    const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
+      ? parseFloat(this.tarifaDomicilio) || 0
+      : 0;
 
-  const precioServicio = parseFloat(this.precioServicio) || 0;
-  const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
-    ? parseFloat(this.tarifaDomicilio) || 0
-    : 0;
+    const montoFinal = precioServicio + precioDomicilio;
 
-  const montoFinal = precioServicio + precioDomicilio;
+    const data = {
+      servicios_tecnicos: {
+        id_cita: null,
+        id_cliente: this.cliente.id_cliente,
+        id_servicio: this.idServicioSeleccionado,
+        id_horario: this.servicios_tecnicos.id_horario,
+        fecha_atencion: this.servicios_tecnicos.fecha_atencion,
+        id_modalidad: this.servicios_tecnicos.id_modalidad,
+        id_tarifadomicilio:
+          this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+        id_distrito:
+          this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
+        direccion:
+          this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
+        documento: this.servicios_tecnicos.documento,
+        comentario_cliente: this.servicios_tecnicos.comentario_cliente,
+        estado: "Pendiente",
+        id_usuario: null,
+        observacion_tecnico: null,
+        precio_serviciot: precioServicio,
+        precio_domicilio: precioDomicilio,
+        acepto: this.servicios_tecnicos.acepto,
+        tipo: "Normal"
+      },
+      pago: {
+        id_tipopago: "CREDIT_CARD",
+        fecha_pago: this.obtenerFechaHoraPeru(),
+        monto_final: montoFinal,
+      },
+    };
 
-  const data = {
-    servicios_tecnicos: {
-      id_cita: null,
-      id_cliente: this.cliente.id_cliente,
-      id_servicio: this.idServicioSeleccionado,
-      id_horario: this.servicios_tecnicos.id_horario,
-      fecha_atencion: this.servicios_tecnicos.fecha_atencion,
-      id_modalidad: this.servicios_tecnicos.id_modalidad,
-      id_tarifadomicilio:
-        this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-      id_distrito:
-        this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
-      direccion:
-        this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
-      documento: this.servicios_tecnicos.documento,
-      comentario_cliente: this.servicios_tecnicos.comentario_cliente,
-      estado: "Pendiente",
-      id_usuario: null,
-      observacion_tecnico: null,
-      precio_serviciot: precioServicio,
-      precio_domicilio: precioDomicilio,
-      acepto: this.servicios_tecnicos.acepto
-    },
-    pago: {
-      id_tipopago: "CREDIT_CARD",
-      fecha_pago: this.obtenerFechaHoraPeru(),
-      monto_final: montoFinal,
-    },
-  };
-
-  console.log("Enviando a API:", data);
-
-  this.serviciosTecnicosService.registrarServicio(data).subscribe({
-    next: (resp) => {
-      Swal.fire({
-        title: "¡Registro exitoso!",
-        text: "Se ha registrado la cita de instalación con éxito.",
-        icon: "success",
-        draggable: true,
-        confirmButtonText: "Aceptar",
-      }).then(() => {
-        window.location.reload();
+      //Marcador de errores
+    if (formServicioTec.invalid) {
+      Object.values(formServicioTec.controls).forEach(control => {
+        control.markAsTouched();
       });
-    },
-    error: (err) => {
-      console.error("Error al registrar", err);
-      Swal.fire({
-        title: "Error al Registrar!",
-        text: "Hubo un problema al registrar su cita de instalación.",
-        icon: "error",
-        draggable: true
-      });
+      return;
     }
-  });
-}
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('pasarelaModal');
+      const modal = Modal.getOrCreateInstance(modalEl!);
+      modal.show();
+    }, 50);
+
+
+    this.mostrarPasarela(montoFinal, this.correo, data);
+    return;
+
+  //   this.serviciosTecnicosService.registrarServicio(data).subscribe({
+  //     next: (resp) => {
+  //       Swal.fire({
+  //         title: "¡Registro exitoso!",
+  //           html: `
+  //   <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+  //   <p>En breve recibirá un correo de confirmación.</p>
+  //   <p><strong>Gracias por elegirnos.</strong></p>
+  // `,
+  //         icon: "success",
+  //         draggable: true,
+  //         confirmButtonText: "Aceptar",
+  //       }).then(() => {
+  //         window.location.reload();
+  //       });
+  //     },
+  //     error: (err) => {
+  //       console.error("Error al registrar", err);
+  //       Swal.fire({
+  //         title: "Error al Registrar!",
+  //         text: "Hubo un problema al registrar su cita de instalación.",
+  //         icon: "error",
+  //         draggable: true
+  //       });
+  //     }
+  //   });
+  }
 
 
   obtenerFechaHoraPeru(): string {
@@ -273,5 +284,96 @@ registrarServicioInstalacion(formCita: NgForm) {
       partes.find(p => p.type === tipo)?.value || "00";
 
     return `${get("year")}-${get("month")}-${get("day")} ${get("hour")}:${get("minute")}:${get("second")}`;
+  }
+
+
+  async mostrarPasarela(monto: number, email: string, dataPago: any) {
+    const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
+      locale: 'es-PE'
+    });
+    const bricksBuilder = mp.bricks();
+    const settings = {
+      initialization: {
+        amount: 100,
+        payer: {
+          email: email,
+        }
+      },
+      customization: {
+        paymentMethods: {
+          creditCard: "all",
+          maxInstallments: 1
+        }
+      },
+      callbacks: {
+        onReady: () => {
+          console.log("CardPayment Brick listo");
+        },
+        onSubmit: (cardFormData: any) => {
+          console.log("Payload enviado:", cardFormData);
+
+          return new Promise((resolve, reject) => {
+            fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(cardFormData),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                this.serviciosTecnicosService.registrarServicio(dataPago).subscribe({
+                  next: (resp) => {
+                    Swal.fire({
+                      title: "¡Registro exitoso!",
+                                  html: `
+    <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+    <p>En breve recibirá un correo de confirmación.</p>
+    <p><strong>Gracias por elegirnos.</strong></p>
+  `,
+                      icon: "success",
+                      draggable: true,
+                      confirmButtonText: "Aceptar",
+                    }).then(() => {
+                      window.location.reload();
+                    });
+                  },
+                  error: (err) => {
+                    console.error("Error al registrar", err);
+                    Swal.fire({
+                      title: "Error al Registrar!",
+                      text: "Hubo un problema al registrar su cita de instalación.",
+                      icon: "error",
+                      draggable: true
+                    });
+
+                  }
+
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+                Swal.fire({
+                  title: "Error al Registrar!",
+                  text: "Hubo un problema al registrar su cita de diagnóstico.",
+                  icon: "error",
+                  draggable: true
+                });
+                // reject();
+              });
+          });
+        },
+        onError: (error: string) => {
+          console.error("Error en CardPayment:", error);
+        },
+      }
+    };
+
+    this.paymentBrickController = await bricksBuilder.create(
+      "cardPayment",
+      "cardPaymentBrick_container",
+      settings
+    );
+
   }
 }

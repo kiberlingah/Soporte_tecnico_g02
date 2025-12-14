@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
   
   
@@ -15,13 +16,20 @@ import { AuthService } from 'src/app/auth/auth.service';
     mostrarMenu = false;
     mostrarBuscador = false;
     
-    constructor(private auth: AuthService) {}
+    constructor(private auth: AuthService, 
+      private router: Router) {}
   
     //ngOnInit(): void {
       //this.rol = this.auth.getRole();
     //}
+    // logout() {
+    //     this.auth.logout();
+    // }
     logout() {
-        this.auth.logout();
-    }
+  localStorage.clear();
+
+  this.router.navigate(['/login'], { replaceUrl: true });
+}
+
 
   }

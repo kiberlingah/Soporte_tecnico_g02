@@ -5,11 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
 import { NgxPaginationModule } from 'ngx-pagination';
-=======
 import { NgForm } from '@angular/forms';
->>>>>>> c95f4cfdb968c1b2baf00145d7b4bc017023daf9
 
 // Interceptor versión Instalada
 import { AuthTokenInterceptor } from './auth/auth.interceptor';

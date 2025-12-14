@@ -38,37 +38,42 @@
       <form #formCitaDiagnostico="ngForm">
         <div class="form-grid">
           <div class="row">
+
             <div class="col-sm-8 mb-2">
               <label class="form-label">Nombres y Apellidos</label>
-              <input type="text" class="form-control" [(ngModel)]="nombreCompleto" name="nombres" readonly>
-            </div>
-            <div class="col-sm-4 mb-2">
-              <label class="form-label">DNI/RUC</label>
-              <input type="text" class="form-control" [(ngModel)]="citas_diagnostico.documento" name="documento"
-                id="documento" #documento="ngModel" pattern="[0-9]*" minlength="8" maxlength="11" required
-                title="Debe contener solo números (8 para DNI, 11 para RUC)" />
-              <div *ngIf="documento.errors?.['pattern'] && documento.touched" class="text-danger small mt-1">
-                Solo se permiten números.
-              </div>
-              <div *ngIf="(documento.errors?.['minlength'] || documento.errors?.['maxlength']) && documento.touched"
-                class=" text-danger small mt-1">
-                Ingrese 8 dígitos para DNI y 11 para RUC.
-              </div>
-              <div *ngIf="documento.errors?.['required'] && documento.touched" class="text-danger small mt-1">
-                Ingrese su número de documento o RUC.
+              <input type="text" class="form-control" [(ngModel)]="nombreCompleto" name="nombres" readonly required>
+              <div *ngIf="formCitaDiagnostico.submitted && !nombreCompleto" class="text-danger small mt-1">
+                Los nombres son obligatorios.
               </div>
             </div>
 
             <div class="col-sm-4 mb-2">
+              <label class="form-label">DNI/RUC</label>
+              <input type="text" class="form-control" [class.is-invalid]="documento.invalid && documento.touched"
+                [(ngModel)]="citas_diagnostico.documento" name="documento" id="documento" #documento="ngModel"
+                pattern="[0-9]*" minlength="8" maxlength="11" required />
+
+              <div *ngIf="documento.errors?.['required'] && documento.touched" class="invalid-feedback">
+                Ingrese su número de documento.
+              </div>
+              <div *ngIf="documento.errors?.['pattern'] && documento.touched" class="invalid-feedback">
+                Solo se permiten números.
+              </div>
+              <div *ngIf="(documento.errors?.['minlength'] || documento.errors?.['maxlength']) && documento.touched"
+                class="invalid-feedback">
+                Ingrese 8 dígitos para DNI o 11 para RUC.
+              </div>
+
+            </div>
+
+            <div class="col-sm-4 mb-2">
               <label class="form-label">Modalidad</label>
-              <select class="form-select" [(ngModel)]="citas_diagnostico.id_modalidad" name="id_modalidad"
-                id="id_modalidad" (change)="validarModalidad()" #id_modalidad="ngModel" required>
+              <select class="form-select" [(ngModel)]="citas_diagnostico.id_modalidad" name="id_modalidad" required >
                 <option value="">Seleccionar</option>
-                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">
-                  {{ m.nombre_modalidad }}
-                </option>
+                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
               </select>
-              <div *ngIf="id_modalidad.invalid && id_modalidad.touched" class="text-danger small mt-1">
+              <div *ngIf="formCitaDiagnostico.submitted && !citas_diagnostico.id_modalidad"
+                class="text-danger small mt-1">
                 Debe seleccionar una modalidad.
               </div>
             </div>
@@ -76,42 +81,37 @@
             <div class="col-sm-4 mb-2">
               <label class="form-label">Fecha</label>
               <input type="date" class="form-control" [(ngModel)]="citas_diagnostico.fecha_atencion"
-                name="fecha_atencion" [min]="fechaMinima" (change)="validarNoDomingo()" required
-                title="Seleccione una fecha válida">
-              <div *ngIf="!citas_diagnostico.fecha_atencion" class="text-danger small mt-1">
+                name="fecha_atencion" [min]="fechaUnica" required readonly>
+              <div *ngIf="formCitaDiagnostico.submitted && !citas_diagnostico.fecha_atencion"
+                class="text-danger small mt-1">
                 Debe seleccionar una fecha.
               </div>
             </div>
 
             <div class="col-sm-4 mb-2">
-              <!-- <label class="form-label">Hora</label>
-              <select class="form-select" [(ngModel)]="citas_diagnostico.id_horario" name="id_horario" id="id_horario">
-                <option value="">Seleccionar</option>
-                <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
-              </select> -->
             </div>
 
             <div class="col-sm-4 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
               <label class="form-label">Distrito</label>
-              <select class="form-select" [(ngModel)]="idDistritoSeleccionado" (change)="setearTarifaDomicilio()"
-                name="id_distrito">
+              <select class="form-select" [(ngModel)]="idDistritoSeleccionado" name="id_distrito" required (change)="setearTarifaDomicilio()">
                 <option value="">Seleccionar</option>
-                <option *ngFor="let d of distritos" [value]="d.id_distrito">
-                  {{ d.nombre_distrito }}
-                </option>
+                <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
               </select>
+              <div *ngIf="formCitaDiagnostico.submitted && !idDistritoSeleccionado" class="text-danger small mt-1">
+                Debe seleccionar un distrito.
+              </div>
             </div>
 
             <div class="col-sm-8 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
               <label class="form-label">Dirección</label>
               <input type="text" class="form-control" [(ngModel)]="citas_diagnostico.direccion" name="direccion"
-                #direccion="ngModel" maxlength="100" required>
-              <div *ngIf="direccion.invalid && direccion.touched" class="text-danger small mt-1">
+                required>
+              <div *ngIf="formCitaDiagnostico.submitted && !citas_diagnostico.direccion" class="text-danger small mt-1">
                 La dirección es obligatoria.
               </div>
             </div>
-            
-            <div class="col-sm-12 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
+
+           <div class="col-sm-12 mb-2" *ngIf="citas_diagnostico.id_modalidad == 3">
               <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
                 tarifaDomicilio }}</span>
             </div>
@@ -125,14 +125,26 @@
             <div class="col-sm-12">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="acepto" [(ngModel)]="citas_diagnostico.acepto"
-                  name="acepto" />
-                <a href="#" class="form-check-label text-black ms-2">Acepto los términos y condiciones</a>
+                  name="acepto" #acepto="ngModel" required
+                  [class.is-invalid]="acepto.invalid && (acepto.touched || formCitaDiagnostico.submitted)">
+                <label class="form-check-label text-black ms-2" for="acepto">
+                  Acepto los términos y condiciones
+                </label>
+                <div *ngIf="acepto.errors?.['required'] && (acepto.touched || formCitaDiagnostico.submitted)"
+                  class="invalid-feedback">
+                  Debes aceptar los términos y condiciones.
+                </div>
               </div>
             </div>
+
           </div>
         </div>
-        <button class="btn-submit" type="submit" (click)="registrarCitaDiagnostico(formCitaDiagnostico)">Pagar Cita de
-          Diagnóstico</button>
+
+        <div class="text-center mt-4 mb-5">
+          <button class="btn-submit" type="submit" (click)="registrarCitaDiagnostico(formCitaDiagnostico)">
+            Pagar Cita de Diagnóstico
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -142,108 +154,131 @@
         <div class="wrapper2">
           <div class="formulario2  mb-5">
             <h2 class="panel-title1 mb-4">Instalación</h2>
+            
+          <form #formServicioTec="ngForm" >
+            <div class="form-grid">
+              <div class="row g-3">
 
-            <form>
-              <div class="form-grid ">
-                <div class="row">
-                  <div class="col-sm-8 mb-2">
-                    <label class="form-label">Programa a Instalar</label>
-                    <select class="form-select" name="id_servicio" id="id_servicio" [(ngModel)]="idServicioSeleccionado"
-                      (change)="setearPrecio()">
-                      <option value="">Seleccionar</option>
-                      <option *ngFor="let s of servicios" [value]="s.id_servicio">
-                        {{ s.descripcion_servicio }}
-                      </option>
-                    </select>
+                <div class="col-md-8">
+                  <label class="form-label">Programa a Instalar</label>
+                  <select class="form-select" name="id_servicio" id="id_servicio" [(ngModel)]="idServicioSeleccionado"
+                    #id_servicio="ngModel" required (change)="setearPrecio()">
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let s of servicios" [value]="s.id_servicio">
+                      {{ s.descripcion_servicio }}
+                    </option>
+                  </select>
+                  <div *ngIf="id_servicio.invalid && id_servicio.touched" class="text-danger small mt-1">
+                    Debe seleccionar un programa.
                   </div>
+                </div>
 
-                  <div class="col-sm-4 mb-2">
-                    <label class="form-label">Precio (S/)</label>
-                    <input type="number" class="form-control" readonly [value]="precioServicio" step="0.01"
-                      name="precio_serviciot" id="precio_serviciot" />
+                <div class="col-md-4">
+                  <label class="form-label">Precio (S/)</label>
+                  <input type="number" class="form-control" readonly [value]="precioServicio" step="0.01"
+                    name="precio_serviciot" id="precio_serviciot" />
+                </div>
+
+                <div class="col-md-8">
+                  <label class="form-label">Nombres y Apellidos</label>
+                  <input class="form-control" type="text" id="nombres" [(ngModel)]="nombreCompleto" name="nombres"
+                    readonly />
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label">DNI/RUC</label>
+                  <input class="form-control" type="text" id="documento_s" [(ngModel)]="servicios_tecnicos.documento"
+                    name="documento_s" #documento_s="ngModel" pattern="[0-9]*" minlength="8" maxlength="11" required />
+                  <div *ngIf="documento_s.errors?.['required'] && documento_s.touched" class="text-danger small mt-1">
+                    Ingrese su número de documento.
                   </div>
-
-                  <div class="col-sm-8 mb-2">
-                    <label class="form-label">Nombres y Apellidos</label>
-                    <input class="form-control" type="text" id="nombres" [(ngModel)]="nombreCompleto" name="nombres"
-                      readonly />
+                  <div *ngIf="documento_s.errors?.['pattern'] && documento_s.touched" class="text-danger small mt-1">
+                    Solo se permiten números.
                   </div>
-
-
-                  <div class="col-sm-4 mb-2">
-                    <label class="form-label">DNI/RUC </label>
-                    <input class="form-control" type="text" id="documento" [(ngModel)]="servicios_tecnicos.documento"
-                      name="documento" placeholder="Ej. 12345678" />
+                  <div *ngIf="(documento_s.errors?.['minlength'] || documento_s.errors?.['maxlength']) && documento_s.touched"
+                    class="text-danger small mt-1">
+                    Ingrese 8 dígitos para DNI o 11 para RUC.
                   </div>
+                </div>
 
-                  <div class="col-sm-4 mb-2">
-                    <label class="form-label">Modalidad</label>
-                    <select class="form-select" [(ngModel)]="servicios_tecnicos.id_modalidad" name="id_modalidad"
-                      id="id_modalidad" (change)="validarModalidad()">
-                      <option value="">Seleccionar</option>
-                      <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
-                    </select>
+                <div class="col-md-4">
+                  <label class="form-label">Modalidad</label>
+                  <select class="form-select" [(ngModel)]="servicios_tecnicos.id_modalidad" name="id_modalidad"
+                    #id_modalidad="ngModel" required (change)="validarModalidad()">
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
+                  </select>
+                  <div *ngIf="id_modalidad.invalid && id_modalidad.touched" class="text-danger small mt-1">
+                    Debe seleccionar una modalidad.
                   </div>
+                </div>
 
-                  <div class="col-sm-4 mb-2">
-                    <label class="form-label">Fecha</label>
-                    <input class="form-control" type="date" id="fecha_atencion"
-                      [(ngModel)]="servicios_tecnicos.fecha_atencion" name="fecha_atencion" [min]="fechaMinima"
-                      (change)="validarNoDomingo()" />
+                <div class="col-md-4">
+                  <label class="form-label">Fecha</label>
+                  <input class="form-control" type="date" id="fecha_atencion"
+                    [(ngModel)]="servicios_tecnicos.fecha_atencion" name="fecha_atencion" #fecha_atencion="ngModel"
+                    required [min]="fechaUnica" (change)="validarNoDomingo()" />
+                  <div *ngIf="fecha_atencion.invalid && fecha_atencion.touched" class="text-danger small mt-1">
+                    Debe seleccionar una fecha.
                   </div>
+                </div>
 
-                  <div class="col-sm-4 mb-2">
-                    <!-- <label class="form-label">Hora</label>
-                    <select class="form-select" [(ngModel)]="servicios_tecnicos.id_horario" name="id_horario"
-                      id="id_horario">
-                      <option value="">Seleccionar</option>
-                      <option *ngFor="let h of horarios" [value]="h.id_horario">{{ h.horario }}</option>
-                    </select> -->
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-4" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                  <label class="form-label">Distrito</label>
+                  <select class="form-select" [(ngModel)]="idDistritoSeleccionado" name="distrito" #distrito="ngModel"
+                    required (change)="setearTarifaDomicilio()">
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
+                  </select>
+                  <div *ngIf="distrito.invalid && distrito.touched" class="text-danger small mt-1">
+                    Debe seleccionar un distrito.
                   </div>
+                </div>
 
-                  <div class="col-sm-4 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-                    <label class="form-label">Distrito</label>
-                    <select class="form-select" [(ngModel)]="idDistritoSeleccionado" (change)="setearTarifaDomicilio()"
-                      name="distrito">
-                      <option value="">Seleccionar</option>
-                      <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
-                    </select>
+                <div class="col-md-8" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                  <label class="form-label">Dirección</label>
+                  <input class="form-control" type="text" id="direccion" [(ngModel)]="servicios_tecnicos.direccion"
+                    name="direccion"  required />
+                  <div *ngIf="formServicioTec.submitted && !servicios_tecnicos.direccion" class="text-danger small mt-1">
+                    La dirección es obligatoria.
                   </div>
+                </div>
+                            <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
+              <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
+                tarifaDomicilio }}</span>
+            </div>
 
-                  <div class="col-sm-8 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-                    <label class="form-label">Dirección</label>
-                    <input class="form-control" type="text" id="direccion" [(ngModel)]="servicios_tecnicos.direccion"
-                      name="direccion" placeholder="Dirección completa" />
-                  </div>
+                <div class="col-md-12">
+                  <label class="form-label">Comentario</label>
+                  <textarea class="form-control" id="comentario_cliente"
+                    [(ngModel)]="servicios_tecnicos.comentario_cliente" name="comentario_cliente" rows="3"
+                    placeholder="Escribe algún detalle adicional..."></textarea>
+                </div>
 
-                  <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-                    <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
-                      tarifaDomicilio }}</span>
-                  </div>
-
-
-                  <div class="col-sm-12 mb-3">
-                    <label class="form-label">Comentario</label>
-                    <textarea class="form-control" id="comentario_cliente"
-                      [(ngModel)]="servicios_tecnicos.comentario_cliente" name="comentario_cliente" rows="3"
-                      placeholder="Escribe algún detalle adicional..."></textarea>
-                  </div>
-
-                  <div class="col-sm-12">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="acepto"
-                        [(ngModel)]="servicios_tecnicos.acepto" name="acepto" />
-                      <a href="#" class="form-check-label text-black ms-2">Acepto los términos y condiciones</a>
+                <div class="col-md-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="acepto_s" [(ngModel)]="servicios_tecnicos.acepto"
+                      name="acepto_s" #acepto_s="ngModel" required>
+                    <label class="form-check-label text-black ms-2" for="acepto_s">
+                      Acepto los términos y condiciones
+                    </label>
+                    <div *ngIf="acepto_s.invalid && acepto_s.touched" class="text-danger small mt-1">
+                      Debes aceptar los términos y condiciones.
                     </div>
                   </div>
+                </div>
 
+                <div class="col-md-12 text-center mt-4 mb-5">
+                  <button class="btn-submit" type="submit" (click)="registrarServicioInstalacion(formServicioTec)">
+                    Pagar Servicio de Instalación
+                  </button>
                 </div>
               </div>
-
-              <button type="submit" class="btn-submit" (click)="registrarServicioInstalacion()">
-                Pagar Servicio
-              </button>
-            </form>
+            </div>
+          </form>
           </div>
         </div>
       </div>
@@ -252,3 +287,23 @@
 </div>
 
 <app-footer-simple></app-footer-simple>
+
+<div class="modal fade" id="pasarelaModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Mercado pago </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+
+        <div id="cardPaymentBrick_container"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

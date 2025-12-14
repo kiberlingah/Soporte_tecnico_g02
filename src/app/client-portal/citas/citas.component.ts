@@ -30,9 +30,7 @@ export class CitasComponent implements OnInit {
   nombreCompleto: string = '';
   paymentBrickController: any;
   correo: string = '';
-  //hoy: string = '';
-
-  // Estado del formulario
+ 
   citas_diagnostico: any = {
     id_cliente: '',
     id_horario: '',
@@ -168,24 +166,6 @@ export class CitasComponent implements OnInit {
 
 
 registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
-  // 🔥 Marca todos los campos como tocados para activar los mensajes en rojo
-  formCitaDiagnostico.form.markAllAsTouched();
-
-  // Validación global antes de enviar
-  formCitaDiagnostico.form.markAllAsTouched();
-
-if (formCitaDiagnostico.invalid) {
-  Swal.fire({
-    title: "Registro incompleto",
-    text: "Por favor completa todos los campos obligatorios antes de continuar.",
-    icon: "warning",
-    confirmButtonText: "Aceptar"
-  });
-  return;
-}
-
-
-  // Si todo está completo, continúa con el envío
   const idCliente = Number(localStorage.getItem('id_cliente'));
   const precioCita = 50.00;
   const precioDomicilio = this.citas_diagnostico.id_modalidad == 3
@@ -210,6 +190,8 @@ if (formCitaDiagnostico.invalid) {
       observacion_tecnico: null,
       precio_diagnostico: precioCita,
       precio_domicilio: precioDomicilio,
+      acepto: this.citas_diagnostico.acepto,
+      tipo: "Normal"
     },
     pago: {
       id_tipopago: "CREDIT_CARD",
@@ -218,14 +200,18 @@ if (formCitaDiagnostico.invalid) {
     },
   };
 
-
+  //Marcador de errores
+    if (formCitaDiagnostico.invalid) {
+      Object.values(formCitaDiagnostico.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      return;
+    }
         setTimeout(() => {
                 const modalEl = document.getElementById('pasarelaModal');
                 const modal = Modal.getOrCreateInstance(modalEl!);
                 modal.show();
-              }, 50);
-
-  
+              }, 50);  
     this.mostrarPasarela(montoFinal, this.correo, data);
     return;
 
@@ -290,7 +276,11 @@ if (formCitaDiagnostico.invalid) {
                   next: (resp) => {
                     Swal.fire({
                       title: "¡Registro exitoso!",
-                      text: "Se ha registrado la cita de diagnóstico con éxito. En breve recibirá un correo de confimación. Gracias por elegirnos",
+                                  html: `
+    <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+    <p>En breve recibirá un correo de confirmación.</p>
+    <p><strong>Gracias por elegirnos.</strong></p>
+  `,
                       icon: "success",
                       draggable: true,
                       confirmButtonText: "Aceptar",
@@ -337,5 +327,9 @@ if (formCitaDiagnostico.invalid) {
     );
 
   }
+
+  onCloseModal() {
+  (document.activeElement as HTMLElement)?.blur();
+}
 
 }

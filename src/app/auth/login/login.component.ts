@@ -15,35 +15,8 @@ export class LoginComponent {
   correo: string = '';
   contrasena: string = '';
 
-  // Mensajes de feedback
-  mensajeExito: string = '';
-  mensajeError: string = '';
 
   constructor(private clienteService: ClienteService, private router: Router) { }
-
-  // iniciarSesion(formValue: any): void {
-  //   const credentials = {
-  //     correo: this.correo,
-  //     contrasena: this.contrasena // ⚠️ el backend espera "password"
-  //   };
-  //   this.clienteService.loginCliente(credentials).subscribe({
-  //     next: (res: any) => {
-  //       if (res.token) {
-  //         //localStorage.setItem('token', res.token);
-  //         //localStorage.setItem('id_cliente', res.id_cliente);
-  //         this.mensajeExito = '✅ Login exitoso';
-  //         this.mensajeError = '';
-  //         // Redirige al perfil o dashboard
-  //         this.router.navigate(['/cliente/dashboard']);
-  //       }
-  //     },
-  //     error: (err: any) => {
-  //       console.error('Error en login:', err);
-  //       this.mensajeError = '❌ Credenciales inválidas';
-  //       this.mensajeExito = '';
-  //     }
-  //   });
-  // }
 
   iniciarSesion(form: NgForm): void {
 
@@ -58,8 +31,7 @@ export class LoginComponent {
           localStorage.setItem('token', res.token);
           const payload: any = jwtDecode(res.token);
           localStorage.setItem('id_cliente', payload.id_cliente);
-          this.mensajeExito = '✅ Login exitoso';
-          this.mensajeError = '';
+
           this.router.navigate(['/cliente/dashboard']);
         }
       },
@@ -71,7 +43,9 @@ export class LoginComponent {
           text: "El correo o la contraseña no son correctos. Por favor, comprueba tus credenciales e intenta de nuevo.",
           confirmButtonText: "Aceptar",
         });
-      }
+        
+      },
+      
     });
   }
 

@@ -22,6 +22,7 @@ import { CitaspAdminComponent } from './company_portal/citasp-admin/citasp-admin
 import { ServiciospAdminComponent } from './company_portal/serviciosp-admin/serviciosp-admin.component';
 import { CitaspTecnicoComponent } from './company_portal/citasp-tecnico/citasp-tecnico.component';
 import { ServiciospTecnicoComponent } from './company_portal/serviciosp-tecnico/serviciosp-tecnico.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   //Clientes
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'cliente',
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: DashboardClienteComponent },
       { path: 'dashboard', component: DashboardClienteComponent },
@@ -45,6 +47,7 @@ const routes: Routes = [
   { path: 'empresa', component: LoginEmpresaComponent},
   {
     path: 'company',
+    canActivate: [AuthGuard],
     children: [
       { path: 'portalAdminEmp', component: PortalAdminEmpComponent },
       {path: 'portalTecnico', component: PortalTecnicoComponent},
@@ -70,7 +73,8 @@ const routes: Routes = [
 
 
   // Redirección por defecto
-  { path: '', redirectTo: '/inicio', pathMatch: 'full' }
+  //{ path: '', redirectTo: '/inicio', pathMatch: 'full' }
+  { path: '**', redirectTo: 'inicio' }
 ];
 
 @NgModule({

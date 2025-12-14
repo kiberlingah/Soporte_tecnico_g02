@@ -15,7 +15,7 @@ export class NavTecnicosComponent {
       //}
       logout() {
           this.auth.logout();
-          return this.router.navigate(['/empresa']);
+          return this.router.navigate(['/empresa'], { replaceUrl: true });
       }
 
 }
