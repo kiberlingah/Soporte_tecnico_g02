@@ -6,10 +6,11 @@
 
 
 <section class="hero-video">
-  <!-- Video de fondo -->
-  <video autoplay muted loop playsinline class="video-fondo" id="inicio">
-    <source [src]="'assets/'+'video-fondo.mp4'" type="video/mp4"> 
-  </video>
+  <!-- Imagen de fondo desde URL -->
+  <img src="https://i.pinimg.com/736x/7b/a3/ef/7ba3ef5f9bc9f9bd94e02b4119c3a7b1.jpg" 
+       alt="Imagen Tecnologica" 
+       class="imagen-fondo" 
+       id="inicio">
 
   <!-- Navbar responsive con hamburguesa -->
   <nav class="navbar classnavbar2 navbar-dark navbar-expand-lg rounded-pill px-4 py-2 mb-5 mx-4 mt-4">
@@ -19,8 +20,7 @@
       <!-- Logo -->
       <a [routerLink]="[]" class="navbar-brand d-flex align-items-center nav-link" fragment="inicio">
         <!--href="#inicio" -->
-        <img src="https://i.pinimg.com/1200x/dd/83/fd/dd83fd3bfcc60f6e3563e5db3b4f8eaa.jpg" alt="Logo" width="150"
-          height="40">
+        <img src="assets\logo.jpg" alt="Logo" width="150" height="40">
       </a>
 
       <!-- Botón hamburguesa -->
@@ -38,7 +38,7 @@
           <a [routerLink]="[]" fragment="modalidadesServicio" class="nav-link">Modalidades</a>
           <a [routerLink]="[]" fragment="contacto" class="nav-link">Contacto</a>
           <a routerLink="/login" class="btn rounded-pill px-4 py-2 fw-semibold text-white"
-            style="background-color:#5f6fff;">
+            style="background-color:#0e0efc;">
             Iniciar sesión
           </a>
         </div>
@@ -52,7 +52,7 @@
           <a [routerLink]="[]" fragment="modalidadesServicio" class="nav-link">Modalidades</a>
           <a [routerLink]="[]" fragment="contacto" class="nav-link">Contacto</a>
           <a routerLink="/login" class="btn rounded-pill px-4 py-2 fw-semibold text-white w-100"
-            style="background-color:#5f6fff;">
+            style="background-color:#0e0efc;">
             Iniciar sesión
           </a>
         </div>
@@ -100,7 +100,7 @@
           Nuestra <span style="font-family: 'Dancing Script', cursive;">Misión</span>
         </h2>
         <p class="fs-5" style="font-family: 'Rajdhani', sans-serif; color:#2a05ff;">
-          En <strong>AsiQueUD</strong> brindamos soporte técnico web confiable, rápido y seguro,
+          En <strong>VAMSolutions</strong> brindamos soporte técnico web confiable, rápido y seguro,
           asegurando la continuidad de los sistemas digitales de nuestros clientes.
           Nuestro compromiso es ofrecer soluciones integrales de software y hardware con atención personalizada.
         </p>
@@ -122,8 +122,8 @@
 
 
     <!-- Bloque 2: mision con título centrado -->
-    <div class="row g-0 bloque-mision position-relative">
-      <div class="col-12 imagen-mision"></div>
+    <div class="row g-0 bloque-mision-tecnologia position-relative">
+     <div class="col-12 imagen-tecnologia"></div>
       <div class="titulo-mision text-center position-absolute top-50 start-50 translate-middle text-white">
         <h2 class="display-5 fw-bold">
           Soluciones <span class="fst-italic">Tecnológicas</span>
@@ -165,7 +165,7 @@
           Nuestra <span style="font-family:'Dancing Script', cursive;">Vision</span>
         </h2>
         <p class="fs-5" style="font-family:'Rajdhani', sans-serif; color:#f0f8ff; text-align:right;">
-          En <strong>AsiQueUD</strong> ofrecemos soporte remoto inmediato, mantenimiento preventivo para garantizar la
+          En <strong>VAMSolutions</strong> ofrecemos soporte remoto inmediato, mantenimiento preventivo para garantizar la
           continuidad de tus sistemas, seguridad digital para proteger tu información y consultoría tecnológica que
           impulsa la innovación en tu empresa, todo con rapidez, confianza y excelencia profesional.
         </p>
@@ -303,7 +303,7 @@
       <!-- Texto centro -->
       <div class="col-md-4">
         <div class="cuadro-modalidadesServicio texto-cuadro">
-          <h5 style="font-family:'Rajdhani', sans-serif; color:#8A2BE2;">Modalidad Presencial</h5>
+          <h5 style="font-family:'Rajdhani', sans-serif; color:#000080;">Modalidad Presencial</h5>
           <p style="font-family:'Rajdhani', sans-serif; color:#03153a;">
             Atención técnica directa en nuestras oficinas, ideal para diagnósticos complejos y soporte especializado.
           </p>
@@ -330,7 +330,7 @@
       <!-- Texto izquierda -->
       <div class="col-md-4">
         <div class="cuadro-modalidadesServicio texto-cuadro">
-          <h5 style="font-family:'Rajdhani', sans-serif; color:#8A2BE2;">Modalidad Remota</h5>
+          <h5 style="font-family:'Rajdhani', sans-serif; color:#000080;">Modalidad Remota</h5>
           <p style="font-family:'Rajdhani', sans-serif; color:#03153a;">
             Soporte técnico a distancia vía conexión segura, ideal para resolver problemas sin salir de casa.
           </p>
@@ -353,7 +353,7 @@
       <!-- Texto derecha -->
       <div class="col-md-4">
         <div class="cuadro-modalidadesServicio texto-cuadro">
-          <h5 style="font-family:'Rajdhani', sans-serif; color:#8A2BE2;">Modalidad a Domicilio</h5>
+          <h5 style="font-family:'Rajdhani', sans-serif; color:#000080;">Modalidad a Domicilio</h5>
           <p style="font-family:'Rajdhani', sans-serif; color:#03153a;">
             Un técnico especializado visita tu ubicación para brindar soluciones personalizadas y confiables.
           </p>
@@ -376,7 +376,7 @@
 <section id="contacto" class="py-5 contacto-seccion text-center text-white">
   <div class="container">
     <h2 class="mb-3 fw-bold text-uppercase" style="font-family:'Orbitron', sans-serif; color:#5ad7f3;">
-      ¡Conéctate con AsiQueUD!
+      ¡Conéctate con VAMSolutions!
     </h2>
     <p class="mb-4" style="font-family:'Rajdhani', sans-serif; color:#f0f8ff;">
       Regístrate para recibir soporte técnico inmediato, asesoría personalizada y las últimas novedades en innovación
@@ -403,7 +403,7 @@
       <div class="col-md-5 mb-4 ps-5 me-5">
         <h5 class="text-info" style="font-family:'Orbitron', sans-serif;">Soporte Técnico Web</h5>
         <p class="small" style="font-family:'Rajdhani', sans-serif;">
-          En <strong>AsiQueUD</strong> garantizamos continuidad digital con soporte remoto, mantenimiento preventivo y
+          En <strong>VAMSolutions</strong> garantizamos continuidad digital con soporte remoto, mantenimiento preventivo y
           seguridad avanzada.
         </p>
       </div>
@@ -443,7 +443,7 @@
     </div>
     <hr class="bg-secondary">
     <p class="text-center small mb-0" style="font-family:'Rajdhani', sans-serif;">
-      &copy; 2025 <strong>AsiQueUD</strong> | Sistema de Soporte Técnico. Innovación y confianza para tu empresa.
+      &copy; 2025 <strong>VAMSolutions</strong> | Sistema de Soporte Técnico. Innovación y confianza para tu empresa.
     </p>
   </div>
 </footer>

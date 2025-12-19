@@ -1,14 +1,14 @@
-//Seccion fondo
+/* Sección fondo */
 .hero-video {
   height: 90vh;
   overflow: hidden;
   position: relative; /* asegura que todo se posicione dentro */
 }
+
 .hero-video h1,
 .hero-video p {
-  text-shadow: 0 2px 6px rgba(89, 0, 255, 0.6);
+  text-shadow: 0 2px 6px #000080;
 }
-
 
 nav{
     /*background-color: #0d1b3f;*/
@@ -29,14 +29,15 @@ nav{
   color: #03cdffa2;
 }
 
-.video-fondo {
+/* Imagen de fondo (antes era video) */
+.imagen-fondo {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  z-index: 1; /* el video queda detrás */
+  object-fit: cover; /* ajusta la imagen sin deformarla */
+  z-index: 1; /* la imagen queda detrás */
 }
 
 .hero-video nav,
@@ -49,7 +50,7 @@ nav{
 }
 
 .hero-video p {
-  color: #5f53ff; /* blanco suave */
+  color: #000080; /* blanco suave */
 }
 
 .hero-video .nav-link {
@@ -58,7 +59,7 @@ nav{
 }
 
 .hero-video .btn-login {
-  background-color: #8A2BE2;
+  background-color: #000080;
   color: rgb(0, 195, 255);
 }
 
@@ -109,8 +110,7 @@ nav{
 
 /* Texto */
 .texto-cuadro {
-  background-color: #f5f8ff;      /* ✅ azul muy claro institucional */
-  padding: 2rem;
+  background-color: #f5f8ff;      
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -124,7 +124,7 @@ nav{
   font-family: 'Rajdhani', sans-serif;
   font-weight: 600;
   font-size: 1.3rem;
-  color: #8A2BE2;                 /* ✅ violeta institucional */
+  color: #000080;                 
   margin-bottom: 0.5rem;
 }
 
@@ -132,13 +132,13 @@ nav{
 .texto-cuadro p {
   font-family: 'Rajdhani', sans-serif;
   font-size: 1rem;
-  color: #03153a;                 /* ✅ azul oscuro para contraste */
+  color: #03153a;                 
   margin-bottom: 1rem;
 }
 
 /* Botón */
 .texto-cuadro a.btn {
-  background-color: #8A2BE2;      /* violeta institucional */
+  background-color: #000080;      
   color: #fff;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
@@ -150,8 +150,8 @@ nav{
 }
 
 .texto-cuadro a.btn:hover {
-  background-color: #5ad7f3;      /* azul eléctrico al hover */
-  color: #03153a;                 /* contraste sobre azul */
+  background-color: #5ad7f3;      
+  color: #03153a;                
   box-shadow: 0 0 12px rgba(90,215,243,0.6);
 }
 
@@ -179,6 +179,20 @@ nav{
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
+
+/* ===== Bloque Soluciones Tecnológicas ===== */
+.bloque-mision-tecnologia {
+  position: relative;
+  min-height: 400px;
+}
+
+.imagen-tecnologia {
+  background-image: url('https://i.pinimg.com/1200x/0f/37/9a/0f379a1f988e3f3112e279129307a734.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+
 /* Bloque Mision */
 .bloque-mision {
   background-color: #000;
@@ -203,7 +217,7 @@ nav{
 }
 .bloque-vision img {
   width: 100%;
-  height: 270px;            /* ✅ más pequeño que antes */
+  height: 270px;           
   object-fit: cover;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.4);
@@ -216,7 +230,7 @@ nav{
 
 .cuadro-servicio {
   width: 100%;
-  aspect-ratio: 1 / 1;         /* ✅ fuerza que sean cuadrados */
+  aspect-ratio: 1 / 1;        
   object-fit: cover;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.4);
@@ -240,18 +254,18 @@ nav{
 .seccion-servicios {
   background-color: #03153a;
   color: #f0f8ff;
-  min-height: 650px;              /* ✅ más alto */
-  display: flex;                  /* ✅ activa flexbox */
+  min-height: 650px;              
+  display: flex;                 
   flex-direction: column;
-  justify-content: center;        /* ✅ centra verticalmente */
+  justify-content: center;       
   align-items: center;
-  padding-top: 60px;              /* ✅ espacio arriba */
+  padding-top: 60px;             
   padding-bottom: 80px;
 }
 
 
 .servicio-cuadro {
-  height: 280px;                  /* ✅ más alto */
+  height: 280px;                  
   position: relative;
   overflow: hidden;
   margin-bottom: 1rem;
@@ -265,7 +279,7 @@ nav{
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: rgba(138,43,226,0.8);
+  background: #0e0efc;
   margin: 0;
   padding: 0.6rem 0.5rem;
   font-size: 1.15rem;
@@ -318,8 +332,8 @@ nav{
 
 .campo-email:focus {
   outline: none;
-  border-color: #8A2BE2;       /* violeta institucional al focus */
-  box-shadow: 0 0 10px rgba(138,43,226,0.6);
+  border-color: #00008B;       /* violeta institucional al focus */
+  box-shadow: 0 0 10px #000080;
 }
 
 .campo-email::placeholder {
@@ -328,7 +342,7 @@ nav{
 }
 
 .boton-suscribir {
-  background-color: #8A2BE2;
+  background-color: #000080;
   border-radius: 50px;
   font-weight: 600;
   color: white;
@@ -359,71 +373,6 @@ nav{
 
 
 
-//Seccion chatbot
-/* Icono flotante */
-.chatbot-icono {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #8A2BE2, #5ad7f3); // violeta + celeste bebé
-  color: white;
-  border-radius: 50%;
-  font-size: 1.6rem;
-  cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease;
-  z-index: 1050;
-}
-
-.chatbot-icono:hover {
-  transform: scale(1.1);
-}
-
-/* Ventana de chat */
-.chatbot-ventana {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 340px;
-  border-radius: 15px;
-  overflow: hidden;
-  z-index: 1050;
-}
-
-.card-header {
-  background: linear-gradient(135deg, #8A2BE2, #5ad7f3); // degradado institucional
-  color: white;
-  font-weight: 600;
-}
-
-.chat-body {
-  height: 280px;
-  overflow-y: auto;
-  background: #f9f9f9;
-  padding: 12px;
-}
-
-/* Mensajes estilo burbuja */
-.mensaje-bot {
-  background: #e9ecef;
-  color: #03153a;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 80%;
-  font-size: 0.9rem;
-}
-
-.mensaje-user {
-  background: #5ad7f3; // celeste bebé
-  color: #03153a;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 80%;
-  margin-left: auto;
-  font-size: 0.9rem;
-}
 
 /* Input */
 .campo-input {
@@ -432,7 +381,7 @@ nav{
 
 /* Botón enviar */
 .btn-enviar {
-  background-color: #8A2BE2; // violeta institucional
+  background-color: #033dfc; // violeta institucional
   color: white;
   border-radius: 50px;
   transition: all 0.3s ease;
