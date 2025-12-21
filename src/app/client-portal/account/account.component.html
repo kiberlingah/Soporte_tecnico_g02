@@ -27,7 +27,7 @@
       <!-- ENCABEZADO -->
       <div class="text-center mb-5 mt-5">
         <p class="mb-2 title_seccion1">⚙️ Configuración de Cuenta</p>
-        <div class="mx-auto mb-4" style="width:60px; height:4px; background:#905BF4; border-radius:4px;"></div>
+<div class="line-title"></div>
         <p class="mb-4">Actualiza tus datos personales, gestiona tu acceso y mantén tu cuenta segura y activa.</p>
       </div>
 
@@ -35,24 +35,24 @@
       <div class="row mt-4 text-center">
         <div class="col-md-4 mb-3">
           <div
-            class="p-4 rounded-4 shadow-sm bg-light border-start border-4 border-primary animate__animated animate__fadeInUp">
-            <i class="bi bi-shield-lock-fill fs-2 text-primary"></i>
+            class="p-4 rounded-4 shadow-sm bg-light border-start border-4 border-info1 animate__animated animate__fadeInUp">
+            <i class="bi bi-shield-lock-fill fs-2 text-info1"></i>
             <h6 class="mt-2">Seguridad activa</h6>
             <p class="text-muted small">Tu contraseña está cifrada y protegida.</p>
           </div>
         </div>
         <div class="col-md-4 mb-3">
           <div
-            class="p-4 rounded-4 shadow-sm bg-light border-start border-4 border-success animate__animated animate__fadeInUp animate__delay-1s">
-            <i class="bi bi-envelope-check-fill fs-2 text-success"></i>
+            class="p-4 rounded-4 shadow-sm bg-light border-start border-4 border-primary1 animate__animated animate__fadeInUp animate__delay-1s">
+            <i class="bi bi-envelope-check-fill fs-2 text-primary1"></i>
             <h6 class="mt-2">Correo verificado</h6>
             <p class="text-muted small">Tu correo está confirmado y activo.</p>
           </div>
         </div>
         <div class="col-md-4 mb-3">
           <div
-            class="p-4 rounded-4 shadow-sm bg-light border-start border-4 border-warning animate__animated animate__fadeInUp animate__delay-2s">
-            <i class="bi bi-clock-history fs-2 text-warning"></i>
+            class="p-4 rounded-4 shadow-sm bg-light border-start border-4 border-primary2 animate__animated animate__fadeInUp animate__delay-2s">
+            <i class="bi bi-clock-history fs-2 text-primary2"></i>
             <h6 class="mt-2">Último acceso</h6>
             <p class="text-muted small">Hace 2 días.</p>
           </div>
@@ -67,8 +67,7 @@
             </h3>
 
             <!-- Formulario principal (solo lectura) -->
-            <form class="row g-4 needs-validation" novalidate>
-              <!-- Nombres -->
+            <form class="row g-4 needs-validation cuenta-formulario" novalidate>              <!-- Nombres -->
               <div class="col-md-6">
                 <label class="form-label">Nombres</label>
                 <div class="input-group">
@@ -104,15 +103,6 @@
                 </div>
               </div>
 
-              <!-- Contraseña -->
-              <!-- <div class="col-12">
-                <label class="form-label">Contraseña <span class="text-muted">(oculta)</span></label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light"><i class="bi bi-lock-fill"></i></span>
-                  <input type="password" class="form-control" [value]="cliente.contrasena" readonly>
-                </div>
-              </div> -->
-
               <!-- Botones -->
               <div class="col-12 d-flex justify-content-end gap-3 mt-3">
                 <button type="button" class="btn btn-outline-primary px-4" data-bs-toggle="modal"
@@ -131,10 +121,10 @@
 
       <!-- Modal Editar -->
       <div class="modal fade" id="modalEditar" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content rounded-4 shadow">
-            <div class="modal-header">
-              <h5 class="modal-title text-primary"><i class="bi bi-pencil-fill me-2"></i>Editar Cuenta</h5>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content rounded-4  shadow-lg border-0">
+            <div class="modal-header bg-primary text-white rounded-top-4">
+              <h5 class="modal-title"><i class="bi bi-pencil-fill me-2"></i>Editar Cuenta</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -178,9 +168,9 @@
                   <input type="password" class="form-control" formControlName="contrasenaActual"
                     placeholder="Ingrese su contraseña actual">
 
-                  <span class="text-primary d-block mt-1">
-                    Ingrese su contraseña actual para actualizar sus datos
-                  </span>
+                  <small class="text-primary ms-1">
+                    * Ingrese su contraseña actual para actualizar sus datos
+                  </small>
 
                   <div class="text-danger mt-1"
                     *ngIf="formCuenta.get('contrasenaActual')?.touched && formCuenta.get('contrasenaActual')?.invalid">
@@ -196,7 +186,7 @@
 
               </form>
 
-              <div class="modal-footer">
+              <div class="modal-footer border-0">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button class="btn btn-outline-primary" (click)="editarCuenta()">Guardar</button>
               </div>
@@ -208,15 +198,16 @@
       <!-- Modal Eliminar -->
       <div class="modal fade" id="modalEliminar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content rounded-4 shadow">
-            <div class="modal-header">
-              <h5 class="modal-title text-danger"><i class="bi bi-trash-fill me-2"></i>Eliminar Cuenta</h5>
+          <div class="modal-content rounded-4 shadow-lg border-0">
+            <div class="modal-header bg-danger text-white rounded-top-4">
+              <h5 class="modal-title"><i class="bi bi-trash-fill me-2"></i>Eliminar Cuenta</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-              <p>⚠️ Tu cuenta ha sido marcada para eliminación.<br>
-                Tienes 30 días para recuperarla o conservar tus datos.<br>
-                Pasado este plazo, tu cuenta será eliminada permanentemente.</p>
+            <div class="modal-body text-center">
+              <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 4rem;"></i>
+              <p>Si usted elige la opción "Eliminar", su cuenta será marcada para eliminación.<br>
+                Tiene un máximo de 30 días para recuperarla y/o conservar sus datos.<br>
+                Pasado este plazo, su cuenta será eliminada permanentemente.</p>
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

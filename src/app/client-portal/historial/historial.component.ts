@@ -6,10 +6,12 @@ import { ModalidadService } from 'src/app/services/modalidad.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Modal } from 'bootstrap';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environment/environment';
 import { CitaService } from 'src/app/services/cita.service';
 import { ServiciosTecnicosService } from '../servicios_tecnicos/service/servicios_tecnicos.service';
+import Swal from 'sweetalert2';
 
-
+declare var MercadoPago: any;
 @Component({
   selector: 'app-historial',
   templateUrl: './historial.component.html',
@@ -23,6 +25,10 @@ export class HistorialComponent implements OnInit {
   horarios: any[] = [];
   usuarios: any[] = [];
   serviciosRepair: any[] = [];
+  cliente: any = {};
+   paymentBrickController: any;
+  correo: string = '';
+
 
   idCliente!: number;
   idCita!: number;
@@ -50,6 +56,18 @@ export class HistorialComponent implements OnInit {
     this.cargarCatalogos().then(() => {
       this.cargarPagos();
     });
+
+    const token = localStorage.getItem('token');
+    const idCliente = Number(localStorage.getItem('id_cliente'));
+
+        if (token && idCliente) {
+      this.clienteService.obtenerCliente(idCliente, token).subscribe({
+        next: data => {
+          this.cliente = data;
+        },
+        error: err => console.error('Error al cargar cliente:', err)
+      });
+    }
   }
 
   async cargarCatalogos() {
@@ -101,35 +119,12 @@ export class HistorialComponent implements OnInit {
 
   getUsuarioDatos(id: number): string {
     const u = this.usuarios.find(x => x.id_usuario == id);
-    console.log(u);
+    //console.log(u);
     return u ? `${u.nombres} ${u.apellidos}` : '';
 
   }
 
 
-  // abrirModal(id_pago: number) {
-
-
-  //   this.servicioTecnicoService
-  //     .obtenerServicioFaltaPago(this.idCliente, this.idCita)
-  //     .subscribe(resp => {
-  //       console.log(resp);
-  //     });
-
-  //   this.detallePago = null;
-
-  //   this.clienteService.detallePago(id_pago).subscribe(detalle => {
-  //     console.log("DETALLE RECIBIDO:", detalle);
-
-  //     this.detallePago = detalle[0];
-
-  //     setTimeout(() => {
-  //       const modalEl = document.getElementById('detalleModal');
-  //       const modal = Modal.getOrCreateInstance(modalEl!);
-  //       modal.show();
-  //     }, 50);
-  //   });
-  // }
 get montoTotal(): string {
 
   const precioServ =Number(this.servicioTecnico.precio_serviciot || 0); 
@@ -165,11 +160,23 @@ get montoTotal(): string {
 }
 
   pagarServicio() {
+const montoFinal = parseFloat(this.montoTotal) || 0;
+
     const dataPag = {
       id_tipopago: "CREDIT_CARD",
   id_servicio_tecnico: this.servicioTecnico.id_servicio_tecnico,
-  monto_final: this.montoTotal
+  monto_final: montoFinal
 };
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('pasarelaModal');
+      const modal = Modal.getOrCreateInstance(modalEl!);
+      modal.show();
+    }, 50);
+
+
+    this.mostrarPasarela(montoFinal, this.correo, dataPag);
+    return;
 
 this.servicioTecnicoService.registrarPago(dataPag).subscribe({
   next: resp => {
@@ -179,6 +186,96 @@ this.servicioTecnicoService.registrarPago(dataPag).subscribe({
     console.error('Error', err);
   }
 });}
+
+async mostrarPasarela(monto: number, email: string, dataPago: any) {
+    const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
+      locale: 'es-PE'
+    });
+    const bricksBuilder = mp.bricks();
+    const settings = {
+      initialization: {
+        amount: 100,
+        payer: {
+          email: email,
+        }
+      },
+      customization: {
+        paymentMethods: {
+          creditCard: "all",
+          maxInstallments: 1
+        }
+      },
+      callbacks: {
+        onReady: () => {
+          console.log("CardPayment Brick listo");
+        },
+        onSubmit: (cardFormData: any) => {
+          console.log("Payload enviado:", cardFormData);
+
+          return new Promise((resolve, reject) => {
+            fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(cardFormData),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                this.servicioTecnicoService.registrarPago(dataPago).subscribe({
+                  next: (resp) => {
+                    Swal.fire({
+                      title: "¡Registro exitoso!",
+                                  html: `
+    <p>Se ha registrado la cita de diagnóstico con éxito.</p>
+    <p>En breve recibirá un correo de confirmación.</p>
+    <p><strong>Gracias por elegirnos.</strong></p>
+  `,
+                      icon: "success",
+                      draggable: true,
+                      confirmButtonText: "Aceptar",
+                    }).then(() => {
+                      window.location.reload();
+                    });
+                  },
+                  error: (err) => {
+                    console.error("Error al registrar", err);
+                    Swal.fire({
+                      title: "Error al Registrar!",
+                      text: "Hubo un problema al registrar su cita de instalación.",
+                      icon: "error",
+                      draggable: true
+                    });
+
+                  }
+
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+                Swal.fire({
+                  title: "Error al Registrar!",
+                  text: "Hubo un problema al registrar su cita de diagnóstico.",
+                  icon: "error",
+                  draggable: true
+                });
+                // reject();
+              });
+          });
+        },
+        onError: (error: string) => {
+          console.error("Error en CardPayment:", error);
+        },
+      }
+    };
+
+    this.paymentBrickController = await bricksBuilder.create(
+      "cardPayment",
+      "cardPaymentBrick_container",
+      settings
+    );
+
+  }
 
 }
 

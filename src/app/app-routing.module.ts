@@ -22,6 +22,7 @@ import { CitaspAdminComponent } from './company_portal/citasp-admin/citasp-admin
 import { ServiciospAdminComponent } from './company_portal/serviciosp-admin/serviciosp-admin.component';
 import { CitaspTecnicoComponent } from './company_portal/citasp-tecnico/citasp-tecnico.component';
 import { ServiciospTecnicoComponent } from './company_portal/serviciosp-tecnico/serviciosp-tecnico.component';
+import { TerminosCondicionesComponent } from './client-portal/terminos-condiciones/terminos-condiciones.component';
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'historial', component: HistorialComponent },
       { path: 'servicios', component: ServiciosTecnicosComponent },
       { path: 'servifast', component: ServiciosFastComponent },
+      
     ]
   },
 
@@ -63,7 +65,7 @@ const routes: Routes = [
   //{ path: 'cliente/dashboard', component: DashboardClienteComponent }, // 👈 nueva ruta explícita
   { path: 'admin', component: DashboardAdminComponent },
   { path: 'tecnico', component: DashboardTecnicoComponent },
-
+    {path:'terminos-condiciones', component: TerminosCondicionesComponent},
   // Secciones del cliente
   //{ path: 'cliente/account', component: AccountComponent },
   //{ path: 'cliente/citas', component: CitasComponent },

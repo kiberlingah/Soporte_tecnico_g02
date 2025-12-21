@@ -2,9 +2,7 @@
   href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
   rel="stylesheet">
 
-<video autoplay muted loop playsinline class="video-fondo">
-  <source src="assets/video-fondo.mp4" type="video/mp4">
-</video>
+<img src="assets/fondo_lore.jpg" alt="Fondo login" class="imagen-fondo">
 
 <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
   <div class="row register-wrapper rounded-4 overflow-hidden shadow-lg" style="max-width: 950px; width: 100%;">
@@ -14,7 +12,7 @@
       <form #formRegisterClient="ngForm" (ngSubmit)="registrar(formRegisterClient)" novalidate>
 
         <!-- Botón cerrar -->
-        <div class="text-end mb-3">
+        <div class="text-end ">
           <button type="button" class="btn btn-cerrar" (click)="volverAlInicio()" aria-label="Cerrar">
             X
           </button>
@@ -22,8 +20,8 @@
 
         <!-- Ícono y título -->
         <div class="text-center mb-4">
-          <img src="assets/icono-iniciar-sesion.png" alt="Icono de registro" width="120" class="mb-3 mx-auto d-block">
-          <h2 class="fw-bold" style="font-family:'Orbitron', sans-serif; color:#5ad7f3;">
+          <i class="bi bi-person-circle mb-3" style="font-size: 7rem; color:#0808c7;"></i>
+                    <h2 class="fw-bold" style="font-family:'Orbitron', sans-serif; color:#0808c7;">
             Registrar cuenta
           </h2>
         </div>
@@ -114,8 +112,10 @@
     </div>
 
     <!-- Columna derecha: imagen institucional -->
-    <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-gradient rounded-end-4">
-      <img src="assets\login-visual.png" alt="Visual institucional" class="img-fluid rounded-4 shadow">
+    <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-gradient rounded-end-4"
+      style="background-color:#d7ebff;">
+      <img src="assets/register_re.png" alt="Visual institucional" class="img-fluid"
+        style="max-width: 120%; height: auto;">
     </div>
   </div>
 </div>

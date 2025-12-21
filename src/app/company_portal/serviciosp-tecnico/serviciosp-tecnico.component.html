@@ -1,4 +1,6 @@
+<body class="d-flex flex-column min-vh-100">
 <app-nav-tecnicos></app-nav-tecnicos>
+<main class="flex-fill">
 <div class="title7 text-center mt-5">
 
     <p class="mb-2 title_seccion1">
@@ -22,7 +24,7 @@
         <div class="col-md-3">
             <select class="form-select" [(ngModel)]="filtroServicio">
                 <option value="">Todos los servicios</option>
-                <option *ngFor="let s of serviciosInstall" [value]="s.id">{{ s.descripcion_servicio }}</option>
+                <option *ngFor="let s of serviciosInstall" [value]="s.id_servicio">{{ s.descripcion_servicio }}</option>
             </select>
         </div>
 
@@ -30,7 +32,7 @@
         <div class="col-md-3">
             <select class="form-select" [(ngModel)]="filtroDistrito">
                 <option value="">Todos los distritos</option>
-                <option *ngFor="let d of distritos" [value]="d.id">{{ d.nombre_distrito }}</option>
+                <option *ngFor="let d of distritos" [value]="d.id_distrito">{{ d.nombre_distrito }}</option>
             </select>
         </div>
 
@@ -38,7 +40,7 @@
         <div class="col-md-3">
             <select class="form-select" [(ngModel)]="filtroModalidad">
                 <option value="">Todas las modalidades</option>
-                <option *ngFor="let m of modalidades" [value]="m.id">{{ m.nombre_modalidad }}</option>
+                <option *ngFor="let m of modalidades" [value]="m.id_modalidad">{{ m.nombre_modalidad }}</option>
             </select>
         </div>
 
@@ -106,9 +108,10 @@
         </div>
     </div>
 </div>
+</main>
 
 <app-footer-simple></app-footer-simple>
-
+</body>
 
 <div class="modal fade" id="modalDetalleCita" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -177,7 +180,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-success" (click)="guardarCambios()">Guardar</button>
+                <button class="btn btn-info" (click)="guardarCambios()">Guardar</button>
             </div>
 
         </div>

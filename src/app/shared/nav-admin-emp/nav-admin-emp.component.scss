@@ -1,14 +1,5 @@
-.video-fondo {
-  position: relative;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.3;
-}
-
 .navbar-cliente {
-  background: linear-gradient(135deg, #5ad7f3, #8A2BE2);
+  background: linear-gradient(135deg, #5ad7f3, #0339aa);
   //border-radius: 50px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   z-index: 10;

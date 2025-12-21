@@ -1,25 +1,16 @@
-<link
-  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
-  rel="stylesheet">
-
-<video autoplay muted loop playsinline class="video-fondo">
-  <source src="assets/video-fondo.mp4" type="video/mp4">
-</video>
+<img src="assets/fondo_lore.jpg" alt="Fondo login" class="imagen-fondo">
 
 <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
   <div class="row login-wrapper rounded-4 overflow-hidden shadow-lg" style="max-width: 950px; width: 100%;">
+  
+  <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center rounded-start-4" 
+      style="background-color:#d7ebff;">
+    <img src="assets/login_lo.png" alt="Visual institucional" 
+        class="img-fluid" style="max-width: 120%; height: auto;">
+  </div>
 
-
-    <!-- Columna izquierda: imagen institucional -->
-    <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-gradient rounded-start-4">
-      <img src="assets/login-visual.png" alt="Visual institucional" class="img-fluid rounded-4 shadow">
-    </div>
-
-
-
-    <!-- Columna derecha: formulario -->
     <div class="col-md-6 bg-white p-5 d-flex flex-column justify-content-center">
-      <form #form="ngForm" (ngSubmit)="iniciarSesion(form.value)" novalidate>
+      <form #form="ngForm"  novalidate>
 
         <div class="text-end mb-3">
           <button type="button" class="btn btn-cerrar" (click)="volverAlInicio()" aria-label="Cerrar">
@@ -27,11 +18,9 @@
           </button>
         </div>
 
-
-        <!-- Ícono y título -->
-        <div class="text-center mb-4">
-          <img src="assets/icono-iniciar-sesion.png" alt="Icono de acceso" width="120" class="mb-3 mx-auto d-block">
-          <h2 class="fw-bold" style="font-family:'Orbitron', sans-serif; color:#5ad7f3;">
+        <div class="text-center">
+          <i class="bi bi-person-circle mb-3" style="font-size: 7rem; color:#0808c7;"></i> 
+          <h2 class="fw-bold" style="font-family:'Orbitron', sans-serif; color:#0808c7;">
             Iniciar sesión
           </h2>
         </div>
@@ -65,7 +54,7 @@
 
         <!-- Botón -->
         <!-- <button type="submit" class="btn w-100 btn-login mt-3" [disabled]="form.invalid">  -->
-<button type="submit" class="btn w-100 btn-login mt-3" [disabled]="form.invalid">
+<button type="submit" class="btn w-100 btn-login mt-3" (click)="iniciarSesion(form)">
           <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar sesión
         </button>
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Modal } from 'bootstrap';
 import { switchMap } from 'rxjs';
 import { ServiciosTecnicosService } from 'src/app/client-portal/servicios_tecnicos/service/servicios_tecnicos.service';
@@ -62,7 +63,7 @@ export class CitaspTecnicoComponent {
   idDistritoSeleccionado: any = '';
   precioTarifa: number = 0.00;
   modalidadAnterior: number = 0;
-
+  formCitaTecnico!: NgForm;
 
   constructor(
     private clienteService: ClienteService,
@@ -265,6 +266,20 @@ guardarCambios() {
       console.error(err);
       Swal.fire('Error', 'No se pudo completar la operación', 'error');
     }
+  });
+}
+
+filtrarCitas() {
+  return this.listaCitasPendientes.filter(c => {
+    const cumpleDistrito = this.filtroDistrito
+      ? c.id_distrito == this.filtroDistrito
+      : true;
+
+    const cumpleModalidad = this.filtroModalidad
+      ? c.id_modalidad == this.filtroModalidad
+      : true;
+
+    return cumpleDistrito && cumpleModalidad;
   });
 }
 

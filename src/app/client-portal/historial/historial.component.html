@@ -1,10 +1,13 @@
+<link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
+  rel="stylesheet">
 <app-nav-pcliente></app-nav-pcliente>
 <div class="text-center mt-5">
 
   <p class="mb-2 title_seccion1">
     Revise su Historial de Servicios
   </p>
-  <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
+  <div class="line-title"></div>
   <p class="mb-2" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
     Aquí podrás visualizar el historial de tus servicios adquiridos.
   </p>
@@ -18,15 +21,15 @@
 
     <div class="stats-box d-flex justify-content-center gap-5 mt-4">
       <div>
-        <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">98%</strong>
+        <strong class="d-block" style="font-size: 1.5rem; color: #000080;">98%</strong>
         <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Satisfacción</small>
       </div>
       <div>
-        <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">+2,500</strong>
+        <strong class="d-block" style="font-size: 1.5rem; color: #000080;">+2,500</strong>
         <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Citas completadas</small>
       </div>
       <div>
-        <strong class="d-block" style="font-size: 1.5rem; color: #4E2BCC;">24/7</strong>
+        <strong class="d-block" style="font-size: 1.5rem; color: #000080;">24/7</strong>
         <small style="font-family: 'Rajdhani', sans-serif; color: #0F032D;">Soporte disponible</small>
       </div>
     </div>
@@ -36,7 +39,7 @@
 <div class="historial-wrapper container mb-5">
   <div class="historial-box">
 
-    <h2 class="panel-title mb-5">Historial De Servicios Adquiridos</h2>
+    <h3 class="panel-title1 mb-5 mt-2 text-center">Historial De Servicios Adquiridos</h3>
 
     <div class="card shadow-sm border-0">
 
@@ -67,7 +70,8 @@
                   Fecha: {{pago.fecha_servicio || pago.fecha_diagnostico}} <br>
                   <span class="text-primary" *ngIf="getHorario(pago.horario_servicio||pago.horario_diagnostico) !== ''">
                     Hora: {{getHorario(pago.horario_servicio||pago.horario_diagnostico)}}</span><br>
-                  <span class="badge rounded-pill bg-light text-info">{{pago.tipo_servicio||pago.tipo_diagnostico}}</span>
+                  <span
+                    class="badge rounded-pill bg-light text-info">{{pago.tipo_servicio||pago.tipo_diagnostico}}</span>
                 </td>
 
                 <td>
@@ -88,7 +92,8 @@
                 </td>
 
                 <td class="text-end">
-                  <button class="btn btn-sm btn-primary" (click)="abrirModal(pago.id_pago, pago.id_cita)">Más detalles</button>
+                  <button class="btn btn-sm btn-primary" (click)="abrirModal(pago.id_pago, pago.id_cita)">Más
+                    detalles</button>
                 </td>
               </tr>
             </tbody>
@@ -146,7 +151,7 @@
           </p>
           <p><strong>Monto Total:</strong> S/{{detallePago.monto_final}}</p>
 
-                    <p
+          <p
             *ngIf="getUsuarioDatos(detallePago.tecnico_servicio||detallePago.tecnico_diagnostico)===null||getUsuarioDatos(detallePago.tecnico_servicio||detallePago.tecnico_diagnostico)!==''">
             <strong>Tecnico:</strong> {{getUsuarioDatos(detallePago.tecnico_servicio||detallePago.tecnico_diagnostico)}}
           </p>
@@ -159,28 +164,30 @@
         </ng-container>
 
         <h5 class="mb-2 mt-2 text-info text-center" *ngIf="servicioTecnico">Servicio Recomendado – Listo para Pago</h5>
-<form *ngIf="servicioTecnico">
-            <div *ngIf="servicioTecnico">
+        <form *ngIf="servicioTecnico">
+          <div *ngIf="servicioTecnico">
 
-  <p><strong>Servicio:</strong> {{ getServicioDesc(servicioTecnico.id_servicio) }}</p>
+            <p><strong>Servicio:</strong> {{ getServicioDesc(servicioTecnico.id_servicio) }}</p>
 
-  <p><strong>Modalidad:</strong> {{ getModalidadNombre(servicioTecnico.id_modalidad) }}</p>
+            <p><strong>Modalidad:</strong> {{ getModalidadNombre(servicioTecnico.id_modalidad) }}</p>
 
-  <p><strong>Fecha atención:</strong> {{ servicioTecnico.fecha_atencion | date }}</p>
-  <p><strong>Hora atención:</strong> {{ getHorario(servicioTecnico.id_horario) }}</p>
-  <p *ngIf="servicioTecnico.direccion || servicioTecnico.id_distrito">
-    <strong>Dirección:</strong> {{ servicioTecnico.direccion }} {{getDistritoNombre(servicioTecnico.id_distrito)}}
-  </p>
-  <p><strong>Precio del servicio:</strong> S/{{ servicioTecnico.precio_serviciot }}</p>
-  <p *ngIf="servicioTecnico.precio_domicilio !=0"><strong>Tarifa visita a domicilio:</strong> S/{{ servicioTecnico.precio_domicilio }}</p>
+            <p><strong>Fecha atención:</strong> {{ servicioTecnico.fecha_atencion | date }}</p>
+            <p><strong>Hora atención:</strong> {{ getHorario(servicioTecnico.id_horario) }}</p>
+            <p *ngIf="servicioTecnico.direccion || servicioTecnico.id_distrito">
+              <strong>Dirección:</strong> {{ servicioTecnico.direccion }}
+              {{getDistritoNombre(servicioTecnico.id_distrito)}}
+            </p>
+            <p><strong>Precio del servicio:</strong> S/{{ servicioTecnico.precio_serviciot }}</p>
+            <p *ngIf="servicioTecnico.precio_domicilio !=0"><strong>Tarifa visita a domicilio:</strong> S/{{
+              servicioTecnico.precio_domicilio }}</p>
 
-  
 
-  <p><strong>Monto Total:</strong> S/{{ montoTotal }}</p>
-  <button class="btn btn-info mb-5 mt-3" (click)="pagarServicio()">Pagar Servicio</button>
 
-</div>
-</form>
+            <p><strong>Monto Total:</strong> S/{{ montoTotal }}</p>
+            <button class="btn btn-info mb-5 mt-3" (click)="pagarServicio()">Pagar Servicio</button>
+
+          </div>
+        </form>
 
 
         <ng-template #cargando>
@@ -195,5 +202,25 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="pasarelaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Mercado pago </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+
+          <div id="cardPaymentBrick_container"></div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 <app-footer-simple></app-footer-simple>

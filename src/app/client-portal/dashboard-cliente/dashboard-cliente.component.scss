@@ -8,7 +8,7 @@
 }
 
 .navbar-cliente {
-  background: linear-gradient(135deg, #5ad7f3, #8A2BE2);
+  background: linear-gradient(135deg, #5ad7f3, #007FFF);
   border-radius: 50px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   z-index: 10;
@@ -95,9 +95,10 @@
 
 .banner-cliente {
   height: 40vh;
-  background: linear-gradient(to bottom right, rgba(10,61,145,0.6), rgba(0,0,0,0.3));
+  background-image: url(https://i.pinimg.com/736x/7b/a3/ef/7ba3ef5f9bc9f9bd94e02b4119c3a7b1.jpg);
   backdrop-filter: blur(4px);
-  padding-top: 80px;
+  background-position: bottom;
+    background-size: cover;
 }
 
 
@@ -147,7 +148,7 @@
 }
 
 .acceso-violeta {
-  background-color: #8A2BE2;
+  background-color: #0339aa;
   color: white;
 }
 
@@ -197,7 +198,7 @@
 }
 
 .acceso-violeta {
-  background-color: #8A2BE2;
+  background-color: #0339aa;
   color: #ffffff; // texto principal blanco
 }
 

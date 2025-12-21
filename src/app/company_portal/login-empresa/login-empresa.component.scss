@@ -1,25 +1,9 @@
-.video-fondo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
- background-image: url('https://static.wixstatic.com/media/c837a6_2119733e838e4a2f8813ebde736f99d5~mv2.jpg/v1/fill/w_1385,h_1300,al_b,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c837a6_2119733e838e4a2f8813ebde736f99d5~mv2.jpg');
-}
-
-.container-fluid {
-  background-color: rgba(16, 159, 255, 0.116); // blanco translúcido
-}
-
 .bg-gradient {
-  background: linear-gradient(135deg, #5ad7f3, #8A2BE2);
+  background: linear-gradient(135deg, #0213ff, #000080);
 }
 
 .btn-cerrar {
-  background-color: #c688ff; // violeta institucional
-  color: rgb(255, 255, 255);
+  color: #0808c7;
   border: none;
   font-size: 1.2rem;
   padding: 0.4rem 0.8rem;
@@ -30,7 +14,7 @@
 
 .btn-cerrar:hover {
   background-color: #5ad7f3; // azul eléctrico
-  color: #03153a;            // azul oscuro
+  color: #0808c7;            // azul oscuro
   transform: scale(1.1);
   box-shadow: 0 0 8px rgba(90,215,243,0.6);
 }
@@ -46,13 +30,13 @@
 }
 
 .campo-input:focus {
-  border-color: #8A2BE2;
-  box-shadow: 0 0 10px rgba(138,43,226,0.6);
+  border-color: #000080;
+  box-shadow: 0 0 10px #000080;
   outline: none;
 }
 
 .btn-login {
-  background-color: #8A2BE2;
+  background-color: #0808c7;
   color: white;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
@@ -63,7 +47,7 @@
 
 .btn-login:hover {
   background-color: #5ad7f3;
-  color: #03153a;
+  color: #191970;
   box-shadow: 0 0 12px rgba(90,215,243,0.6);
 }
 
@@ -75,5 +59,5 @@
 }
 
 .link-secundario:hover {
-  color: #8A2BE2;
+  color: #000080;
 }

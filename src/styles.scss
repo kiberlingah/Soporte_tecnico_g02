@@ -20,5 +20,59 @@
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     font-weight: 600;
-    color: #4E2BCC;
+    color: #000080;
+}
+
+
+.imagen-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* la imagen se adapta sin deformarse */
+  z-index: -1;        /* queda detrás del contenido */
+}
+
+.line-title {
+      width: 120px;
+    height: 6px;
+    background: #92E1FF;
+    border-radius: 4px;
+    margin: 0 auto 25px auto;
+}
+
+.btn-cerrar {
+  color: #000080;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.btn-cerrar:hover {
+  background-color: #5ad7f3; // azul eléctrico
+  color: #000080;            // azul oscuro
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(90,215,243,0.6);
+}
+
+//----Cambios Reyshell----
+.panel-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  color: #000080;
+  margin-bottom: 8px;
+}
+.panel-subtitle {
+  font-size: 1rem;
+  color: #007FFF;
+  margin-bottom: 20px;
+}
+.price-box {
+  font-size: 1rem;
+  color: #000080;
+  margin-bottom: 20px;
 }

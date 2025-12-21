@@ -197,7 +197,8 @@ guardarCambios() {
 
   const data = {
     id_servicio_tecnico: this.stSeleccionada.id_servicio_tecnico,
-    observacion_tecnico: this.stSeleccionada.observacion_tecnico
+    observacion_tecnico: this.stSeleccionada.observacion_tecnico,
+    estado: ""
   };
 
   this.stService.comentarioStUpdate(data).subscribe({
@@ -205,7 +206,7 @@ guardarCambios() {
       Swal.fire({
         icon: 'success',
         title: 'Proceso completado',
-        text: 'La cita fue finalizada correctamente'
+        text: 'La servicio fue finalizada correctamente'
       }).then(() => window.location.reload());
     },
     error: (err) => {

@@ -10,8 +10,7 @@
       Agende su Cita para Instalación
     </p>
 
-    <div style="width: 60px; height: 4px; background: #905BF4; border-radius: 4px; margin: 0 auto 25px auto;"></div>
-
+    <div class="line-title"></div>
     <p class="mb-4" style="font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #1d253a;">
       Para instalar un programa en tu equipo de computo, necesitas una cita de instalación.
     </p>
@@ -23,7 +22,7 @@
       <div class="col-lg-10">
         <div class="servicio-formulario panel-card" style="max-width: 900px; padding-bottom: 40px; margin: 0 auto;">
           <h2 class="panel-title1 mb-4 text-center">Servicio de Instalación</h2>
-          <form #formServicioTec="ngForm" >
+          <form #formServicioTec="ngForm">
             <div class="form-grid">
               <div class="row g-3">
 
@@ -123,10 +122,10 @@
                     La dirección es obligatoria.
                   </div>
                 </div>
-                            <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
-              <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
-                tarifaDomicilio }}</span>
-            </div>
+                <div class="col-sm-12 mb-2" *ngIf="servicios_tecnicos.id_modalidad == 3">
+                  <span class="opcional text-info">La tarifa de visita hasta su domicilio tiene el precio de: S/. {{
+                    tarifaDomicilio }}</span>
+                </div>
 
                 <div class="col-md-12">
                   <label class="form-label">Comentario</label>
@@ -139,9 +138,10 @@
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="acepto" [(ngModel)]="servicios_tecnicos.acepto"
                       name="acepto" #acepto="ngModel" required>
-                    <label class="form-check-label text-black ms-2" for="acepto">
+                    <a href="/terminos-condiciones" target="_blank" rel="noopener noreferrer"
+                      class="form-check-label text-black ms-2">
                       Acepto los términos y condiciones
-                    </label>
+                    </a>
                     <div *ngIf="acepto.invalid && acepto.touched" class="text-danger small mt-1">
                       Debes aceptar los términos y condiciones.
                     </div>
@@ -164,21 +164,21 @@
   <app-footer-simple></app-footer-simple>
 
   <div class="modal fade" id="pasarelaModal" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
 
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Mercado pago </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Mercado pago </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+
+          <div id="cardPaymentBrick_container"></div>
+
+        </div>
+
       </div>
-
-      <div class="modal-body">
-
-
-        <div id="cardPaymentBrick_container"></div>
-
-      </div>
-
     </div>
   </div>
-</div>

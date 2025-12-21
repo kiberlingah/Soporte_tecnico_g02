@@ -20,12 +20,19 @@ export class LoginEmpresaComponent {
   ) {}
 
   iniciarSesion(form: NgForm): void {
-    if (form.invalid) return;
+    
 
     const credentials = {
       correo: this.correo,
       contrasena: this.contrasena
     };
+
+            if (form.invalid) {
+      Object.values(form.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      return;
+    }
 
     this.usuarioService.loginUsuario(credentials).subscribe({
       next: (res: any) => {

@@ -41,6 +41,12 @@ registrar(formRegisterClient: NgForm): void {
       Swal.fire({
         title: '✅ Registro exitoso',
         text: 'Se ha registrado con éxito tu cuenta',
+        html: `
+    <p>Su cuenta ha sido registrada con éxito.</p>
+    <p>En breve recibirá un correo de confirmación.</p>
+    <p>Por favor verifique en su correo un codigo de confirmación</p>
+    <p>Si no se encuentra en su bandeja de entrada, revise su carpeta de spam.</p>
+  `,
         icon: 'success',
         confirmButtonText: 'Aceptar'
       }).then(() => {

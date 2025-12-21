@@ -147,40 +147,49 @@ body {
 }
 
 /* ===== FORMULARIO ===== */
+/* ===== FORMULARIO ===== */
 .cuenta-formulario .form-label {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 600;
-  color: #4E2BCC;
+  //font-family: "Rajdhani", sans-serif;
+  //font-weight: 600;
+  font-size: 17px;
+  //color: #000080; /* Azure */
 }
 
 .cuenta-formulario .form-control {
   border-radius: 10px;
-  border: 1px solid #905BF4;
+  border: 1px solid #92E1FF; /* Cerulean Sky */
   background-color: #f9f9ff;
-  color: #0F032D;
+  color: #000080; /* Dark Blue */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cuenta-formulario .form-control:focus {
-  border-color: #87F5F5;
-  box-shadow: 0 0 0 3px rgba(135,245,245,0.3);
+  border-color: #007FFF; /* Azure */
+  box-shadow: 0 0 0 3px rgba(146,225,255,0.4); /* glow institucional */
   outline: none;
 }
 
+/* Botones */
 .cuenta-formulario .btn {
   padding: 10px 20px;
   font-size: 14px;
-  border-radius: 6px;
+  border-radius: 8px;
+  //font-family: "Rajdhani", sans-serif;
+  //font-weight: 600;
+  font-size: 16px;
 }
 
+/* Botón primario */
+.cuenta-formulario .btn-outline-primary {
+  color: #0808c7;
+  border-color: #0808c7 ;
+}
 .cuenta-formulario .btn-outline-primary:hover {
-  background-color: #905BF4;
-  color: white;
+  background: #0808c7;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0,0,128,0.25);
 }
 
-.cuenta-formulario .btn-danger:hover {
-  background-color: #a71d2a;
-}
 
 .opcional {
   font-size: 0.8em;
@@ -188,10 +197,18 @@ body {
 }
 
 /* ===== MODALES ===== */
+/* ===== MODALES ===== */
+
 .modal-editar,
 .modal-eliminar {
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+}
+
+.modal-header {
+  background: linear-gradient(90deg, #1d05f8, #007FFF); /* degradado institucional */
+  color: #000080;
+  border-radius: 12px 12px 0 0;
 }
 
 .modal-header .cerrar {
@@ -199,20 +216,36 @@ body {
   border: none;
   font-size: 20px;
   cursor: pointer;
+  color: #000080;
 }
-
 .modal-header .cerrar:hover {
   color: #dc3545;
 }
 
-
-.cerrar {
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+//Kim cambios
+.border-info1 {
+    --bs-border-opacity: 1;
+    border-color: #59d6f2 !important;
 }
 
-.cerrar:hover {
-  color: #dc3545;
+.text-info1 {
+    color: #59d6f2  !important;
 }
+
+.border-primary1 {
+    --bs-border-opacity: 1;
+    border-color: #2c83cc  !important;
+}
+
+.text-primary1 {
+    color: #2c83cc  !important;
+}
+.border-primary2 {
+    --bs-border-opacity: 1;
+    border-color: #0741ae  !important;
+}
+
+.text-primary2 {
+    color: #0741ae  !important;
+}
+

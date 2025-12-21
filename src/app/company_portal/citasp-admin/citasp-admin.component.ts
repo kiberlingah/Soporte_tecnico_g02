@@ -140,6 +140,20 @@ filtroModalidad: string = "";
     error: (err) => console.error(err)
   });
 }
+
+filtrarCitas() {
+  return this.listaCitasPendientes.filter(c => {
+    const cumpleDistrito = this.filtroDistrito
+      ? c.id_distrito == this.filtroDistrito
+      : true;
+
+    const cumpleModalidad = this.filtroModalidad
+      ? c.id_modalidad == this.filtroModalidad
+      : true;
+
+    return cumpleDistrito && cumpleModalidad;
+  });
+}
     
 
 }

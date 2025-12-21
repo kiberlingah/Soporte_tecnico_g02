@@ -1,64 +1,64 @@
-//Seccion fondo
+/* Sección fondo */
 .hero-video {
   height: 90vh;
   overflow: hidden;
   position: relative; /* asegura que todo se posicione dentro */
 }
+
 .hero-video h1,
 .hero-video p {
-  text-shadow: 0 2px 6px rgba(89, 0, 255, 0.6);
+  text-shadow: 0 2px 6px #000080;
 }
 
-
-nav{
-    /*background-color: #0d1b3f;*/
-    //background-color: rgba(99, 88, 252, 0.5);
-    background-color: rgb(3 64 195 / 86%) ;
-    margin-top: -5px;
-    position: fixed !important;
-    top: 0;
-    width: 98%;
-    padding: 10px 0 !important;
-    z-index: 5 !important;
-    margin: 1% 1% !important;
-    padding: 12px 12px !important;
+/* Navbar */
+nav {
+  background-color: rgb(3 64 195 / 86%);
+  margin-top: -5px;
+  position: fixed !important;
+  top: 0;
+  width: 98%;
+  padding: 12px 12px !important;
+  z-index: 5 !important;
+  margin: 1% 1% !important;
 }
 
-
-.navbar-toggler{
+.navbar-toggler {
   color: #03cdffa2;
 }
 
-.video-fondo {
+/* Imagen de fondo (antes era video) */
+.imagen-fondo {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  z-index: 1; /* el video queda detrás */
+  object-fit: cover; /* ajusta la imagen sin deformarla */
+  z-index: 1; /* la imagen queda detrás */
 }
 
+/* Contenido encima del fondo */
 .hero-video nav,
 .hero-video .container-fluid {
   position: relative;
-  z-index: 2; /* navbar y contenido encima del video */
+  z-index: 2; /* navbar y contenido encima de la imagen */
 }
+
 .hero-video h1 {
   color: #1586f5; /* azul eléctrico */
 }
 
 .hero-video p {
-  color: #5f53ff; /* blanco suave */
+  color: #000080; /* blanco suave */
 }
 
 .hero-video .nav-link {
-  color: #03cdff !important; /* texto claro en menú */
+  //color: #ffffff; /* texto claro en menú */
   font-weight: 500;
 }
 
 .hero-video .btn-login {
-  background-color: #8A2BE2;
+  background-color: #000080;
   color: rgb(0, 195, 255);
 }
 
@@ -124,7 +124,7 @@ nav{
   font-family: 'Rajdhani', sans-serif;
   font-weight: 600;
   font-size: 1.3rem;
-  color: #8A2BE2;                 /* ✅ violeta institucional */
+  color: #000080;                 /* ✅ violeta institucional */
   margin-bottom: 0.5rem;
 }
 
@@ -138,7 +138,7 @@ nav{
 
 /* Botón */
 .texto-cuadro a.btn {
-  background-color: #8A2BE2;      /* violeta institucional */
+  background-color: #000080;      /* violeta institucional */
   color: #fff;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
@@ -178,6 +178,20 @@ nav{
   border-radius: 0;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
+
+/* ===== Bloque Soluciones Tecnológicas ===== */
+.bloque-mision-tecnologia {
+  position: relative;
+  min-height: 400px;
+}
+
+.imagen-tecnologia {
+  background-image: url('https://i.pinimg.com/1200x/0f/37/9a/0f379a1f988e3f3112e279129307a734.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+
 
 /* Bloque Mision */
 .bloque-mision {
@@ -265,7 +279,7 @@ nav{
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: rgba(138,43,226,0.8);
+  background: #0e0efc;
   margin: 0;
   padding: 0.6rem 0.5rem;
   font-size: 1.15rem;
@@ -318,8 +332,8 @@ nav{
 
 .campo-email:focus {
   outline: none;
-  border-color: #8A2BE2;       /* violeta institucional al focus */
-  box-shadow: 0 0 10px rgba(138,43,226,0.6);
+  border-color: #00008B;       /* violeta institucional al focus */
+  box-shadow: 0 0 10px #000080;
 }
 
 .campo-email::placeholder {
@@ -328,7 +342,7 @@ nav{
 }
 
 .boton-suscribir {
-  background-color: #8A2BE2;
+  background-color: #000080;
   border-radius: 50px;
   font-weight: 600;
   color: white;
@@ -359,71 +373,6 @@ nav{
 
 
 
-//Seccion chatbot
-/* Icono flotante */
-.chatbot-icono {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #8A2BE2, #5ad7f3); // violeta + celeste bebé
-  color: white;
-  border-radius: 50%;
-  font-size: 1.6rem;
-  cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease;
-  z-index: 1050;
-}
-
-.chatbot-icono:hover {
-  transform: scale(1.1);
-}
-
-/* Ventana de chat */
-.chatbot-ventana {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  width: 340px;
-  border-radius: 15px;
-  overflow: hidden;
-  z-index: 1050;
-}
-
-.card-header {
-  background: linear-gradient(135deg, #8A2BE2, #5ad7f3); // degradado institucional
-  color: white;
-  font-weight: 600;
-}
-
-.chat-body {
-  height: 280px;
-  overflow-y: auto;
-  background: #f9f9f9;
-  padding: 12px;
-}
-
-/* Mensajes estilo burbuja */
-.mensaje-bot {
-  background: #e9ecef;
-  color: #03153a;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 80%;
-  font-size: 0.9rem;
-}
-
-.mensaje-user {
-  background: #5ad7f3; // celeste bebé
-  color: #03153a;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 80%;
-  margin-left: auto;
-  font-size: 0.9rem;
-}
 
 /* Input */
 .campo-input {
@@ -432,13 +381,26 @@ nav{
 
 /* Botón enviar */
 .btn-enviar {
-  background-color: #8A2BE2; // violeta institucional
+  background-color: #033dfc; // violeta institucional
   color: white;
   border-radius: 50px;
   transition: all 0.3s ease;
 }
 
 .btn-enviar:hover {
+  background-color: #5ad7f3;
+  color: #03153a;
+}
+
+
+.btn-inicio-sesion {
+  background-color: #0808c7;
+  color: white;
+
+  transition: all 0.3s ease;
+}
+
+.btn-inicio-sesion:hover {
   background-color: #5ad7f3;
   color: #03153a;
 }

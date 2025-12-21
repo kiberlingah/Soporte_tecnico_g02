@@ -20,10 +20,19 @@ export class LoginComponent {
 
   iniciarSesion(form: NgForm): void {
 
+
+
     const credentials = {
       correo: this.correo,
       contrasena: this.contrasena
     };
+
+        if (form.invalid) {
+      Object.values(form.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      return;
+    }
 
     this.clienteService.loginCliente(credentials).subscribe({
       next: (res: any) => {

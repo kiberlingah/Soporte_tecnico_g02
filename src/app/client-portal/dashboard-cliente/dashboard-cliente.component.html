@@ -1,9 +1,5 @@
 <router-outlet></router-outlet>
 
-<!-- Tipografías y estilos externos -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&display=swap"
-  rel="stylesheet">
 
 <!-- Video de fondo -->
 <video autoplay muted loop playsinline class="video-fondo">
@@ -12,49 +8,11 @@
 
 <app-nav-pcliente></app-nav-pcliente>
 
-
-<!-- <nav class="navbar navbar-expand-lg navbar-cliente px-4 py-2">
-  <div class="container-fluid">
-     Logo institucional
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" style="font-family:'Orbitron', sans-serif;"
-      routerLink="/inicio">
-      <i class="bi bi-arrow-up-right-square-fill me-2"></i> AsiQueUD
-    </a>
-
-      Botón hamburguesa  
-    <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
-      data-bs-target="#menuCliente">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-     Menú y acciones 
-    <div class="collapse navbar-collapse justify-content-end" id="menuCliente">
-      <ul class="navbar-nav gap-4">
-        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/account">Configuración</a></li>
-        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/historial">Historial</a></li>
-        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/servicios">Servicios</a></li>
-        <li class="nav-item"><a class="nav-link text-white" routerLink="/cliente/citas">Citas</a></li>
-      </ul>
-
-
-      Lupa expandible + botón
-      <div class="d-flex align-items-center gap-3 position-relative">
-        <button class="btn btn-lupa" (click)="mostrarBuscador = !mostrarBuscador">
-          <i class="bi bi-search"></i>
-        </button>
-        <input *ngIf="mostrarBuscador" type="text" class="form-control buscador-expandido" placeholder="Buscar">
-        <button class="btn btn-cerrar-sesion" (click)="auth.logout()">Cerrar sesión</button>
-      </div>
-    </div>
-  </div>
-</nav> -->
-
-
 <!-- Banner institucional -->
-<section class="banner-cliente d-flex align-items-center justify-content-center text-center">
+<section class="banner-cliente d-flex align-items-center justify-content-center text-center p-3">
   <div>
     <h1 class="display-4 fw-bold" style="font-family:'Orbitron', sans-serif; color:#5ad7f3;" [(ngModel)]="cliente">
-      Bienvenido a tu Portal {{cliente.nombres}}
+      Te damos la bienvenida {{cliente.nombres}}.
     </h1>
     <p class="fs-5 text-white" style="font-family:'Rajdhani', sans-serif;">
       Accede a tus servicios, historial y configura tu cuenta.
@@ -74,7 +32,7 @@
            <img [src]="'assets/img_icons/' + 'man_repair.png'" class="img_thiings">
           <h4>¿Quieres saber qué ocurre con tu equipo de cómputo?</h4>
           <p>Si deseas reservar una cita para diagnosticar tu equipo, presiona el siguiente botón:</p>
-          <a routerLink="/cliente/citas" class="btn btn-diagnostico">Diagnóstico</a>
+          <a routerLink="/cliente/citas" class="btn btn-info">Diagnóstico</a>
         </div>
       </div>
       <div class="col-lg-6">
@@ -83,7 +41,7 @@
            <img [src]="'assets/img_icons/' + 'bug_laptop.png'" class="img_thiings">
           <h4>¿Necesitas instalar un programa en tu equipo de cómputo?</h4>
           <p>Si deseas solicitar el servicio de instalación de software, presiona el siguiente botón.</p>
-          <a routerLink="/cliente/servicios" class="btn btn-instalacion">Instalación</a>
+          <a routerLink="/cliente/servicios" class="btn btn-info">Instalación</a>
         </div>
       </div>
     </div>
@@ -95,16 +53,16 @@
           <i class="bi bi-gear-fill icono-acceso text-info"></i>
           <h4>Configuración</h4>
           <p>Configura tu cuenta y tus credenciales únicas.</p>
-          <a routerLink="/cliente/account" class="btn btn-configuracion">Acceder</a>
+          <a routerLink="/cliente/account" class="btn btn-info">Acceder</a>
         </div>
       </div>
 
       <div class="col-md-4 mb-3">
         <div class="card acceso-card acceso-blanco text-center p-4 h-100">
-          <i class="bi bi-headset icono-acceso text-success"></i>
+          <i class="bi bi-headset icono-acceso text-info"></i>
           <h4>¿Necesitas ayuda?</h4>
           <p>Utiliza este botón si tu asesor/a aún no te atiende o para poderte brindar una mejor atención.</p>
-          <a routerLink="/cliente/dashboard" class="btn btn-soporte">Contáctenos</a>
+          <a routerLink="/cliente/dashboard" class="btn btn-info">Contáctenos</a>
         </div>
       </div>
 
@@ -113,7 +71,7 @@
           <i class="bi bi-journal-text icono-acceso text-light"></i>
           <h4>Historial</h4>
           <p>Revisa tus actividades y solicitudes anteriores.</p>
-          <a routerLink="/cliente/historial" class="btn btn-historial">Acceder</a>
+          <a routerLink="/cliente/historial" class="btn btn-info">Acceder</a>
         </div>
       </div>
     </div>
@@ -126,7 +84,7 @@
     <div class="row g-4 align-items-center">
       <!-- Texto institucional a la izquierda -->
       <div class="col-md-6">
-        <h5 class="subtitulo-contacto">#CONTACTO #AYUDA</h5>
+
         <h2 class="titulo-contacto">¡Contacta ahora!</h2>
         <p class="descripcion-contacto">
           Nuestro equipo estará gustoso de ayudarte en lo que necesites. No dudes en escribirnos.
@@ -149,51 +107,3 @@
 </section>
 
 <app-footer-simple></app-footer-simple>
-<!-- <footer class="footer-cliente text-white pt-5 pb-4">
-  <div class="container">
-    <div class="row g-4">
-      
-      <div class="col-md-3">
-        <h5 class="titulo-footer">Sobre AsiQueUD</h5>
-        <p class="texto-footer">
-          Plataforma de soporte técnico confiable, rápida y segura. Estamos aquí para ayudarte siempre.
-        </p>
-      </div>
-
-      
-      <div class="col-md-3">
-        <h5 class="titulo-footer">Accesos Cliente</h5>
-        <ul class="list-unstyled">
-          <li><a routerLink="/cliente/account" class="link-footer">Configuración</a></li>
-          <li><a routerLink="/cliente/historial" class="link-footer">Historial</a></li>
-          <li><a routerLink="/cliente/servicios" class="link-footer">Servicios</a></li>
-          <li><a routerLink="/cliente/citas" class="link-footer">Citas</a></li>
-        </ul>
-      </div>
-
-      
-      <div class="col-md-3">
-        <h5 class="titulo-footer">Soporte</h5>
-        <ul class="list-unstyled">
-          <li><a routerLink="/cliente/faq" class="link-footer">Preguntas frecuentes</a></li>
-          <li><a routerLink="/cliente/privacidad" class="link-footer">Política de privacidad</a></li>
-          <li><a routerLink="/cliente/terminos" class="link-footer">Términos y condiciones</a></li>
-        </ul>
-      </div>
-
-      
-      <div class="col-md-3">
-        <h5 class="titulo-footer">Contacto</h5>
-        <ul class="list-unstyled">
-          <li><i class="bi bi-geo-alt-fill me-2"></i> Lima, Perú</li>
-          <li><i class="bi bi-telephone-fill me-2"></i> +51 987 654 321</li>
-          <li><i class="bi bi-envelope-fill me-2"></i> soporte@asiqueud.com</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="text-center mt-4 pt-3 border-top border-light">
-      <small class="texto-footer">© 2025 AsiQueUD. Todos los derechos reservados.</small>
-    </div>
-  </div>
-</footer> -->
