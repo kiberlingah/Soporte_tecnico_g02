@@ -11,48 +11,24 @@ export class AuthService {
 
   mensajeExito: string = '';
   mensajeError: string = '';
-  // Simulación de login
+
   loginMock(rol: 'cliente' | 'admin' | 'tecnico') {
     this.role = rol;
     localStorage.setItem('rol', rol);
-    localStorage.setItem('token', 'fake-token-123'); // token simulado
+    localStorage.setItem('token', 'fake-token-123'); 
     
-    this.redirectHomeByRole(); // redirige según rol
+    this.redirectHomeByRole(); 
   }
 
-//   loginReal(correo: string, contrasena: string) {
-//   this.clienteService.loginCliente({ correo, contrasena }).subscribe({
-//     next: (resp: any) => {
-//       if (resp.success) {
-//         // Guardar token
-//         localStorage.setItem('token', resp.token);
-        
-//         // Guardar el id_cliente real
-//         localStorage.setItem('id_cliente', resp.id_cliente);
-//         this.mensajeExito = '✅ Login exitoso';
-//           this.mensajeError = '';
-//           this.router.navigate(['/cliente/dashboard']);
-//       }
-//     },
-//     error: (err) => {
-//       console.error("Error login:", err);
-//       this.mensajeError = '❌ Credenciales inválidas';
-//       this.mensajeExito = '';
-//     }
-//   });
-// }
 
-  // Obtener rol actual
   getRole(): string | null {
     return this.role || localStorage.getItem('rol');
   }
 
-  // Verificar si está logueado
   isLoggedIn(): boolean {
     return !!this.getRole();
   }
 
-  // Obtener token
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -61,7 +37,6 @@ export class AuthService {
     return localStorage.getItem('id_cliente');
   }
 
-  // Redirección según rol (siempre devuelve string)
   redirectHomeByRole(): string {
     const rol = this.getRole();
     if (rol === 'cliente') {
@@ -80,7 +55,6 @@ export class AuthService {
     return '/login';
   }
 
-  // Cerrar sesión
   logout() {
     this.role = null;
     localStorage.clear();

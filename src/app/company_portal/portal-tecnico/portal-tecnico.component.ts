@@ -10,24 +10,24 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class PortalTecnicoComponent {
 
   nusuario: string = '';
-      usuario: any = {};
-      mostrarMenu = false;
-      mostrarBuscador = false; // ✅ propiedad para controlar la lupa expandible
-    
-      constructor(public auth: AuthService,
-        private usuarioService: UsuarioService,
-      ) { }
-    
-    
-      ngOnInit(): void {
-        const token = localStorage.getItem('token');
-        const idusuario = Number(localStorage.getItem('id_usuario'));
-        if (token && idusuario) {
-          this.usuarioService.obtenerUser(idusuario, token).subscribe({
-          next: data => this.usuario = data,
-          error: err => console.error('Error al cargar cliente:', err)
-        });
-        } 
-      }
+  usuario: any = {};
+  mostrarMenu = false;
+  mostrarBuscador = false;
+
+  constructor(public auth: AuthService,
+    private usuarioService: UsuarioService,
+  ) { }
+
+
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    const idusuario = Number(localStorage.getItem('id_usuario'));
+    if (token && idusuario) {
+      this.usuarioService.obtenerUser(idusuario, token).subscribe({
+        next: data => this.usuario = data,
+        error: err => console.error('Error al cargar cliente:', err)
+      });
+    }
+  }
 
 }

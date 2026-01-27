@@ -4,19 +4,11 @@ body {
   color: rgb(255, 255, 255);
 }
 
-
-
-/* ============================================================
-   LAYOUT
-============================================================ */
 .layout {
   display: flex;
   min-height: 100vh;
 }
 
-/* ============================================================
-   SIDEBAR
-============================================================ */
 .sidebar {
   width: 260px;
   background-color: #673dff; /* morado fuerte */
@@ -66,10 +58,6 @@ body {
   font-weight: 600;
 }
 
-
-/* ============================================================
-   TOPBAR
-============================================================ */
 .topbar {
   height: 80px;
     background-color: #905BF4; 
@@ -83,7 +71,6 @@ body {
   box-shadow: 0 4px 12px rgba(78,43,204,0.2);
 }
 
-/* Buscador institucional */
 .search-box {
   background: #EFEFEF;
   border-radius: 10px;
@@ -117,7 +104,6 @@ body {
   box-shadow: 0 0 0 3px rgba(90,215,243,0.3);
 }
 
-/* Parte derecha */
 .top-right {
   display: flex;
   align-items: center;
@@ -151,13 +137,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  //padding: 40px;
-  //background-color: #f0f4f8;
   min-height: 100%;
 }
 
 .formulario2 {
-  //background-color: #ffffff;
   padding: 28px;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -167,22 +150,15 @@ body {
   border: 1px solid #5bb7f4;
 }
 
-/* ============================================================
-   CONTENT
-============================================================ */
 .content-area {
   flex: 1;
   display: grid;
   grid-template-columns: 1.1fr 1.4fr;
   gap: 40px;
-  //padding: 40px;
   background: linear-gradient(180deg, #ffffff);
     font-family: 'Inter', sans-serif;
 }
 
-/* ============================================================
-   WELCOME CARD
-============================================================ */
 .welcome-box {
   text-align: left;
   padding-left: 30px;
@@ -239,10 +215,6 @@ background: linear-gradient(180deg, #467cf150, #EFEFEF);
   color: #888;
 }
 
-
-/* ============================================================
-   FORM PANEL (borde más vivo, sombra elegante, mejor padding)
-============================================================ */
 .panel-card {
   background: linear-gradient(180deg, #deffff25);
   border: 1px solid #5bb7f4;
@@ -271,7 +243,6 @@ background: linear-gradient(180deg, #467cf150, #EFEFEF);
   color: var(--texto);
   margin-bottom: 20px;
 }
-/* Inputs modernos con iconos */
 .field {
   position: relative;
   font-family: 'Rajdhani', sans-serif;
@@ -284,27 +255,9 @@ background: linear-gradient(180deg, #467cf150, #EFEFEF);
   color: #8ea0c7;
   font-size: 1rem;
 }
-// input, select, textarea {
-//   width: 100%;
-//   padding: 13px 14px 13px 40px;
-//   border-radius: 14px;
-//   border: 1px solid #d7def1;
-//   background: #f8faff;
-//   font-size: 0.95rem;
-//   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
-// }
-// input:focus, select:focus, textarea:focus {
-//   border-color: #eee4ff;
-//   background: #ffffff;
-//   box-shadow: 0 0 0 4px rgba(119,0,255,0.2);
-//   transform: translateY(-1px);
-// }
 
-
-/* Grid */
 .grid-2cols { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
 
-/* Checkbox alineado y con aire */
 .terms-group {
   display: flex;
   align-items: center; 
@@ -313,14 +266,12 @@ background: linear-gradient(180deg, #467cf150, #EFEFEF);
   margin: 5%;
 }
 
-
 .terms-group input[type="checkbox"] {
   accent-color: var(--azul);
   transform: scale(1.15);
   margin: 0;
   cursor: pointer;
 }
-
 
 .checkbox-label {
   display: flex;
@@ -334,8 +285,6 @@ background: linear-gradient(180deg, #467cf150, #EFEFEF);
   transform: scale(1.15);
   margin: 0;
 }
-
-
 
 .btn-submit {
   width: 100%; margin-top: 22px; padding: 16px;
@@ -352,7 +301,6 @@ background: linear-gradient(180deg, #467cf150, #EFEFEF);
   filter: saturate(1.05);
 }
 
-
 input,
 select,
 textarea {
@@ -366,9 +314,6 @@ input[readonly] {
   background-color: #e9ecef;
 }
 
-/* ============================================================
-   RESPONSIVE
-============================================================ */
 @media (max-width: 1200px) {
   .content-area { grid-template-columns: 1fr; }
 }

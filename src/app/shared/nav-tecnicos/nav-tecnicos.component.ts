@@ -8,14 +8,11 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./nav-tecnicos.component.scss']
 })
 export class NavTecnicosComponent {
-      constructor(private auth: AuthService, private router: Router) {}
-    
-      //ngOnInit(): void {
-        //this.rol = this.auth.getRole();
-      //}
-      logout() {
-          this.auth.logout();
-          return this.router.navigate(['/empresa'], { replaceUrl: true });
-      }
+  constructor(private auth: AuthService, private router: Router) { }
+
+  logout() {
+    this.auth.logout();
+    return this.router.navigate(['/empresa'], { replaceUrl: true });
+  }
 
 }

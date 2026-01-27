@@ -1,28 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from'src/environment/environment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CitaService {
   [x: string]: any;
-  //private baseUrl = 'https://spyrocode.dev';
   private baseUrl = `${environment.urlHost}/citas`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   registrarCitaDiagnostico(cita: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/cita_pago`, cita);
   }
 
-  // actualizarCliente(cliente: any): Observable<any> {
-  //   return this.http.put(`${this.baseUrl}/actualizar`, cliente);
-  // }
-
-  // eliminarCliente(id: number): Observable<any> {
-  //   return this.http.delete(`${this.baseUrl}/eliminar?id=${id}`);
-  // }
-   getCitaDetalle(id_cita: number): Observable<any> {
+  getCitaDetalle(id_cita: number): Observable<any> {
     const url = `${this.baseUrl}/obtenerId?id_cita=${id_cita}`;
     return this.http.get<any>(url);
   }
@@ -37,7 +29,6 @@ export class CitaService {
     return this.http.get<any[]>(url);
   }
 
- 
   asignarTecnicoUpdate(cita: any): Observable<any> {
     const url = `${this.baseUrl}/asignar-tecnico`;
     const body = {

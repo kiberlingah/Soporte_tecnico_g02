@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
-// Servicios que consumen tus APIs Laravel
 import { ModalidadService } from 'src/app/services/modalidad.service';
 import { DistritoService } from 'src/app/services/distrito.service';
 import { HorarioService } from 'src/app/services/horario.service';
@@ -21,7 +20,6 @@ declare var MercadoPago: any;
   styleUrls: ['./citas.component.scss']
 })
 export class CitasComponent implements OnInit {
-  //servicios: any[] = [];
   modalidades: any[] = [];
   distritos: any[] = [];
   horarios: any[] = [];
@@ -66,30 +64,23 @@ export class CitasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    // Fecha 
     const hoy = new Date();
     const manana = new Date(hoy);
     manana.setDate(hoy.getDate() + 2);
     this.fechaMinima = manana.toISOString().split('T')[0];
     this.citas_diagnostico.fecha_atencion = this.fechaMinima;
 
-    // listas de modalidades, distritos y horarios
     this.modalidadService.getModalidades().subscribe({
       next: (d: any[]) => this.modalidades = d,
-      error: (err: any) => console.error('Error al cargar modalidades:', err)
     });
     this.distritoService.listar().subscribe({
       next: (d: any[]) => this.distritos = d,
-      error: (err: any) => console.error('Error al cargar distritos:', err)
     });
     this.horarioService.listar().subscribe({
       next: (h: any[]) => this.horarios = h,
-      error: (err: any) => console.error('Error al cargar horarios:', err)
     });
     this.tarifaService.listar().subscribe({
       next: (t: any[]) => this.tarifasDomicilio = t,
-      error: (err: any) => console.error('Error al cargar tarifas:', err)
     });
 
 
@@ -105,7 +96,6 @@ export class CitasComponent implements OnInit {
           this.citas_diagnostico.id_cliente = this.cliente.id_cliente;
           this.correo = this.cliente.correo;
         },
-        error: err => console.error('Error al cargar cliente:', err)
       });
     }
   }
@@ -149,10 +139,8 @@ export class CitasComponent implements OnInit {
       .subscribe({
         next: (resp) => {
           this.precioTarifa = parseFloat(resp.precio);
-          console.log("Precio obtenido:", this.precioTarifa);
         },
         error: (err) => {
-          console.error("Error obteniendo tarifa:", err);
           this.precioTarifa = 0;
         }
       }
@@ -200,7 +188,6 @@ registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
     },
   };
 
-  //Marcador de errores
     if (formCitaDiagnostico.invalid) {
       Object.values(formCitaDiagnostico.controls).forEach(control => {
         control.markAsTouched();
@@ -257,11 +244,8 @@ registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
       },
       callbacks: {
         onReady: () => {
-          console.log("CardPayment Brick listo");
         },
         onSubmit: (cardFormData:any) => {
-          console.log("Payload enviado:", cardFormData);
-
           return new Promise((resolve, reject) => {
             fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
               method: "POST",
@@ -290,8 +274,6 @@ registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
                     })
                   },
                   error: (err) => {
-                    //alert("Hubo un problema al registrar.");
-                    console.error("Error al registrar", err);
                     Swal.fire({
                       title: "Error al Registrar!",
                       text: "Hubo un problema al registrar su cita de diagnóstico.",
@@ -303,19 +285,14 @@ registrarCitaDiagnostico(formCitaDiagnostico: NgForm) {
                 });
               })
               .catch((err) => {
-                console.error(err);
                 Swal.fire({
                   title: "Error al Registrar!",
                   text: "Hubo un problema al registrar su cita de diagnóstico.",
                   icon: "error",
                   draggable: true
                 });
-                // reject();
               });
           });
-        },
-        onError: (error: string) => {
-          console.error("Error en CardPayment:", error);
         },
       }
     };

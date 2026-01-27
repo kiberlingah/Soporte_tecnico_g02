@@ -18,126 +18,125 @@ import Swal from 'sweetalert2';
 export class ServiciospAdminComponent {
 
   listaStPendientes: any[] = [];
-      servicios: any[] = [];
-      modalidades: any[] = [];
-      distritos: any[] = [];
-      horarios: any[] = [];
-      usuarios: any[] = [];
-      clientes: any[] = [];
-     
-      page: number = 1;
-      itemsPerPage: number = 10;
-  
-      stSeleccionada: any = null;
-    modalInstance: any;
-  
-      // Filtros
+  servicios: any[] = [];
+  modalidades: any[] = [];
+  distritos: any[] = [];
+  horarios: any[] = [];
+  usuarios: any[] = [];
+  clientes: any[] = [];
+
+  page: number = 1;
+  itemsPerPage: number = 10;
+
+  stSeleccionada: any = null;
+  modalInstance: any;
+
   searchText: string = "";
   filtroServicio: string = "";
   filtroDistrito: string = "";
   filtroModalidad: string = "";
-    
-    
-      constructor(
-        private clienteService: ClienteService,
-        private servicioService: ServicioService,
-        private modalidadService: ModalidadService,
-        private distritoService: DistritoService,
-        private horarioService: HorarioService,
-        private usuarioService: UsuarioService,
-        private citaService: CitaService,
-        private stService: ServiciosTecnicosService
-      ) { }
-    
-      ngOnInit(): void {
-    
-        this.cargarCatalogos().then(() => {
-          this.cargarStPendientes();
-        });
+
+
+  constructor(
+    private clienteService: ClienteService,
+    private servicioService: ServicioService,
+    private modalidadService: ModalidadService,
+    private distritoService: DistritoService,
+    private horarioService: HorarioService,
+    private usuarioService: UsuarioService,
+    private citaService: CitaService,
+    private stService: ServiciosTecnicosService
+  ) { }
+
+  ngOnInit(): void {
+
+    this.cargarCatalogos().then(() => {
+      this.cargarStPendientes();
+    });
+  }
+
+  async cargarCatalogos() {
+    await Promise.all([
+      this.servicioService.listarServicio().toPromise().then(data => this.servicios = data),
+      this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
+      this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
+      this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
+      this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
+      this.usuarioService.listaUsuariosTecnicos().toPromise().then(data => this.usuarios = data)
+    ]);
+  }
+
+  cargarStPendientes() {
+    this.stService.getStStatusPendient().subscribe({
+      next: (resp) => {
+        console.log("Citas recibidos:", resp);
+        this.listaStPendientes = resp;
+      },
+      error: (err) => {
+        console.error("Error al obtener citas:", err);
       }
-    
-      async cargarCatalogos() {
-        await Promise.all([
-          this.servicioService.listarServicio().toPromise().then(data => this.servicios = data),
-          this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
-          this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
-          this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
-          this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
-          this.usuarioService.listaUsuariosTecnicos().toPromise().then(data => this.usuarios = data)
-        ]);
-      }
-    
-      cargarStPendientes() {
-        this.stService.getStStatusPendient().subscribe({
-          next: (resp) => {
-            console.log("Citas recibidos:", resp);
-            this.listaStPendientes = resp;
-          },
-          error: (err) => {
-            console.error("Error al obtener citas:", err);
-          }
-        });
-      }
-    
-      getServicioDesc(id: number): string {
-        const s = this.servicios.find(x => x.id_servicio == id);
-        return s ? s.descripcion_servicio : '';
-      }
-    
-      getModalidadNombre(id: number): string {
-        const m = this.modalidades.find(x => x.id_modalidad == id);
-        return m ? m.nombre_modalidad : '';
-      }
-    
-      getDistritoNombre(id: number): string {
-        const d = this.distritos.find(x => x.id_distrito == id);
-        return d ? d.nombre_distrito : '';
-      }
-    
-      getHorario(id: number): string {
-        const h = this.horarios.find(x => x.id_horario == id);
-        return h ? h.horario : '';
-      }
-  
-      getClientes(id: number): string {
-        const c = this.clientes.find(x => x.id_cliente == id);
-        return c ? `${c.nombres} ${c.apellidos}` : '';
-      }
-  
-        abrirModal(id_servicio_tecnico: number) {
-      this.stService.getStDetalle(id_servicio_tecnico).subscribe({
-        next: (resp) => {
-          this.stSeleccionada = resp;
-          this.stSeleccionada.id_usuario = "";
-  
-          setTimeout(() => {
-                  const modalEl = document.getElementById('modalDetalleCita');
-                  const modal = Modal.getOrCreateInstance(modalEl!);
-                  modal.show();
-                }, 50);
-        },
-        error: (err) => console.error(err)
-      });
-    }
-  
-    getUsuarioTecnico(): string {
-      const u = this.usuarios.find(x => x.id_usuario == this.stSeleccionada.id_usuario);
-      return u ? `${u.nombres} ${u.apellidos}` : '';
-    }
-  
-    guardarCambios() {
+    });
+  }
+
+  getServicioDesc(id: number): string {
+    const s = this.servicios.find(x => x.id_servicio == id);
+    return s ? s.descripcion_servicio : '';
+  }
+
+  getModalidadNombre(id: number): string {
+    const m = this.modalidades.find(x => x.id_modalidad == id);
+    return m ? m.nombre_modalidad : '';
+  }
+
+  getDistritoNombre(id: number): string {
+    const d = this.distritos.find(x => x.id_distrito == id);
+    return d ? d.nombre_distrito : '';
+  }
+
+  getHorario(id: number): string {
+    const h = this.horarios.find(x => x.id_horario == id);
+    return h ? h.horario : '';
+  }
+
+  getClientes(id: number): string {
+    const c = this.clientes.find(x => x.id_cliente == id);
+    return c ? `${c.nombres} ${c.apellidos}` : '';
+  }
+
+  abrirModal(id_servicio_tecnico: number) {
+    this.stService.getStDetalle(id_servicio_tecnico).subscribe({
+      next: (resp) => {
+        this.stSeleccionada = resp;
+        this.stSeleccionada.id_usuario = "";
+
+        setTimeout(() => {
+          const modalEl = document.getElementById('modalDetalleCita');
+          const modal = Modal.getOrCreateInstance(modalEl!);
+          modal.show();
+        }, 50);
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  getUsuarioTecnico(): string {
+    const u = this.usuarios.find(x => x.id_usuario == this.stSeleccionada.id_usuario);
+    return u ? `${u.nombres} ${u.apellidos}` : '';
+  }
+
+  guardarCambios() {
     this.stService.asignarStTecnicoUpdate(this.stSeleccionada).subscribe({
       next: () => {
         Swal.fire({
-                              title: "¡Registro exitoso!",
-                              text: "La asignación de técnico ha sido realizada con éxito.",
-                              icon: "success",
-                              draggable: true,
-                              confirmButtonText: "Aceptar",
-                            
-                            }).then(() => {
-                              window.location.reload();
-                            })
+          title: "¡Registro exitoso!",
+          text: "La asignación de técnico ha sido realizada con éxito.",
+          icon: "success",
+          draggable: true,
+          confirmButtonText: "Aceptar",
+
+        }).then(() => {
+          window.location.reload();
+        })
         this.modalInstance.hide();
       },
       error: (err) => console.error(err)

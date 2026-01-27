@@ -62,32 +62,27 @@ export class ServiciosTecnicosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //fecha
     const hoy = new Date();
     const manana = new Date(hoy);
     manana.setDate(hoy.getDate() + 2);
     this.fechaMinima = manana.toISOString().split('T')[0];
     this.servicios_tecnicos.fecha_atencion = this.fechaMinima;
 
-    // Cargar modalidades
     this.modalidadService.getModalidades().subscribe({
       next: (d: any[]) => this.modalidades = d,
       error: (err: any) => console.error('Error al cargar modalidades:', err)
     });
 
-    // Cargar distritos
     this.distritoService.listar().subscribe({
       next: (d: any[]) => this.distritos = d,
       error: (err: any) => console.error('Error al cargar distritos:', err)
     });
 
-    // Cargar horarios
     this.horarioService.listar().subscribe({
       next: (h: any[]) => this.horarios = h,
       error: (err: any) => console.error('Error al cargar horarios:', err)
     });
 
-    // Cargar tarifas por distrito
     this.tarifaService.listar().subscribe({
       next: (t: any[]) => this.tarifasDomicilio = t,
       error: (err: any) => console.error('Error al cargar tarifas:', err)
@@ -218,7 +213,7 @@ export class ServiciosTecnicosComponent implements OnInit {
       },
     };
 
-      //Marcador de errores
+    //error
     if (formServicioTec.invalid) {
       Object.values(formServicioTec.controls).forEach(control => {
         control.markAsTouched();
@@ -236,32 +231,6 @@ export class ServiciosTecnicosComponent implements OnInit {
     this.mostrarPasarela(montoFinal, this.correo, data);
     return;
 
-  //   this.serviciosTecnicosService.registrarServicio(data).subscribe({
-  //     next: (resp) => {
-  //       Swal.fire({
-  //         title: "¡Registro exitoso!",
-  //           html: `
-  //   <p>Se ha registrado la cita de diagnóstico con éxito.</p>
-  //   <p>En breve recibirá un correo de confirmación.</p>
-  //   <p><strong>Gracias por elegirnos.</strong></p>
-  // `,
-  //         icon: "success",
-  //         draggable: true,
-  //         confirmButtonText: "Aceptar",
-  //       }).then(() => {
-  //         window.location.reload();
-  //       });
-  //     },
-  //     error: (err) => {
-  //       console.error("Error al registrar", err);
-  //       Swal.fire({
-  //         title: "Error al Registrar!",
-  //         text: "Hubo un problema al registrar su cita de instalación.",
-  //         icon: "error",
-  //         draggable: true
-  //       });
-  //     }
-  //   });
   }
 
 
@@ -326,7 +295,7 @@ export class ServiciosTecnicosComponent implements OnInit {
                   next: (resp) => {
                     Swal.fire({
                       title: "¡Registro exitoso!",
-                                  html: `
+                      html: `
     <p>Se ha registrado la cita de diagnóstico con éxito.</p>
     <p>En breve recibirá un correo de confirmación.</p>
     <p><strong>Gracias por elegirnos.</strong></p>
@@ -359,7 +328,6 @@ export class ServiciosTecnicosComponent implements OnInit {
                   icon: "error",
                   draggable: true
                 });
-                // reject();
               });
           });
         },

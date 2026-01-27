@@ -44,8 +44,8 @@
 }
 
 .btn-cerrar:hover {
-  background-color: #5ad7f3; // azul eléctrico
-  color: #0808c7;            // azul oscuro
+  background-color: #5ad7f3; 
+  color: #0808c7;            
   transform: scale(1.1);
   box-shadow: 0 0 8px rgba(90,215,243,0.6);
 }
@@ -62,17 +62,15 @@
 }
 
 
-// Estilo para los mensajes de error
 .text-danger.small {
-  min-height: 1.2rem; // ✅ reserva espacio para el mensaje
+  min-height: 1.2rem; 
   display: block;
   font-size: 0.85rem;
   margin-top: 0.25rem;
   font-family: 'Rajdhani', sans-serif;
 }
 
-// Estilo para los campos
 .campo-input.ng-invalid.ng-touched {
-  border-color: #dc3545; // rojo Bootstrap
-  box-shadow: 0 0 6px rgba(220,53,69,0.4); // glow rojo
+  border-color: #dc3545; 
+  box-shadow: 0 0 6px rgba(220,53,69,0.4); 
 }

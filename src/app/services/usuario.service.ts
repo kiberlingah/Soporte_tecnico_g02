@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders  } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import { Observable } from 'rxjs';
 
@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 export class UsuarioService {
   private baseUrl = `${environment.urlHost}/usuarios`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   loginUsuario(data: any) {
-  return this.http.post(`${this.baseUrl}/login`, data);
-}
+    return this.http.post(`${this.baseUrl}/login`, data);
+  }
   listar() {
     return this.http.get(`${this.baseUrl}/listar`);
   }
@@ -33,16 +33,16 @@ export class UsuarioService {
   }
 
   listarUsuarios(): Observable<any> {
-      return this.http.get(`${this.baseUrl}/listar`);
-    }
+    return this.http.get(`${this.baseUrl}/listar`);
+  }
 
   listaUsuariosTecnicos(): Observable<any> {
     return this.http.get(`${this.baseUrl}/lista_tecnicos`);
   }
 
   obtenerUser(id: number, token: string): Observable<any> {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.baseUrl}/ver?id_usuario=${id}`, { headers });
-    }
-  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.baseUrl}/ver?id_usuario=${id}`, { headers });
+  }
+
 }

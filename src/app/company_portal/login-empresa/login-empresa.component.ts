@@ -42,11 +42,9 @@ export class LoginEmpresaComponent {
         localStorage.setItem('token', res.token);
         const payload: any = jwtDecode(res.token);
 
-        // Guardar datos del usuario
         localStorage.setItem('id_usuario', payload.id_usuario);
         localStorage.setItem('rol', payload.rol);
 
-        // 🔥 Redirigir según el rol
         this.redirigirPorRol(payload.rol);
       },
       error: () => {
@@ -61,9 +59,6 @@ export class LoginEmpresaComponent {
 
   redirigirPorRol(rol: string) {
     switch (rol) {
-      // case 'admin_sistema':
-      //   this.router.navigate(['/admin-sistema/home']);
-      //   break;
 
       case 'admin_empresa':
         this.router.navigate(['/company/portalAdminEmp']);

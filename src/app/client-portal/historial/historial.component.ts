@@ -65,7 +65,6 @@ export class HistorialComponent implements OnInit {
         next: data => {
           this.cliente = data;
         },
-        error: err => console.error('Error al cargar cliente:', err)
       });
     }
   }
@@ -81,18 +80,15 @@ export class HistorialComponent implements OnInit {
 
     this.servicioService.getServiciosReparacion().subscribe({
       next: (sr: any[]) => this.serviciosRepair = sr,
-      error: (err: any) => console.error('Error al cargar instalación:', err)
     })
   }
 
   cargarPagos() {
     this.clienteService.obtenerListaPagos(this.idCliente).subscribe({
       next: (resp) => {
-        console.log("Pagos recibidos:", resp);
         this.listaPagos = resp;
       },
       error: (err) => {
-        console.error("Error al obtener pagos:", err);
       }
     });
   }
@@ -119,7 +115,6 @@ export class HistorialComponent implements OnInit {
 
   getUsuarioDatos(id: number): string {
     const u = this.usuarios.find(x => x.id_usuario == id);
-    //console.log(u);
     return u ? `${u.nombres} ${u.apellidos}` : '';
 
   }
@@ -143,8 +138,7 @@ get montoTotal(): string {
     .obtenerServicioFaltaPago(this.idCliente, id_cita)
     .subscribe(st => {
 
-      this.servicioTecnico = st[0]; // si es array
-      console.log('aquiiiiiiiiiii',st);
+      this.servicioTecnico = st[0];
 
       this.clienteService.detallePago(id_pago).subscribe(detalle => {
 
@@ -177,15 +171,7 @@ const montoFinal = parseFloat(this.montoTotal) || 0;
 
     this.mostrarPasarela(montoFinal, this.correo, dataPag);
     return;
-
-this.servicioTecnicoService.registrarPago(dataPag).subscribe({
-  next: resp => {
-    console.log('Pago registrado', resp);
-  },
-  error: err => {
-    console.error('Error', err);
   }
-});}
 
 async mostrarPasarela(monto: number, email: string, dataPago: any) {
     const mp = new MercadoPago('TEST-18feeddc-35a5-4ca5-8a6a-c8761e37c9c1', {
@@ -207,11 +193,8 @@ async mostrarPasarela(monto: number, email: string, dataPago: any) {
       },
       callbacks: {
         onReady: () => {
-          console.log("CardPayment Brick listo");
         },
         onSubmit: (cardFormData: any) => {
-          console.log("Payload enviado:", cardFormData);
-
           return new Promise((resolve, reject) => {
             fetch(`${environment.urlHost}/mercado-pago/procesar-pago`, {
               method: "POST",
@@ -239,7 +222,6 @@ async mostrarPasarela(monto: number, email: string, dataPago: any) {
                     });
                   },
                   error: (err) => {
-                    console.error("Error al registrar", err);
                     Swal.fire({
                       title: "Error al Registrar!",
                       text: "Hubo un problema al registrar su cita de instalación.",
@@ -252,7 +234,6 @@ async mostrarPasarela(monto: number, email: string, dataPago: any) {
                 });
               })
               .catch((err) => {
-                console.error(err);
                 Swal.fire({
                   title: "Error al Registrar!",
                   text: "Hubo un problema al registrar su cita de diagnóstico.",

@@ -15,103 +15,102 @@ import Swal from 'sweetalert2';
   styleUrls: ['./citasp-admin.component.scss']
 })
 export class CitaspAdminComponent {
-    listaCitasPendientes: any[] = [];
-    servicios: any[] = [];
-    modalidades: any[] = [];
-    distritos: any[] = [];
-    horarios: any[] = [];
-    usuarios: any[] = [];
-    clientes: any[] = [];
-   
-    page: number = 1;
-    itemsPerPage: number = 10;
+  listaCitasPendientes: any[] = [];
+  servicios: any[] = [];
+  modalidades: any[] = [];
+  distritos: any[] = [];
+  horarios: any[] = [];
+  usuarios: any[] = [];
+  clientes: any[] = [];
 
-    citaSeleccionada: any = null;
+  page: number = 1;
+  itemsPerPage: number = 10;
+
+  citaSeleccionada: any = null;
   modalInstance: any;
 
-    // Filtros
-searchText: string = "";
-filtroServicio: string = "";
-filtroDistrito: string = "";
-filtroModalidad: string = "";
-  
-  
-    constructor(
-      private clienteService: ClienteService,
-      private servicioService: ServicioService,
-      private modalidadService: ModalidadService,
-      private distritoService: DistritoService,
-      private horarioService: HorarioService,
-      private usuarioService: UsuarioService,
-      private citaService: CitaService
-    ) { }
-  
-    ngOnInit(): void {
-  
-      this.cargarCatalogos().then(() => {
-        this.cargarCitasPendientes();
-      });
-    }
-  
-    async cargarCatalogos() {
-      await Promise.all([
-        this.servicioService.listarServicio().toPromise().then(data => this.servicios = data),
-        this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
-        this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
-        this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
-        this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
-        this.usuarioService.listaUsuariosTecnicos().toPromise().then(data => this.usuarios = data)
-      ]);
-    }
-  
-    cargarCitasPendientes() {
-      this.citaService.getCitasStatusPendient().subscribe({
-        next: (resp) => {
-          console.log("Citas recibidos:", resp);
-          this.listaCitasPendientes = resp;
-        },
-        error: (err) => {
-          console.error("Error al obtener citas:", err);
-        }
-      });
-    }
-  
-    getServicioDesc(id: number): string {
-      const s = this.servicios.find(x => x.id_servicio == id);
-      return s ? s.descripcion_servicio : 'Cita de Diagnostico';
-    }
-  
-    getModalidadNombre(id: number): string {
-      const m = this.modalidades.find(x => x.id_modalidad == id);
-      return m ? m.nombre_modalidad : '';
-    }
-  
-    getDistritoNombre(id: number): string {
-      const d = this.distritos.find(x => x.id_distrito == id);
-      return d ? d.nombre_distrito : '';
-    }
-  
-    getHorario(id: number): string {
-      const h = this.horarios.find(x => x.id_horario == id);
-      return h ? h.horario : '';
-    }
+  searchText: string = "";
+  filtroServicio: string = "";
+  filtroDistrito: string = "";
+  filtroModalidad: string = "";
 
-    getClientes(id: number): string {
-      const c = this.clientes.find(x => x.id_cliente == id);
-      return c ? `${c.nombres} ${c.apellidos}` : '';
-    }
 
-      abrirModal(id_cita: number) {
+  constructor(
+    private clienteService: ClienteService,
+    private servicioService: ServicioService,
+    private modalidadService: ModalidadService,
+    private distritoService: DistritoService,
+    private horarioService: HorarioService,
+    private usuarioService: UsuarioService,
+    private citaService: CitaService
+  ) { }
+
+  ngOnInit(): void {
+
+    this.cargarCatalogos().then(() => {
+      this.cargarCitasPendientes();
+    });
+  }
+
+  async cargarCatalogos() {
+    await Promise.all([
+      this.servicioService.listarServicio().toPromise().then(data => this.servicios = data),
+      this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
+      this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
+      this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
+      this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
+      this.usuarioService.listaUsuariosTecnicos().toPromise().then(data => this.usuarios = data)
+    ]);
+  }
+
+  cargarCitasPendientes() {
+    this.citaService.getCitasStatusPendient().subscribe({
+      next: (resp) => {
+        console.log("Citas recibidos:", resp);
+        this.listaCitasPendientes = resp;
+      },
+      error: (err) => {
+        console.error("Error al obtener citas:", err);
+      }
+    });
+  }
+
+  getServicioDesc(id: number): string {
+    const s = this.servicios.find(x => x.id_servicio == id);
+    return s ? s.descripcion_servicio : 'Cita de Diagnostico';
+  }
+
+  getModalidadNombre(id: number): string {
+    const m = this.modalidades.find(x => x.id_modalidad == id);
+    return m ? m.nombre_modalidad : '';
+  }
+
+  getDistritoNombre(id: number): string {
+    const d = this.distritos.find(x => x.id_distrito == id);
+    return d ? d.nombre_distrito : '';
+  }
+
+  getHorario(id: number): string {
+    const h = this.horarios.find(x => x.id_horario == id);
+    return h ? h.horario : '';
+  }
+
+  getClientes(id: number): string {
+    const c = this.clientes.find(x => x.id_cliente == id);
+    return c ? `${c.nombres} ${c.apellidos}` : '';
+  }
+
+  abrirModal(id_cita: number) {
     this.citaService.getCitaDetalle(id_cita).subscribe({
       next: (resp) => {
         this.citaSeleccionada = resp;
         this.citaSeleccionada.id_usuario = "";
 
         setTimeout(() => {
-                const modalEl = document.getElementById('modalDetalleCita');
-                const modal = Modal.getOrCreateInstance(modalEl!);
-                modal.show();
-              }, 50);
+          const modalEl = document.getElementById('modalDetalleCita');
+          const modal = Modal.getOrCreateInstance(modalEl!);
+          modal.show();
+        }, 50);
       },
       error: (err) => console.error(err)
     });
@@ -123,37 +122,37 @@ filtroModalidad: string = "";
   }
 
   guardarCambios() {
-  this.citaService.asignarTecnicoUpdate(this.citaSeleccionada).subscribe({
-    next: () => {
-      Swal.fire({
-                            title: "¡Registro exitoso!",
-                            text: "La asignación de técnico ha sido realizada con éxito.",
-                            icon: "success",
-                            draggable: true,
-                            confirmButtonText: "Aceptar",
-                          
-                          }).then(() => {
-                            window.location.reload();
-                          })
-      this.modalInstance.hide();
-    },
-    error: (err) => console.error(err)
-  });
-}
+    this.citaService.asignarTecnicoUpdate(this.citaSeleccionada).subscribe({
+      next: () => {
+        Swal.fire({
+          title: "¡Registro exitoso!",
+          text: "La asignación de técnico ha sido realizada con éxito.",
+          icon: "success",
+          draggable: true,
+          confirmButtonText: "Aceptar",
 
-filtrarCitas() {
-  return this.listaCitasPendientes.filter(c => {
-    const cumpleDistrito = this.filtroDistrito
-      ? c.id_distrito == this.filtroDistrito
-      : true;
+        }).then(() => {
+          window.location.reload();
+        })
+        this.modalInstance.hide();
+      },
+      error: (err) => console.error(err)
+    });
+  }
 
-    const cumpleModalidad = this.filtroModalidad
-      ? c.id_modalidad == this.filtroModalidad
-      : true;
+  filtrarCitas() {
+    return this.listaCitasPendientes.filter(c => {
+      const cumpleDistrito = this.filtroDistrito
+        ? c.id_distrito == this.filtroDistrito
+        : true;
 
-    return cumpleDistrito && cumpleModalidad;
-  });
-}
-    
+      const cumpleModalidad = this.filtroModalidad
+        ? c.id_modalidad == this.filtroModalidad
+        : true;
+
+      return cumpleDistrito && cumpleModalidad;
+    });
+  }
+
 
 }

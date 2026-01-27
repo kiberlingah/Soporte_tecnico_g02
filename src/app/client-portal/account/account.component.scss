@@ -4,7 +4,6 @@ body {
   background-color: #f0f4f8;
 }
 
-/* ===== LAYOUT ===== */
 .layout {
   display: flex;
   min-height: 100vh;
@@ -18,7 +17,6 @@ body {
   padding-right: 20px;
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
   width: 260px;
   background-color: #4E2BCC;
@@ -72,7 +70,6 @@ body {
   font-weight: 600;
 }
 
-/* ===== TOPBAR ===== */
 .topbar {
   height: 80px;
   background: linear-gradient(90deg, #905BF4, #4E2BCC);
@@ -146,40 +143,31 @@ body {
   cursor: pointer;
 }
 
-/* ===== FORMULARIO ===== */
-/* ===== FORMULARIO ===== */
 .cuenta-formulario .form-label {
-  //font-family: "Rajdhani", sans-serif;
-  //font-weight: 600;
   font-size: 17px;
-  //color: #000080; /* Azure */
 }
 
 .cuenta-formulario .form-control {
   border-radius: 10px;
-  border: 1px solid #92E1FF; /* Cerulean Sky */
+  border: 1px solid #92E1FF; 
   background-color: #f9f9ff;
-  color: #000080; /* Dark Blue */
+  color: #000080; 
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cuenta-formulario .form-control:focus {
-  border-color: #007FFF; /* Azure */
-  box-shadow: 0 0 0 3px rgba(146,225,255,0.4); /* glow institucional */
+  border-color: #007FFF;
+  box-shadow: 0 0 0 3px rgba(146,225,255,0.4);
   outline: none;
 }
 
-/* Botones */
 .cuenta-formulario .btn {
   padding: 10px 20px;
   font-size: 14px;
   border-radius: 8px;
-  //font-family: "Rajdhani", sans-serif;
-  //font-weight: 600;
   font-size: 16px;
 }
 
-/* Botón primario */
 .cuenta-formulario .btn-outline-primary {
   color: #0808c7;
   border-color: #0808c7 ;
@@ -190,14 +178,10 @@ body {
   box-shadow: 0 6px 18px rgba(0,0,128,0.25);
 }
 
-
 .opcional {
   font-size: 0.8em;
   color: #888;
 }
-
-/* ===== MODALES ===== */
-/* ===== MODALES ===== */
 
 .modal-editar,
 .modal-eliminar {

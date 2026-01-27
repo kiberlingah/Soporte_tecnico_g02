@@ -19,201 +19,194 @@ import Swal from 'sweetalert2';
 })
 export class ServiciospTecnicoComponent {
   listaStPendientes: any[] = [];
-    serviciosInstall: any[] = [];
-    serviciosRepair: any[] = [];
-    modalidades: any[] = [];
-    distritos: any[] = [];
-    horarios: any[] = [];
-    usuarios: any[] = [];
-    clientes: any[] = [];
-  
-    page: number = 1;
-    itemsPerPage: number = 10;
-  
-    stSeleccionada: any = null;
-    modalInstance: any;
-    idServicioReparacionSeleccionado: any = '';
-    precioReparacionSeleccionado: number = 0.00;
-  
-    // Filtros
-    searchText: string = "";
-    filtroServicio: string = "";
-    filtroDistrito: string = "";
-    filtroModalidad: string = "";
-  
-      idServicioSeleccionado: any = '';
-    precioSeleccionado: number = 0.00;
-      fechaUnica: string = '';
-  
-    idDistritoSeleccionado: any = '';
-    precioTarifa: number = 0.00;
-    modalidadAnterior: number = 0;
-  
-  
-    constructor(
-      private clienteService: ClienteService,
-      private servicioService: ServicioService,
-      private modalidadService: ModalidadService,
-      private distritoService: DistritoService,
-      private horarioService: HorarioService,
-      private usuarioService: UsuarioService,
-      private citaService: CitaService,
-      private tarifaService: TarifaService,
-      private stService: ServiciosTecnicosService
-    ) { }
-  
-    ngOnInit(): void {
+  serviciosInstall: any[] = [];
+  serviciosRepair: any[] = [];
+  modalidades: any[] = [];
+  distritos: any[] = [];
+  horarios: any[] = [];
+  usuarios: any[] = [];
+  clientes: any[] = [];
 
-  
-      const token = localStorage.getItem('token');
-      const idusuario = Number(localStorage.getItem('id_usuario'));
-      if (token && idusuario) {
-        this.usuarioService.obtenerUser(idusuario, token).subscribe({
-          next: data => this.usuarios = data,
-          error: err => console.error('Error al cargar cliente:', err)
-        });
-      }
-  
-      this.cargarCatalogos().then(() => {
-        this.cargarCitasPendientes();
+  page: number = 1;
+  itemsPerPage: number = 10;
+
+  stSeleccionada: any = null;
+  modalInstance: any;
+  idServicioReparacionSeleccionado: any = '';
+  precioReparacionSeleccionado: number = 0.00;
+
+  // Filtros
+  searchText: string = "";
+  filtroServicio: string = "";
+  filtroDistrito: string = "";
+  filtroModalidad: string = "";
+
+  idServicioSeleccionado: any = '';
+  precioSeleccionado: number = 0.00;
+  fechaUnica: string = '';
+
+  idDistritoSeleccionado: any = '';
+  precioTarifa: number = 0.00;
+  modalidadAnterior: number = 0;
+
+
+  constructor(
+    private clienteService: ClienteService,
+    private servicioService: ServicioService,
+    private modalidadService: ModalidadService,
+    private distritoService: DistritoService,
+    private horarioService: HorarioService,
+    private usuarioService: UsuarioService,
+    private citaService: CitaService,
+    private tarifaService: TarifaService,
+    private stService: ServiciosTecnicosService
+  ) { }
+
+  ngOnInit(): void {
+
+
+    const token = localStorage.getItem('token');
+    const idusuario = Number(localStorage.getItem('id_usuario'));
+    if (token && idusuario) {
+      this.usuarioService.obtenerUser(idusuario, token).subscribe({
+        next: data => this.usuarios = data,
+        error: err => console.error('Error al cargar cliente:', err)
       });
-  
     }
-  
-    async cargarCatalogos() {
-      await Promise.all([
-        this.servicioService.listarServicio().toPromise().then(data => this.serviciosInstall = data),
-        this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
-        this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
-        this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
-        this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
-        //this.usuarioService.listaUsuariosTecnicos().toPromise().then(data => this.usuarios = data)
-      ]);
+
+    this.cargarCatalogos().then(() => {
+      this.cargarCitasPendientes();
+    });
+
+  }
+
+  async cargarCatalogos() {
+    await Promise.all([
+      this.servicioService.listarServicio().toPromise().then(data => this.serviciosInstall = data),
+      this.modalidadService.listarModalidades().toPromise().then(data => this.modalidades = data),
+      this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
+      this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
+      this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
+    ]);
+  }
+
+  cargarCitasPendientes() {
+    let idusuario = Number(localStorage.getItem('id_usuario'));
+    this.stService.getStTecnico(idusuario).subscribe({
+      next: (resp) => {
+        console.log("Citas recibidos:", resp);
+        this.listaStPendientes = resp;
+      },
+      error: (err) => {
+        console.error("Error al obtener citas:", err);
+      }
+    });
+  }
+
+  ;
+
+  getServicioDesc(id: number): string {
+    const s = this.serviciosInstall.find(x => x.id_servicio == id);
+    return s ? s.descripcion_servicio : 'Cita de Diagnostico';
+  }
+
+  getModalidadNombre(id: number): string {
+    const m = this.modalidades.find(x => x.id_modalidad == id);
+    return m ? m.nombre_modalidad : '';
+  }
+
+  getDistritoNombre(id: number): string {
+    const d = this.distritos.find(x => x.id_distrito == id);
+    return d ? d.nombre_distrito : '';
+  }
+
+  getHorario(id: number): string {
+    const h = this.horarios.find(x => x.id_horario == id);
+    return h ? h.horario : '';
+  }
+
+  getClientes(id: number): string {
+    const c = this.clientes.find(x => x.id_cliente == id);
+    return c ? `${c.nombres} ${c.apellidos}` : '';
+  }
+  getClientesDocumento(id: number): string {
+    const c = this.clientes.find(x => x.id_cliente == id);
+    return c ? c.documento : '';
+  }
+
+  setearPrecio(): void {
+    const servicio = this.serviciosRepair.find(sr => sr.id_servicio == this.idServicioReparacionSeleccionado);
+    this.precioReparacionSeleccionado = servicio ? parseFloat(servicio.precio) : 0.00;
+  }
+
+  get precioServicioReparacion(): string {
+    const n = Number(this.precioReparacionSeleccionado) || 0;
+    return n.toFixed(2);
+  }
+
+  abrirModal(id_servicio_tecnico: number) {
+    this.stService.getStDetalle(id_servicio_tecnico).subscribe({
+      next: (resp) => {
+        this.stSeleccionada = resp;
+        this.stSeleccionada.id_usuario = "";
+
+        setTimeout(() => {
+          const modalEl = document.getElementById('modalDetalleCita');
+          const modal = Modal.getOrCreateInstance(modalEl!);
+          modal.show();
+        }, 50);
+      },
+      error: (err) => console.error(err)
+    });
+
+  }
+
+  setearTarifaDomicilio(): void {
+    if (!this.idDistritoSeleccionado) {
+      this.precioTarifa = 0;
+      return;
     }
-  
-    cargarCitasPendientes() {
-      let idusuario = Number(localStorage.getItem('id_usuario'));
-      this.stService.getStTecnico(idusuario).subscribe({
+    this.tarifaService.obtenerTarifaDistrito(this.idDistritoSeleccionado)
+      .subscribe({
         next: (resp) => {
-          console.log("Citas recibidos:", resp);
-          this.listaStPendientes = resp;
+          this.precioTarifa = parseFloat(resp.precio);
+          console.log("Precio obtenido:", this.precioTarifa);
         },
         error: (err) => {
-          console.error("Error al obtener citas:", err);
+          console.error("Error obteniendo tarifa:", err);
+          this.precioTarifa = 0;
         }
-      });
-    }
-  
-    ;
-  
-    getServicioDesc(id: number): string {
-      const s = this.serviciosInstall.find(x => x.id_servicio == id);
-      return s ? s.descripcion_servicio : 'Cita de Diagnostico';
-    }
-  
-    getModalidadNombre(id: number): string {
-      const m = this.modalidades.find(x => x.id_modalidad == id);
-      return m ? m.nombre_modalidad : '';
-    }
-  
-    getDistritoNombre(id: number): string {
-      const d = this.distritos.find(x => x.id_distrito == id);
-      return d ? d.nombre_distrito : '';
-    }
-  
-    getHorario(id: number): string {
-      const h = this.horarios.find(x => x.id_horario == id);
-      return h ? h.horario : '';
-    }
-  
-    getClientes(id: number): string {
-      const c = this.clientes.find(x => x.id_cliente == id);
-      return c ? `${c.nombres} ${c.apellidos}` : '';
-    }
-     getClientesDocumento(id: number): string {
-      const c = this.clientes.find(x => x.id_cliente == id);
-      return c ? c.documento : '';
-    }
-  
-    setearPrecio(): void {
-      const servicio = this.serviciosRepair.find(sr => sr.id_servicio == this.idServicioReparacionSeleccionado);
-      this.precioReparacionSeleccionado = servicio ? parseFloat(servicio.precio) : 0.00;
-    }
-  
-    get precioServicioReparacion(): string {
-      const n = Number(this.precioReparacionSeleccionado) || 0;
-      return n.toFixed(2);
-    }
-  
-    abrirModal(id_servicio_tecnico: number) {
-      this.stService.getStDetalle(id_servicio_tecnico).subscribe({
-        next: (resp) => {
-          this.stSeleccionada = resp;
-          this.stSeleccionada.id_usuario = "";
-  
-          setTimeout(() => {
-            const modalEl = document.getElementById('modalDetalleCita');
-            const modal = Modal.getOrCreateInstance(modalEl!);
-            modal.show();
-          }, 50);
-        },
-        error: (err) => console.error(err)
-      });
-  
-    }
-  
-    
-  
-    setearTarifaDomicilio(): void {
-      if (!this.idDistritoSeleccionado) {
-        this.precioTarifa = 0;
-        return;
       }
-      this.tarifaService.obtenerTarifaDistrito(this.idDistritoSeleccionado)
-        .subscribe({
-          next: (resp) => {
-            this.precioTarifa = parseFloat(resp.precio);
-            console.log("Precio obtenido:", this.precioTarifa);
-          },
-          error: (err) => {
-            console.error("Error obteniendo tarifa:", err);
-            this.precioTarifa = 0;
-          }
-        }
-        );
-    }
-  
-    get tarifaDomicilio(): string {
-      const n = Number(this.precioTarifa) || 0;
-      return n.toFixed(2);
-    }
-  
-  
-  
-  
-    //
-  
-guardarCambios() {
+      );
+  }
 
-  const data = {
-    id_servicio_tecnico: this.stSeleccionada.id_servicio_tecnico,
-    observacion_tecnico: this.stSeleccionada.observacion_tecnico,
-    estado: ""
-  };
+  get tarifaDomicilio(): string {
+    const n = Number(this.precioTarifa) || 0;
+    return n.toFixed(2);
+  }
 
-  this.stService.comentarioStUpdate(data).subscribe({
-    next: () => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Proceso completado',
-        text: 'La servicio fue finalizada correctamente'
-      }).then(() => window.location.reload());
-    },
-    error: (err) => {
-      console.error(err);
-      Swal.fire('Error', 'No se pudo completar la operación', 'error');
-    }
-  });
-}
+
+  guardarCambios() {
+
+    const data = {
+      id_servicio_tecnico: this.stSeleccionada.id_servicio_tecnico,
+      observacion_tecnico: this.stSeleccionada.observacion_tecnico,
+      estado: ""
+    };
+
+    this.stService.comentarioStUpdate(data).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Proceso completado',
+          text: 'La servicio fue finalizada correctamente'
+        }).then(() => window.location.reload());
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire('Error', 'No se pudo completar la operación', 'error');
+      }
+    });
+  }
 
 }

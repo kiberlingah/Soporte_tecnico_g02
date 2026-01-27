@@ -56,9 +56,9 @@ export class CitaspTecnicoComponent {
     precio_domicilio: 0.00
   };
 
-    idServicioSeleccionado: any = '';
+  idServicioSeleccionado: any = '';
   precioSeleccionado: number = 0.00;
-    fechaUnica: string = '';
+  fechaUnica: string = '';
 
   idDistritoSeleccionado: any = '';
   precioTarifa: number = 0.00;
@@ -108,7 +108,6 @@ export class CitaspTecnicoComponent {
       this.distritoService.listarDistritos().toPromise().then(data => this.distritos = data),
       this.horarioService.listarHorarios().toPromise().then(data => this.horarios = data),
       this.clienteService.listarClientes().toPromise().then(data => this.clientes = data),
-      //this.usuarioService.listaUsuariosTecnicos().toPromise().then(data => this.usuarios = data)
     ]);
   }
 
@@ -151,7 +150,7 @@ export class CitaspTecnicoComponent {
     const c = this.clientes.find(x => x.id_cliente == id);
     return c ? `${c.nombres} ${c.apellidos}` : '';
   }
-   getClientesDocumento(id: number): string {
+  getClientesDocumento(id: number): string {
     const c = this.clientes.find(x => x.id_cliente == id);
     return c ? c.documento : '';
   }
@@ -183,7 +182,7 @@ export class CitaspTecnicoComponent {
 
   }
 
-  
+
   validarModalidad() {
     if (this.servicios_tecnicos.id_modalidad != 3) {
       this.idDistritoSeleccionado = '';
@@ -218,69 +217,66 @@ export class CitaspTecnicoComponent {
 
 
 
+  guardarCambios() {
 
-  //
-
-guardarCambios() {
-
-  const idServicio = Number(this.idServicioReparacionSeleccionado);
+    const idServicio = Number(this.idServicioReparacionSeleccionado);
     const precioServicioR = parseFloat(this.precioServicioReparacion) || 0;
     const precioDomicilio = this.servicios_tecnicos.id_modalidad == 3
       ? parseFloat(this.tarifaDomicilio) || 0
       : 0;
-    
 
-  const data = {
-    id_cita: this.citaSeleccionada.id_cita,
-    id_cliente: this.citaSeleccionada.id_cliente,
-    observacion_tecnico: this.citaSeleccionada.observacion_tecnico,
 
-    servicios_tecnicos: {
-      id_servicio: idServicio,
-      id_modalidad: this.servicios_tecnicos.id_modalidad,
+    const data = {
+      id_cita: this.citaSeleccionada.id_cita,
+      id_cliente: this.citaSeleccionada.id_cliente,
+      observacion_tecnico: this.citaSeleccionada.observacion_tecnico,
+
+      servicios_tecnicos: {
+        id_servicio: idServicio,
+        id_modalidad: this.servicios_tecnicos.id_modalidad,
         id_tarifadomicilio:
           this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
         id_distrito:
           this.servicios_tecnicos.id_modalidad == 3 ? this.idDistritoSeleccionado : null,
         direccion:
           this.servicios_tecnicos.id_modalidad == 3 ? this.servicios_tecnicos.direccion : null,
-      fecha_atencion: this.servicios_tecnicos.fecha_atencion,
-      id_horario: this.servicios_tecnicos.id_horario,
-      documento: this.citaSeleccionada.documento,
-      precio_serviciot: precioServicioR,
-      precio_domicilio: precioDomicilio
-    }
-  };
+        fecha_atencion: this.servicios_tecnicos.fecha_atencion,
+        id_horario: this.servicios_tecnicos.id_horario,
+        documento: this.citaSeleccionada.documento,
+        precio_serviciot: precioServicioR,
+        precio_domicilio: precioDomicilio
+      }
+    };
 
-  console.log('DATA ENVIADA 👉', data);
+    console.log('DATA ENVIADA 👉', data);
 
-  this.citaService.finalizarCita(data).subscribe({
-    next: () => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Proceso completado',
-        text: 'La cita fue finalizada correctamente'
-      }).then(() => window.location.reload());
-    },
-    error: (err) => {
-      console.error(err);
-      Swal.fire('Error', 'No se pudo completar la operación', 'error');
-    }
-  });
-}
+    this.citaService.finalizarCita(data).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Proceso completado',
+          text: 'La cita fue finalizada correctamente'
+        }).then(() => window.location.reload());
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire('Error', 'No se pudo completar la operación', 'error');
+      }
+    });
+  }
 
-filtrarCitas() {
-  return this.listaCitasPendientes.filter(c => {
-    const cumpleDistrito = this.filtroDistrito
-      ? c.id_distrito == this.filtroDistrito
-      : true;
+  filtrarCitas() {
+    return this.listaCitasPendientes.filter(c => {
+      const cumpleDistrito = this.filtroDistrito
+        ? c.id_distrito == this.filtroDistrito
+        : true;
 
-    const cumpleModalidad = this.filtroModalidad
-      ? c.id_modalidad == this.filtroModalidad
-      : true;
+      const cumpleModalidad = this.filtroModalidad
+        ? c.id_modalidad == this.filtroModalidad
+        : true;
 
-    return cumpleDistrito && cumpleModalidad;
-  });
-}
+      return cumpleDistrito && cumpleModalidad;
+    });
+  }
 
 }

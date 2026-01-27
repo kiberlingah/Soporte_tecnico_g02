@@ -11,7 +11,6 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  // Campos enlazados con ngModel
   correo: string = '';
   contrasena: string = '';
 
@@ -27,7 +26,7 @@ export class LoginComponent {
       contrasena: this.contrasena
     };
 
-        if (form.invalid) {
+    if (form.invalid) {
       Object.values(form.controls).forEach(control => {
         control.markAsTouched();
       });
@@ -45,24 +44,23 @@ export class LoginComponent {
         }
       },
       error: (err: any) => {
-        console.error('Error en login:', err);
         Swal.fire({
           icon: "error",
           title: "Credenciales inválidas",
           text: "El correo o la contraseña no son correctos. Por favor, comprueba tus credenciales e intenta de nuevo.",
           confirmButtonText: "Aceptar",
         });
-        
+
       },
-      
+
     });
   }
 
   volverAlInicio(): void {
-    this.router.navigate(['/']); // redirige al inicio
+    this.router.navigate(['/']);
   }
 
   redirigirRegistro(): void {
-    this.router.navigate(['/register']); // redirige al registro
+    this.router.navigate(['/register']);
   }
 }

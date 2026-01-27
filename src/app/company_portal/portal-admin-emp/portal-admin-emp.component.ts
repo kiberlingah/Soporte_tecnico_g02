@@ -12,7 +12,7 @@ export class PortalAdminEmpComponent {
     nusuario: string = '';
     usuario: any = {};
     mostrarMenu = false;
-    mostrarBuscador = false; // ✅ propiedad para controlar la lupa expandible
+    mostrarBuscador = false; 
   
     constructor(public auth: AuthService,
       private usuarioService: UsuarioService,

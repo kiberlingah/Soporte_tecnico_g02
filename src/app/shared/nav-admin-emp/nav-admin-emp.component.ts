@@ -8,23 +8,16 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./nav-admin-emp.component.scss']
 })
 export class NavAdminEmpComponent {
-    mostrarMenu = false;
-    mostrarBuscador = false;
-        constructor(private auth: AuthService
-          , private router: Router
-        ) {}
-      
-        //ngOnInit(): void {
-          //this.rol = this.auth.getRole();
-        //}
-        // logout() {
-        //     this.auth.logout();
-        //     return this.router.navigate(['/empresa']);
-        // }
-          logout() {
-  localStorage.clear();
+  mostrarMenu = false;
+  mostrarBuscador = false;
+  constructor(private auth: AuthService
+    , private router: Router
+  ) { }
 
-  this.router.navigate(['/empresa'], { replaceUrl: true });
-}
+  logout() {
+    localStorage.clear();
+
+    this.router.navigate(['/empresa'], { replaceUrl: true });
+  }
 
 }

@@ -4,34 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Configuración de Cuenta</title>
-  <!-- Bootstrap -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Tipografías -->
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Rajdhani:wght@500&family=Poppins:wght@500&display=swap"
     rel="stylesheet">
-  <!-- Animaciones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
 
-  <!-- <div class="layout"> -->
-
   <app-nav-pcliente></app-nav-pcliente>
   <div class="container">
 
     <main>
-      <!-- ENCABEZADO -->
       <div class="text-center mb-5 mt-5">
         <p class="mb-2 title_seccion1">⚙️ Configuración de Cuenta</p>
-<div class="line-title"></div>
+        <div class="line-title"></div>
         <p class="mb-4">Actualiza tus datos personales, gestiona tu acceso y mantén tu cuenta segura y activa.</p>
       </div>
-
-      <!-- Tarjetas informativas -->
       <div class="row mt-4 text-center">
         <div class="col-md-4 mb-3">
           <div
@@ -66,8 +58,7 @@
               Datos Personales
             </h3>
 
-            <!-- Formulario principal (solo lectura) -->
-            <form class="row g-4 needs-validation cuenta-formulario" novalidate>              <!-- Nombres -->
+            <form class="row g-4 needs-validation cuenta-formulario" novalidate>
               <div class="col-md-6">
                 <label class="form-label">Nombres</label>
                 <div class="input-group">
@@ -76,7 +67,6 @@
                 </div>
               </div>
 
-              <!-- Apellidos -->
               <div class="col-md-6">
                 <label class="form-label">Apellidos</label>
                 <div class="input-group">
@@ -85,7 +75,6 @@
                 </div>
               </div>
 
-              <!-- Teléfono -->
               <div class="col-md-6">
                 <label class="form-label">Teléfono</label>
                 <div class="input-group">
@@ -94,7 +83,6 @@
                 </div>
               </div>
 
-              <!-- Correo -->
               <div class="col-md-6 mb-5">
                 <label class="form-label">Correo</label>
                 <div class="input-group">
@@ -103,7 +91,6 @@
                 </div>
               </div>
 
-              <!-- Botones -->
               <div class="col-12 d-flex justify-content-end gap-3 mt-3">
                 <button type="button" class="btn btn-outline-primary px-4" data-bs-toggle="modal"
                   data-bs-target="#modalEditar">
@@ -119,7 +106,6 @@
         </div>
       </div>
 
-      <!-- Modal Editar -->
       <div class="modal fade" id="modalEditar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content rounded-4  shadow-lg border-0">
@@ -128,7 +114,6 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-              <!-- Formulario editable -->
               <form [formGroup]="formCuenta" class="row g-3">
 
                 <div class="col-md-6">
@@ -195,7 +180,6 @@
         </div>
       </div>
 
-      <!-- Modal Eliminar -->
       <div class="modal fade" id="modalEliminar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content rounded-4 shadow-lg border-0">
@@ -216,42 +200,11 @@
           </div>
         </div>
       </div>
-
-
-      <!-- Botón flotante de ayuda -->
-      <!-- <button class="btn btn-light shadow rounded-circle help-btn" data-bs-toggle="modal" data-bs-target="#modalAyuda">
-        <i class="bi bi-question-circle text-primary fs-4"></i>
-      </button> -->
-
-      <!-- Modal de ayuda -->
-      <!-- <div class="modal fade" id="modalAyuda" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content rounded-4 shadow">
-            <div class="modal-header">
-              <h5 class="modal-title"><i class="bi bi-info-circle me-2"></i>Ayuda y Soporte</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <p class="text-muted">Si necesitas asistencia técnica, puedes:</p>
-              <ul class="list-unstyled">
-                <li><i class="bi bi-envelope-fill text-success me-2"></i> Contactar soporte: soporte@empresa.com</li>
-                <li><i class="bi bi-telephone-fill text-primary me-2"></i> Llamar al: +51 987 654 321</li>
-                <li><i class="bi bi-chat-dots-fill text-warning me-2"></i> Usar el chat en vivo desde el portal</li>
-              </ul>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </main>
   </div>
 
   <app-footer-simple></app-footer-simple>
 
-
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     (() => {
